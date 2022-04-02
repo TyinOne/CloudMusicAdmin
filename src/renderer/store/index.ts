@@ -18,15 +18,7 @@ const modules = pathList.reduce((modules: { [x: string]: any }, modulePath: stri
     return modules;
 }, {});
 
-export const key: InjectionKey<Store<RootStateTypes>> = {
-    [Symbol.toPrimitive](): symbol {
-        return undefined;
-    }, [Symbol.toStringTag]: "", toString(): string {
-        return "";
-    }, valueOf(): symbol {
-        return undefined;
-    }
-};
+export const key: InjectionKey<Store<RootStateTypes>> = Symbol();
 
 export const store = createStore<RootStateTypes>({ modules });
 

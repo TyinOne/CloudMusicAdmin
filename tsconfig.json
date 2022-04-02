@@ -14,7 +14,7 @@
         "importHelpers": true,
         "target": "es2017",
         "types": [
-            "vite/client"
+            "vite/client",
         ],
         "paths": {
             "@config/*": [

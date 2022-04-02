@@ -4,7 +4,7 @@
   </el-container>
 </template>
 <script lang="ts" setup>
-import Main from '@renderer/layout/component/main'
+import Main from '@renderer/layout/component/main.vue'
 
 
 </script>
