@@ -3,8 +3,13 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, getCurrentInstance} from 'vue';
+import {computed, defineAsyncComponent, getCurrentInstance} from 'vue';
 import {useStore} from '@renderer/store'
+
+const defaults = defineAsyncComponent(() => import('@renderer/layout/main/defaults.vue'))
+const classic = defineAsyncComponent(() => import('@renderer/layout/main/classic.vue'))
+const transverse = defineAsyncComponent(() => import('@renderer/layout/main/transverse.vue'))
+const columns = defineAsyncComponent(() => import('@renderer/layout/main/columns.vue'))
 
 const {proxy} = <any>getCurrentInstance();
 const store = useStore();

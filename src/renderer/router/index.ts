@@ -6,6 +6,7 @@ import { Session } from '@renderer/utils/storage';
 import {NextLoading} from '@renderer/utils/loading'
 import { staticRoutes, dynamicRoutes } from '@renderer/router/route';
 import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
+import {initBackEndControlRoutes} from "@renderer/router/backEnd";
 
 const router =createRouter(<RouterOptions>{
     history: createWebHashHistory(),

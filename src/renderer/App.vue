@@ -1,27 +1,30 @@
 <template>
-  <template>
-    <el-config-provider>
-      <router-view v-show="getThemeConfig.lockScreenTime !== 0" />
-      <Settings ref="settingsRef" v-show="getThemeConfig.lockScreenTime !== 0" />
-    </el-config-provider>
-  </template>
+  <el-config-provider>
+    <router-view v-show="getThemeConfig.lockScreenTime !== 0"/>
+    <Settings ref="settingsRef" v-show="getThemeConfig.lockScreenTime !== 0"/>
+  </el-config-provider>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch, reactive, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from '@renderer/store';
-import { Local, Session } from '@renderer/utils/storage';
-import Settings from '@renderer/layout/navBars/breadcrumb/setings.vue';
+import {computed, getCurrentInstance, onBeforeMount, ref} from 'vue';
+import {useRoute} from 'vue-router';
+import {useStore} from '@renderer/store';
+import Settings from '@renderer/layout/navBars/breadcrumb/settings.vue';
 import setIntroduction from '@renderer/utils/setIconfont';
+import {ThemeConfigState} from "@renderer/store/interface";
 
-const { proxy } = <any>getCurrentInstance();
+const {proxy} = <any>getCurrentInstance();
 const settingsRef = ref();
 const route = useRoute();
 const store = useStore();
+
 const getThemeConfig = computed(() => {
-  return store.state.themeConfig.themeConfig;
+  return themConfig().themeConfig;
 });
+
+const themConfig = (): ThemeConfigState => {
+  return store.state.themeConfig
+}
 
 onBeforeMount(() => {
   // 设置批量第三方 icon 图标
@@ -29,10 +32,6 @@ onBeforeMount(() => {
   // 设置批量第三方 js
   setIntroduction.jsCdn();
 });
-
-
-
-
 
 
 </script>
