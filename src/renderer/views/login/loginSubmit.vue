@@ -1,11 +1,16 @@
 <template>
-  <span class="login_button">
+  <span class="login_button" @click="submit">
     <label>注 册</label>
     <label>登 录</label>
     <input type="button"/>
   </span>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const emits = defineEmits(['submit'])
+const submit = () => {
+  emits('submit')
+}
+</script>
 <script lang="ts">
 export default {
   name: "loginSubmit"

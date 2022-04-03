@@ -8,7 +8,7 @@ import Main from '@renderer/layout/component/main.vue'
 
 
 </script>
-<script>
+<script lang="ts">
 export default {
   name: "defaults"
 }

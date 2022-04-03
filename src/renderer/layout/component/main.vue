@@ -6,7 +6,7 @@
   </el-main>
 </template>
 <script setup lang="ts">
-import LayoutParentView from '@renderer/layout/routerView/parent'
+import LayoutParentView from '@renderer/layout/routerView/parent.vue'
 import {computed, getCurrentInstance, onMounted, reactive, watch} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "@renderer/store";
@@ -68,9 +68,9 @@ watch(store.state.themeConfig.themeConfig, (val) => {
 
 </script>
 
-<script>
+<script lang="ts">
 export default {
-  name: "main"
+  name: "layoutMain"
 }
 </script>
 

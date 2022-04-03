@@ -51,7 +51,6 @@ export function formatFlatteningRoutes(arr: any) {
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
  */
 export function formatTwoStageRoutes(arr: any) {
-    console.log(arr)
     if (arr.length <= 0) return false;
     const newArr: any = [];
     const cacheList: Array<string> = [];
@@ -132,17 +131,18 @@ export function setFilterMenuAndCacheTagsViewRoutes() {
  * 获取当前用户权限标识去比对路由表（未处理成多级嵌套路由）
  * @description 这里主要用于动态路由的添加，router.addRoute
  * @link 参考：https://next.router.vuejs.org/zh/api/#addroute
- * @param chil dynamicRoutes（/@/router/route）第一个顶级 children 的下路由集合
+ * @param child dynamicRoutes（/@/router/route）第一个顶级 children 的下路由集合
  * @returns 返回有当前用户权限标识的路由数组
  */
-export function setFilterRoute(chil: any) {
+export function setFilterRoute(child: any) {
     let filterRoute: any = [];
-    chil.forEach((route: any) => {
+    child.forEach((route: any) => {
         if (route.meta.roles) {
             route.meta.roles.forEach((metaRoles: any) => {
-                console.log('c' , store.state.userInfos.userInfos.roles)
                 store.state.userInfos.userInfos.roles.forEach((roles: any) => {
-                    if (metaRoles === roles) filterRoute.push({ ...route });
+                    if (metaRoles === roles) {
+                        filterRoute.push({ ...route });
+                    }
                 });
             });
         }
@@ -156,8 +156,6 @@ export function setFilterRoute(chil: any) {
  * @returns 返回替换后的路由数组
  */
 export function setFilterRouteEnd() {
-
-
     let routes = formatFlatteningRoutes(dynamicRoutes);
     let filterRouteEnd: any = formatTwoStageRoutes(routes);
     filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), { ...pathMatch }];
@@ -197,20 +195,27 @@ if (!isRequestRoutes) initFrontEndControlRoutes().then();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-    console.log(router.getRoutes())
+    if (to.matched.length == 0) {
+        console.log(to);
+        router.push(to.path);
+    }
+    // console.log(router.getRoutes())
     NProgress.configure({ showSpinner: false });
     if (to.meta.title) NProgress.start();
     const token = Session.get('Authentication');
     if (to.path === '/login' && !token) {
+        console.log(router.getRoutes())
         next();
         NProgress.done();
     } else {
         if (!token) {
+            console.log(router.getRoutes())
             next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
             Session.clear();
             await resetRoute();
             NProgress.done();
         } else if (token && to.path === '/login') {
+            console.log(router.getRoutes())
             next('/home');
             NProgress.done();
         } else {
@@ -220,9 +225,11 @@ router.beforeEach(async (to, from, next) => {
                     await initBackEndControlRoutes();
                     // 动态添加路由：防止非首页刷新时跳转回首页的问题
                     // 确保 addRoute() 时动态添加的路由已经被完全加载上去
+                    console.log(router.getRoutes())
                     next({ ...to, replace: true });
                 }
             } else {
+                console.log(router.getRoutes())
                 next();
             }
         }
@@ -232,7 +239,9 @@ router.beforeEach(async (to, from, next) => {
 
 
 // 路由加载后
-router.afterEach(() => {
+router.afterEach((to) => {
+
+
     NProgress.done();
     NextLoading.done();
 });

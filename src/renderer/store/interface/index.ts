@@ -2,7 +2,7 @@
 
 // 布局配置
 export interface ThemeConfigState {
-    themeConfig:{
+    themeConfig: {
         isDrawer: boolean;
         primary: string;
         topBar: string;
@@ -69,6 +69,7 @@ export interface TagsViewRoutesState {
 
 // 用户信息
 export interface UserInfosState {
+    token: string,
     userInfos: {
         authBtnList: string[];
         avatar: string;

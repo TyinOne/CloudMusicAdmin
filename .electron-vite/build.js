@@ -94,5 +94,4 @@ function greeting() {
             space: false
         })
     } else console.log(chalk.yellow.bold(`\n  let's-build`))
-    console.log()
 }

@@ -2,7 +2,7 @@
   <div class="login_container">
     <div class="login" :class="{login_sign_in: isSignIn, login_sign_up : isSignUp}">
       <login-tabs @click.native="switchState"></login-tabs>
-      <login-form />
+      <login-form/>
     </div>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import LoginTabs from '@renderer/views/login/loginTabs.vue'
 import LoginForm from '@renderer/views/login/loginForm.vue'
 import {computed, onMounted, ref} from "vue";
+import LoginSubmit from '@renderer/views/login/loginSubmit.vue'
 
 let state = ref(1);
 

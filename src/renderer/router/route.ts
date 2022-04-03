@@ -1,10 +1,11 @@
 import { RouteRecordRaw } from 'vue-router';
+import Layout from '@renderer/layout/index.vue'
 
 export const dynamicRoutes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: '/',
-        component: () => import('@renderer/layout/index.vue'),
+        component: Layout,
         redirect: '/home',
         meta: {
             isKeepAlive: true,
@@ -38,12 +39,4 @@ export const staticRoutes: Array<RouteRecordRaw> = [
             title: '登录',
         },
     },
-    {
-        path: '/404',
-        name: 'notFound',
-        component: () => import('@renderer/views/error/404.vue'),
-        meta: {
-            title: 'message.staticRoutes.notFound',
-        },
-    }
 ];
