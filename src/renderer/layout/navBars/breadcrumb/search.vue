@@ -58,6 +58,9 @@ const openSearch = () => {
     layoutMenuAutocompleteRef.value.focus();
   });
 };
+defineExpose({
+  openSearch
+})
 // 搜索弹窗关闭
 const closeSearch = () => {
   state.isShowSearch = false;

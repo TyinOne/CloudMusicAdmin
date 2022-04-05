@@ -13,7 +13,7 @@
           <SvgIcon :name="val.meta.icon"/>
           <span>{{ val.meta.title }}</span>
         </template>
-        <SubItem :chil="val.children"/>
+        <SubItem :child="val.children"/>
       </el-sub-menu>
       <template v-else>
         <el-menu-item :index="val.path" :key="val.path">

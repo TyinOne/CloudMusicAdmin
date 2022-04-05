@@ -1,6 +1,9 @@
 <template>
   <el-main class="layout-main">
-    <el-scrollbar>
+    <el-scrollbar
+        class="layout-scrollbar"
+        ref="layoutScrollbarRef"
+    >
       <LayoutParentView :style="{ minHeight: `calc(100vh - ${state.headerHeight})` }"/>
     </el-scrollbar>
   </el-main>

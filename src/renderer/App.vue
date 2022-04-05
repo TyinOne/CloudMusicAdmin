@@ -29,9 +29,6 @@ const getThemeConfig = computed(() => {
 const openSettingsDrawer = () => {
   settingsRef.value.openDrawer();
 };
-const themConfig = (): ThemeConfigState => {
-  return store.state.themeConfig
-}
 
 onBeforeMount(() => {
   // 设置批量第三方 icon 图标
@@ -60,7 +57,6 @@ onMounted(() => {
 // 页面销毁时，关闭监听布局配置/i18n监听
 onUnmounted(() => {
   proxy.mittBus.off('openSettingsDrawer', () => {});
-  proxy.mittBus.off('getI18nConfig', () => {});
 });
 // 监听路由的变化，设置网站标题
 watch(

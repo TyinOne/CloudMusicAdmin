@@ -26,6 +26,53 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     icon: 'iconfont icon-shouye',
                 },
             },
+            {
+                path: '/system',
+                name: 'system',
+                component: Layout,
+                meta: {
+                    title: '系统设置',
+                    isLink: '',
+                    isHide: false,
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    roles: ['admin'],
+                    icon: 'iconfont icon-xitongshezhi',
+                },
+                children: [
+                    {
+                        path: '/system/menu',
+                        name: 'systemMenu',
+                        component: () => import('@renderer/views/system/menu.vue'),
+                        meta: {
+                            title: '菜单设置',
+                            isLink: '',
+                            isHide: false,
+                            isKeepAlive: true,
+                            isAffix: false,
+                            isIframe: false,
+                            roles: ['admin'],
+                            icon: 'iconfont icon-caidan',
+                        },
+                    },
+                    {
+                        path: '/system/role',
+                        name: 'systemRole',
+                        component: () => import('@renderer/views/system/roles.vue'),
+                        meta: {
+                            title: '角色设置',
+                            isLink: '',
+                            isHide: false,
+                            isKeepAlive: true,
+                            isAffix: false,
+                            isIframe: false,
+                            roles: ['admin'],
+                            icon: 'ele-ColdDrink',
+                        },
+                    },
+                ]
+            },
         ]
     }
 ];

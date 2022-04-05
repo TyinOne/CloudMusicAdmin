@@ -315,7 +315,7 @@
         </div>
         <div class="layout-breadcrumb-setting-bar-flex mt15 mb27"
              :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
-          <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏布局风格'}}</div>
+          <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏布局风格' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-select
                 v-model="getThemeConfig.columnsAsideLayout"
@@ -332,7 +332,7 @@
         </div>
 
         <!-- 布局切换 -->
-        <el-divider content-position="left">{{'布局切换' }}</el-divider>
+        <el-divider content-position="left">{{ '布局切换' }}</el-divider>
         <div class="layout-drawer-content-flex">
           <!-- defaults 布局 -->
           <div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
@@ -405,7 +405,8 @@
           </div>
         </div>
         <div class="copy-config">
-          <el-alert :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'" type="warning" :closable="false"></el-alert>
+          <el-alert :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'" type="warning"
+                    :closable="false"></el-alert>
           <el-button size="default" class="copy-config-btn" type="primary" ref="copyConfigBtnRef"
                      @click="onCopyConfigClick">
             <el-icon class="mr5">
@@ -496,7 +497,7 @@ export default defineComponent({
     };
     // 3、界面设置 --> 固定 Header
     const onIsFixedHeaderChange = () => {
-      getThemeConfig.value.isFixedHeaderChange = getThemeConfig.value.isFixedHeader ? false : true;
+      getThemeConfig.value.isFixedHeaderChange = !getThemeConfig.value.isFixedHeader;
       setLocalThemeConfig();
     };
     // 3、界面设置 --> 经典布局分割菜单
@@ -507,7 +508,7 @@ export default defineComponent({
     };
     // 4、界面显示 --> 侧边栏 Logo
     const onIsShowLogoChange = () => {
-      getThemeConfig.value.isShowLogoChange = getThemeConfig.value.isShowLogo ? false : true;
+      getThemeConfig.value.isShowLogoChange = !getThemeConfig.value.isShowLogo;
       setLocalThemeConfig();
     };
     // 4、界面显示 --> 面包屑 Breadcrumb
