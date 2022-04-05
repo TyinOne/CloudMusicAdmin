@@ -23,7 +23,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			 * 菜单 / 顶栏
 			 * 注意：v1.0.17 版本去除设置布局切换，重置主题样式（initSetLayoutChange），
 			 * 切换布局需手动设置样式，设置的样式自动同步各布局，
-			 * 代码位置：/@/layout/navBars/breadcrumb/setings.vue
+			 * 代码位置：/@/layout/navBars/breadcrumb/settings.vue
 			 */
 			// 默认顶栏导航背景颜色
 			topBar: '#ffffff',
@@ -52,7 +52,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 是否开启菜单手风琴效果
 			isUniqueOpened: false,
 			// 是否开启固定 Header
-			isFixedHeader: false,
+			isFixedHeader: true,
 			// 初始化变量，用于更新菜单 el-scrollbar 的高度，请勿删除
 			isFixedHeaderChange: false,
 			// 是否开启经典布局分割菜单（仅经典布局生效）
@@ -66,7 +66,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			 * 界面显示
 			 */
 			// 是否开启侧边栏 Logo
-			isShowLogo: false,
+			isShowLogo: true,
 			// 初始化变量，用于 el-scrollbar 的高度更新，请勿删除
 			isShowLogoChange: false,
 			// 是否开启 Breadcrumb，强制经典、横向布局不显示
@@ -76,7 +76,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 是否开启 Breadcrumb 图标
 			isBreadcrumbIcon: false,
 			// 是否开启 Tagsview 图标
-			isTagsviewIcon: false,
+			isTagsviewIcon: true,
 			// 是否开启 TagsView 缓存
 			isCacheTagsView: false,
 			// 是否开启 TagsView 拖拽

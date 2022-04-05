@@ -16,7 +16,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 name: 'home',
                 component: () => import('@renderer/views/home/index.vue'),
                 meta: {
-                    title: 'message.router.home',
+                    title: '首页',
                     isLink: '',
                     isHide: false,
                     isKeepAlive: true,
@@ -39,4 +39,12 @@ export const staticRoutes: Array<RouteRecordRaw> = [
             title: '登录',
         },
     },
+    {
+        path: '/404',
+        name: 'notFound',
+        component: () => import('@renderer/views/error/404.vue'),
+        meta: {
+            title: '找不到此页面',
+        },
+    }
 ];

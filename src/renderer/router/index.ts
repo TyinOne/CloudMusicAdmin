@@ -195,11 +195,11 @@ if (!isRequestRoutes) initFrontEndControlRoutes().then();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
+    console.log(router.getRoutes())
     if (to.matched.length == 0) {
         console.log(to);
         router.push(to.path);
     }
-    // console.log(router.getRoutes())
     NProgress.configure({ showSpinner: false });
     if (to.meta.title) NProgress.start();
     const token = Session.get('Authentication');
