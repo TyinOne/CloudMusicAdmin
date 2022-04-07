@@ -32,9 +32,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 是否开启顶栏背景颜色渐变
 			isTopBarColorGradual: false,
 			// 默认菜单导航背景颜色
-			menuBar: '#545c64',
+			menuBar: '#ffffff',
 			// 默认菜单导航字体颜色
-			menuBarColor: '#eaeaea',
+			menuBarColor: '#000000',
 			// 是否开启菜单背景颜色渐变
 			isMenuBarColorGradual: false,
 			// 默认分栏菜单背景颜色
@@ -127,9 +127,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			 * 全局网站标题 / 副标题
 			 */
 			// 网站主标题（菜单导航、浏览器当前网页标题）
-			globalTitle: 'vue-next-admin',
+			globalTitle: 'CloudMusic',
 			// 网站副标题（登录页顶部文字）
-			globalViceTitle: 'vueNextAdmin',
+			globalViceTitle: 'CloudMusic',
 			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
 			globalI18n: 'zh-cn',
 			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'

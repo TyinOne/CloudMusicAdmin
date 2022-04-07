@@ -7,8 +7,8 @@
       "url": "http://127.0.0.1"
     }
   ],
-  "productName": "electron-vite-template",
-  "appId": "org.sky.electron-vite-template",
+  "productName": "cloud-admin",
+  "appId": "com.tyin.cloud.admin",
   "directories": {
     "output": "build"
   },

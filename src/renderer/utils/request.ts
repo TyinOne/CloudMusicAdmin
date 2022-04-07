@@ -21,6 +21,7 @@ service.interceptors.request.use(
         if (Session.get('token')) {
             (<any>config.headers).common['Authorization'] = `${Session.get('token')}`;
         }
+        (<any>config.headers).common['env'] = 'admin'
         return config;
     },
     (error) => {

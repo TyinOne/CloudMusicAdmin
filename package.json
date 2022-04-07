@@ -5,6 +5,7 @@
     "name": "TYIN",
     "email": "tyin060@163.com"
   },
+  "main": "./dist/electron/main/main.js",
   "license": "MIT",
   "scripts": {
     "dev": "node .electron-vite/dev-runner.js",
@@ -76,7 +77,6 @@
     "fs-extra": "^10.0.1",
     "javascript-obfuscator": "^4.0.0",
     "multispinner": "^0.2.1",
-    "pinia": "^2.0.11",
     "portfinder": "^1.0.28",
     "rollup-plugin-esbuild": "^4.8.2",
     "rollup-plugin-obfuscator": "^0.2.1",

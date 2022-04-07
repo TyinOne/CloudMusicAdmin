@@ -1,7 +1,9 @@
 <template>
+<!--  <title-bar />-->
   <el-config-provider>
     <router-view v-show="getThemeConfig.lockScreenTime !== 0"/>
     <Settings ref="settingsRef" v-show="getThemeConfig.lockScreenTime !== 0"/>
+    <CloseFull/>
   </el-config-provider>
 </template>
 
@@ -11,9 +13,10 @@ import {useRoute} from 'vue-router';
 import {useStore} from '@renderer/store';
 import Settings from '@renderer/layout/navBars/breadcrumb/settings.vue';
 import setIntroduction from '@renderer/utils/setIconfont';
-import {ThemeConfigState} from "@renderer/store/interface";
 import {Local, Session} from "@renderer/utils/storage";
 import other from "@renderer/utils/other";
+import CloseFull from '@renderer/layout/navBars/breadcrumb/closeFull.vue'
+import TitleBar from '@renderer/components/titleBar/index.vue'
 
 const {proxy} = <any>getCurrentInstance();
 const settingsRef = ref();
@@ -56,7 +59,8 @@ onMounted(() => {
 });
 // 页面销毁时，关闭监听布局配置/i18n监听
 onUnmounted(() => {
-  proxy.mittBus.off('openSettingsDrawer', () => {});
+  proxy.mittBus.off('openSettingsDrawer', () => {
+  });
 });
 // 监听路由的变化，设置网站标题
 watch(

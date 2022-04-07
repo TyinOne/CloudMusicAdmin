@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import {useStore} from "@renderer/store";
 import {computed} from "vue";
-import logoMini from '@renderer/assets/logo-mini.svg'
+import logoMini from '@renderer/assets/cloud_music.svg'
 
 const store = useStore();
 // 获取布局配置信息

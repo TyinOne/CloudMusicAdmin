@@ -35,7 +35,9 @@ export default {
 
     // 逻辑判断
     if (props.name?.startsWith('ele-')) return () => h('i', eleSetStyle, [props.name === 'ele-' ? '' : h(resolveComponent(props.name))]);
-    else if (linesString.find((str) => props.name?.startsWith(str))) return () => h('img', { src: props.name, style: localsStyle });
+    else if (linesString.find((str) => props.name?.startsWith(str))) {
+      return () => h('img', {src: props.name, style: localsStyle});
+    }
     else return () => h('i', { class: props.name, style: onLineStyle });
   },
 };

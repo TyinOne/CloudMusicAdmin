@@ -30,10 +30,23 @@ import {userApi} from "@renderer/api/user";
 import {Session} from '@renderer/utils/storage'
 import router from "@renderer/router";
 import {store} from "@renderer/store";
+import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
+import {computed, reactive} from "vue";
+import {formatAxis} from "@renderer/utils/formatTime";
+import {useRoute} from "vue-router";
+import {ElMessage} from "element-plus";
+const route = useRoute();
 
-const submit = () => {
+const state = reactive({
+  loading: {
+    signIn: false,
+  },
+});
+
+const submit = async () => {
+  state.loading.signIn = true;
   let params = {
-    username: 'admin',
+    username: 'TyinZero',
     password: 'tyinzero'
   }
   userApi().login(params).then(res => {
@@ -49,10 +62,37 @@ const submit = () => {
       token: res.result.token,
       userInfos: userInfo,
     }).then(() => {
+      initFrontEndControlRoutes().then(() => {
+        signInSuccess();
+      });
     })
-    router.push('/')
   })
 }
+// 时间获取
+const currentTime = computed(() => {
+  return formatAxis(new Date());
+});
+// 登录成功后的跳转
+const signInSuccess = () => {
+  // 初始化登录成功时间问候语
+  let currentTimeInfo = currentTime.value;
+  // 登录成功，跳到转首页
+  // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
+  // 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+  if (route.query?.redirect) {
+    router.push({
+      path: <string>route.query?.redirect,
+      query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+    });
+  } else {
+    router.push('/');
+  }
+  // 登录成功提示
+  // 关闭 loading
+  state.loading.signIn = true;
+  const signInText = '欢迎回来！';
+  ElMessage.success(`${currentTimeInfo}，${signInText}`);
+};
 
 
 </script>

@@ -30,6 +30,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 path: '/system',
                 name: 'system',
                 component: Layout,
+                redirect: '/system/menu',
                 meta: {
                     title: '系统设置',
                     isLink: '',
@@ -41,6 +42,38 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     icon: 'iconfont icon-xitongshezhi',
                 },
                 children: [
+                    {
+                        path: '/system/server',
+                        name: 'systemServer',
+                        component: Layout,
+                        meta: {
+                            title: '系统状态',
+                            isLink: '',
+                            isHide: false,
+                            isKeepAlive: true,
+                            isAffix: false,
+                            isIframe: false,
+                            roles: ['admin'],
+                            icon: 'ele-Grid',
+                        },
+                        children:[
+                            {
+                                path: '/system/view',
+                                name: 'systemServer',
+                                component: () => import('@renderer/views/system/serverView.vue'),
+                                meta: {
+                                    title: '服务器总览',
+                                    isLink: '',
+                                    isHide: false,
+                                    isKeepAlive: true,
+                                    isAffix: false,
+                                    isIframe: false,
+                                    roles: ['admin'],
+                                    icon: 'ele-Guide',
+                                },
+                            }
+                        ]
+                    },
                     {
                         path: '/system/menu',
                         name: 'systemMenu',

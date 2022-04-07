@@ -191,31 +191,27 @@ export async function resetRoute() {
 // isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/store/modules/themeConfig.ts`
 const { isRequestRoutes } = store.state.themeConfig.themeConfig;
 // 前端控制路由：初始化方法，防止刷新时路由丢失
-if (!isRequestRoutes) initFrontEndControlRoutes().then();
+if (!isRequestRoutes) initFrontEndControlRoutes();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-    console.log(router.getRoutes())
-    if (to.matched.length == 0) {
-        console.log(to);
-        router.push(to.path);
-    }
     NProgress.configure({ showSpinner: false });
     if (to.meta.title) NProgress.start();
     const token = Session.get('Authentication');
     if (to.path === '/login' && !token) {
-        console.log(router.getRoutes())
         next();
         NProgress.done();
     } else {
         if (!token) {
-            console.log(router.getRoutes())
             next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
             Session.clear();
             await resetRoute();
             NProgress.done();
         } else if (token && to.path === '/login') {
             console.log(router.getRoutes())
+            if (to.matched.length == 0) {
+                router.push(to.path);
+            }
             next('/home');
             NProgress.done();
         } else {
@@ -229,6 +225,9 @@ router.beforeEach(async (to, from, next) => {
                     next({ ...to, replace: true });
                 }
             } else {
+                if (to.matched.length == 0) {
+                    router.push(to.path);
+                }
                 console.log(router.getRoutes())
                 next();
             }
