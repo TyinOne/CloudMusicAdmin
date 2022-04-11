@@ -2,6 +2,7 @@ import axios from 'axios';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {Session} from '@renderer/utils/storage';
 import config from '@renderer/api';
+// import {AxiosInstance} from "a-axios";
 
 export const APPLICATION_JSON = 'application/json';
 export const APPLICATION_FORM = 'application/x-www-form-urlencoded;charset=UTF-8';
@@ -18,8 +19,8 @@ const service = axios.create({
 service.interceptors.request.use(
     (config) => {
         // 在发送请求之前做些什么 token
-        if (Session.get('token')) {
-            (<any>config.headers).common['Authorization'] = `${Session.get('token')}`;
+        if (Session.get('Authentication')) {
+            (<any>config.headers).common['Authentication'] = `${Session.get('Authentication')}`;
         }
         (<any>config.headers).common['env'] = 'admin'
         return config;
@@ -39,11 +40,12 @@ service.interceptors.response.use(
             // `token` 过期或者账号已在别处登录
             if (res.code === 403) {
                 Session.clear(); // 清除浏览器全部临时缓存
-                window.location.href = '/'; // 去登录页
                 ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
                     .then(() => {
+                        window.location.href = '/'; // 去登录页
                     })
                     .catch(() => {
+                        window.location.href = '/'; // 去登录页
                     });
             }
             ElMessage.error(res.message)
@@ -59,26 +61,35 @@ service.interceptors.response.use(
         } else if (error.message == 'Network Error') {
             ElMessage.error('网络连接错误');
         } else {
-            if (error.response.data) ElMessage.error(error.response.statusText);
+            if (error.response.data) ElMessage.error(error.response.data.message);
             else ElMessage.error('接口资源不存在');
         }
         return Promise.reject(error);
     }
 );
 
-export const post = async (url, data, header): Promise<Response> => {
+export const put = async (url, data): Promise<Response> => {
     return await service.request({
         url: url,
         data: data,
+        method: 'put'
+    })
+}
+
+export const post = async (url, data, header): Promise<Response> => {
+    return await service.request({
+        url: url,
+        data: header === APPLICATION_JSON ? data : null,
+        params: header === APPLICATION_FORM ? data : null,
         method: 'post',
         headers: {'Content-Type': header}
     })
 }
 
-export const get = async (url, data): Promise<Response> => {
+export const get = async (url, data?): Promise<Response> => {
     return await service.request({
         url: url,
-        data: data,
+        params: data,
         method: 'get',
         headers: {'Content-Type': APPLICATION_FORM}
     })

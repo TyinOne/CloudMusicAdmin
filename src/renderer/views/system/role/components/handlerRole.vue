@@ -1,0 +1,190 @@
+<template>
+  <div class="system-add-role-container">
+    <el-dialog :title="dialogMessage.title" destroy-on-close v-model="isShowDialog" width="769px" draggable>
+      <el-form ref="formRef" v-loading="loading" :rules="rules" :model="form" size="default" label-width="90px"
+               style="display: flex">
+        <div :style="dialogMessage.init ? {width: '50%'} : {width: '100%'}">
+          <el-row :gutter="12">
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="角色名称" prop="name">
+                <el-input v-model="form.name" placeholder="请输入角色名称" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="权限标识" prop="value">
+                <el-input v-model="form.value" placeholder="请输入权限标识" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="排序">
+                <el-input-number v-model="form.sort" :min="0" :max="999" controls-position="right" placeholder="请输入排序"
+                                 class="w100"/>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="角色状态">
+                <el-switch v-model="form.disabled" active-text="禁用" inactive-text="启用"></el-switch>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="角色描述">
+                <el-input v-model="form.description" type="textarea" placeholder="请输入角色描述" maxlength="150"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="dialogMessage.init" style="width: 50%">
+          <el-row>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+              <el-form-item label="菜单权限">
+                <el-scrollbar height="280px" always>
+                  <el-tree ref="menuTree" node-key="id" check-on-click-node :data="menuData"
+                           :props="menuProps" show-checkbox class="menu-data-tree"/>
+                </el-scrollbar>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+      </el-form>
+
+      <template #footer>
+				<span class="dialog-footer">
+					<el-button :loading="loading" @click.stop="onCancel" size="default">取 消</el-button>
+					<el-button :loading="loading" type="primary" @click.stop="onSubmit"
+                     size="default">{{ dialogMessage.submit }}</el-button>
+				</span>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+<script lang="ts" setup>
+import {reactive, ref} from "vue";
+import {useRoleApi} from '@renderer/api/role';
+import {useMenuApi} from "@renderer/api/menu";
+
+const menuTree = ref()
+let isShowDialog = ref(false)
+let dialogMessage = ref({
+  title: '',
+  submit: '',
+  init: false,
+  callback: () => {
+  }
+})
+const openDialog = (message, row?) => {
+  dialogMessage.value = message
+  if (dialogMessage.value.init) {
+    initDetail(row)
+  }
+  isShowDialog.value = true;
+  getMenuData(row);
+};
+const formRef = ref()
+const rules = reactive(
+    {
+      name: [
+        {required: true, message: '请输入角色名称', trigger: 'blur'},
+        {min: 3, max: 8, message: '请控制在3到8个字符', trigger: 'blur'},
+      ],
+      value: [
+        {required: true, message: '请输入权限标识', trigger: 'blur'},
+      ]
+    }
+)
+let loading = ref(false)
+let form = ref({
+  id: undefined,
+  name: '',
+  value: '',
+  sort: 0,
+  disabled: false,
+  description: '',
+})
+let menuData = ref([])
+const menuProps = {
+  children: 'children',
+  label: 'label',
+}
+const closeDialog = () => {
+  form.value = {
+    id: undefined,
+    name: '',
+    value: '',
+    sort: 0,
+    disabled: false,
+    description: '',
+  }
+  isShowDialog.value = false;
+  dialogMessage.value.callback();
+};
+const onSubmit = () => {
+  loading.value = true
+  // let currentKey = menuTree.value.getCurrentKey(false);
+  let params = {
+    id: form.value.id,
+    name: form.value.name,
+    value: form.value.value,
+    sort: form.value.sort,
+    disabled: form.value.disabled,
+    description: form.value.description,
+    menu: menuTree.value.getCheckedKeys(false),
+    half: menuTree.value.getHalfCheckedKeys()
+  }
+  formRef.value.validate((valid) => {
+    if (valid) {
+      if (dialogMessage.value.init) {
+        useRoleApi().updateRole(params).then(res => {
+          closeDialog()
+          loading.value = false
+        }).catch(e => {
+          loading.value = false
+        })
+      } else {
+        useRoleApi().addRole(params).then(res => {
+          closeDialog()
+          loading.value = false
+        }).catch(e => {
+          loading.value = false
+        })
+      }
+    } else {
+      loading.value = false
+    }
+  })
+}
+const initDetail = (row) => {
+  form.value.id = row.id
+  form.value.name = row.name
+  form.value.value = row.value
+  form.value.sort = row.sort
+  form.value.disabled = row.disabled
+  form.value.description = row.description
+}
+const onCancel = () => {
+  closeDialog()
+}
+const getMenuData = (row) => {
+  let params = {
+    id: undefined
+  }
+  if (row && row.id) {
+    params.id = row.id
+    useMenuApi().getMenuLabel(params).then(res => {
+      menuData.value = res.result.list
+      menuTree.value!.setCheckedKeys(res.result.selected, false)
+    })
+  }
+}
+defineExpose({
+  openDialog
+})
+</script>
+<script lang="ts">
+export default {
+  name: "handlerRole"
+}
+</script>
+
+<style scoped>
+
+</style>

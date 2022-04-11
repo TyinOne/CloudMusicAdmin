@@ -46,6 +46,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                         path: '/system/server',
                         name: 'systemServer',
                         component: Layout,
+                        redirect: '/system/server/view',
                         meta: {
                             title: '系统状态',
                             isLink: '',
@@ -58,8 +59,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                         },
                         children:[
                             {
-                                path: '/system/view',
-                                name: 'systemServer',
+                                path: '/system/server/view',
+                                name: 'systemServerView',
                                 component: () => import('@renderer/views/system/serverView.vue'),
                                 meta: {
                                     title: '服务器总览',
@@ -92,7 +93,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     {
                         path: '/system/role',
                         name: 'systemRole',
-                        component: () => import('@renderer/views/system/roles.vue'),
+                        component: () => import('@renderer/views/system/role/index.vue'),
                         meta: {
                             title: '角色设置',
                             isLink: '',
