@@ -65,7 +65,7 @@ const Close = () => {
   background-color: #ffffff;
   display: flex;
   -webkit-app-region: drag;
-  position: fixed;
+  //position: fixed;
   top: 0;
   z-index: 99999;
   .icon-logo {

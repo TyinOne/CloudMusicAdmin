@@ -8,6 +8,7 @@ interface Page {
 }
 
 export default function getService() {
+    const handleRoleRef = ref(null)
     let keywords = ref('')
     const dataSource = ref([]);
     const pagination = ref({
@@ -39,8 +40,6 @@ export default function getService() {
             }
         })
     }
-
-    const handleRoleRef = ref(null)
     const onOpenAddRole = () => {
         handleRoleRef.value.openDialog({
             title: '新增角色',
@@ -59,7 +58,6 @@ export default function getService() {
     const onRowDel = (row) => {
 
     }
-
     onMounted(async () => {
         await searchRole()
     })

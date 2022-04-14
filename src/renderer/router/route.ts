@@ -23,7 +23,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     isAffix: true,
                     isIframe: false,
                     roles: ['admin', 'common'],
-                    icon: 'iconfont icon-shouye',
+                    icon: 'ele-HomeFilled',
                 },
             },
             {
@@ -61,7 +61,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                             {
                                 path: '/system/server/view',
                                 name: 'systemServerView',
-                                component: () => import('@renderer/views/system/serverView.vue'),
+                                component: () => import('@renderer/views/system/server/index.vue'),
                                 meta: {
                                     title: '服务器总览',
                                     isLink: '',
@@ -78,7 +78,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     {
                         path: '/system/menu',
                         name: 'systemMenu',
-                        component: () => import('@renderer/views/system/menu.vue'),
+                        component: () => import('@renderer/views/system/menu/index.vue'),
                         meta: {
                             title: '菜单设置',
                             isLink: '',
@@ -106,6 +106,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                         },
                     },
                 ]
+            },
+            {
+                path: '/personal',
+                name: 'personal',
+                component: () => import('@renderer/views/personal/index.vue'),
+                meta: {
+                    roles: ['admin', 'common'],
+                    icon: 'ele-User',
+                    title: '个人中心',
+                    isLink: '',
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    isHide: true
+                }
             },
         ]
     }

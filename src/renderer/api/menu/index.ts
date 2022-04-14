@@ -10,6 +10,9 @@ export const useMenuApi = () => {
         },
         getMenuLabel: (params) => {
             return get('/admin/menu/label', params)
+        },
+        getMenuRes: (params) => {
+            return get('/admin/menu/list/tree', params)
         }
     }
 }

@@ -1,10 +1,10 @@
 <template>
-  <div>2</div>
+
 </template>
 
 <script>
 export default {
-  name: "SystemMenu"
+  name: "index"
 }
 </script>
 

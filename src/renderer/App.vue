@@ -1,5 +1,6 @@
 <template>
-<!--  <title-bar />-->
+  <title-bar v-if="!isWeb"/>
+  <title-placeholder v-else/>
   <el-config-provider>
     <router-view v-show="getThemeConfig.lockScreenTime !== 0"/>
     <Settings ref="settingsRef" v-show="getThemeConfig.lockScreenTime !== 0"/>
@@ -17,12 +18,13 @@ import {Local, Session} from "@renderer/utils/storage";
 import other from "@renderer/utils/other";
 import CloseFull from '@renderer/layout/navBars/breadcrumb/closeFull.vue'
 import TitleBar from '@renderer/components/titleBar/index.vue'
+import TitlePlaceholder from '@renderer/components/titleBar/placeholder.vue'
 
 const {proxy} = <any>getCurrentInstance();
 const settingsRef = ref();
 const route = useRoute();
 const store = useStore();
-
+const isWeb = ref(process.env.is_web)
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
   return store.state.themeConfig.themeConfig;

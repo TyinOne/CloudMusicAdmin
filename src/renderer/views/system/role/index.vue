@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <div class="system-user-search mb15">
         <el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"
-                  v-model:model-value="keywords"></el-input>
+                  v-model:model-value="keywords" clearable></el-input>
         <el-button size="default" type="primary" class="ml10" @click="searchRole">
           <el-icon>
             <ele-Search/>
@@ -55,20 +55,25 @@
       >
       </el-pagination>
     </el-card>
-    <handler-role ref="handleRoleRef"></handler-role>
+    <handle-role ref="handleRoleRef"></handle-role>
   </div>
 </template>
 <script setup lang="ts">
 import getService from "@renderer/views/system/role/service";
-import HandlerRole from '@renderer/views/system/role/components/handlerRole.vue'
+import HandleRole from '@renderer/views/system/role/components/handleRole.vue'
+
 const {
+  handleRoleRef,
   keywords,
   dataSource,
   pagination,
+
   searchRole,
   onHandleCurrentChange,
-  onOpenAddRole, onOpenEditRole, onRowDel,
-  handleRoleRef
+  onOpenAddRole,
+  onOpenEditRole,
+  onRowDel
+
 } = getService()
 </script>
 <script lang="ts">

@@ -7,6 +7,7 @@ import {NextLoading} from '@renderer/utils/loading'
 import { staticRoutes, dynamicRoutes } from '@renderer/router/route';
 import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
 import {initBackEndControlRoutes} from "@renderer/router/backEnd";
+import Performance from '@renderer/utils/performance'
 
 
 /**
@@ -235,15 +236,19 @@ router.beforeEach(async (to, from, next) => {
     }
 });
 
-
+let end = null
+router.beforeEach((to, from, next) => {
+    end = Performance.startExecute(`${from.path} => ${to.path} 路由耗时`) /// 路由性能监控
+    next()
+    setTimeout(() => {
+        end()
+    }, 0)
+})
 
 // 路由加载后
 router.afterEach((to) => {
-
-
     NProgress.done();
     NextLoading.done();
 });
-
 // 导出路由
 export default router;

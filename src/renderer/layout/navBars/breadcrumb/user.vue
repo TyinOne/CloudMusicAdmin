@@ -8,6 +8,10 @@
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSettingClick">
       <i class="icon-skin iconfont" :title="'布局配置'"></i>
     </div>
+
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onReloadClick">
+      <svg-icon name="ele-RefreshLeft" :title="'刷新'"></svg-icon>
+    </div>
     <div class="layout-navbars-breadcrumb-user-icon">
       <el-popover placement="bottom" trigger="click" :width="300">
         <template #reference>
@@ -58,6 +62,7 @@ import {resetRoute} from "@renderer/router";
 import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
 import screenfull from 'screenfull';
 import UserNews from '@renderer/layout/navBars/breadcrumb/userNews.vue'
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 const { proxy } = <any>getCurrentInstance();
 const router = useRouter();
 const store = useStore();
@@ -85,6 +90,9 @@ const layoutUserFlexNum = computed(() => {
   else num = '';
   return num;
 });
+const onReloadClick = () => {
+  window.location.reload()
+}
 // 布局配置 icon 点击时
 const onLayoutSettingClick = () => {
   proxy.mittBus.emit('openSettingsDrawer');
@@ -126,7 +134,7 @@ const onHandleCommandClick = (path: string) => {
         })
         .catch(() => {});
   } else if (path === 'wareHouse') {
-    window.open('https://gitee.com/lyt-top/vue-next-admin');
+    window.open('https://www.baidu.com');
   } else {
     router.push(path);
   }

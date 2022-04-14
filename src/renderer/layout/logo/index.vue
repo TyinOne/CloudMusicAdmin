@@ -40,7 +40,7 @@ export default {
 <style scoped lang="scss">
 .layout-logo {
   width: 220px;
-  height: 50px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,18 +55,18 @@ export default {
     }
   }
   &-medium-img {
-    width: 20px;
+    width: 40px;
     margin-right: 5px;
   }
 }
 .layout-logo-size {
   width: 100%;
-  height: 50px;
+  height: 60px;
   display: flex;
   cursor: pointer;
   animation: logoAnimation 0.3s ease-in-out;
   &-img {
-    width: 20px;
+    width: 40px;
     margin: auto;
   }
   &:hover {
