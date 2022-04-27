@@ -10,7 +10,11 @@
   "nsis": {
     "oneClick": false,
     "allowToChangeInstallationDirectory": true,
-    "allowElevation": true
+    "allowElevation": true,
+    "installerIcon": "config/icons/format.ico",
+    "uninstallerIcon": "config/icons/format.ico",
+    "installerHeaderIcon": "config/icons/format.ico",
+    "createDesktopShortcut": true
   },
   "productName": "cloud-admin",
   "appId": "com.tyin.cloud.admin",
@@ -39,7 +43,7 @@
     "icon": "build/icons/icon.icns"
   },
   "win": {
-    "icon": "build/icons/icon.ico",
+    "icon": "./config/icons/format.ico",
     "target": "nsis"
   },
   "linux": {

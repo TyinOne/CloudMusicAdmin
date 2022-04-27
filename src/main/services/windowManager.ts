@@ -44,11 +44,22 @@ class MainInit {
     this.mainWindow.once('ready-to-show', () => {
       this.mainWindow.show()
       // 开发模式下自动开启devtools
-      if (process.env.NODE_ENV === 'development') {
-        this.mainWindow.webContents.openDevTools({ mode: 'undocked', activate: true })
-      }
+      // if (process.env.NODE_ENV === 'development') {
+      //   this.mainWindow.webContents.openDevTools({ mode: 'undocked', activate: true })
+      // }
+      this.mainWindow.webContents.openDevTools({ mode: 'undocked', activate: true })
       if (config.UseStartupChart) this.loadWindow.destroy()
     })
+    this.mainWindow.webContents.session.webRequest.onHeadersReceived({ urls: [ "*://*/*" ] },
+        (d, c)=>{
+          if(d.responseHeaders['X-Frame-Options']){
+            delete d.responseHeaders['X-Frame-Options'];
+          } else if(d.responseHeaders['x-frame-options']) {
+            delete d.responseHeaders['x-frame-options'];
+          }
+          c({cancel: false, responseHeaders: d.responseHeaders});
+        }
+    );
     // 当确定渲染进程卡死时，分类型进行告警操作
     app.on('render-process-gone', (event, webContents, details) => {
       const message = {

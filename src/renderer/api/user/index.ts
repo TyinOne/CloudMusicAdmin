@@ -1,9 +1,12 @@
 import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
 
-export const userApi = () => {
+export const useUserApi = () => {
     return {
-        login: async (data) => {
-            return await post('/admin/user/login', data, APPLICATION_JSON)
+        login: (data) => {
+            return post('/admin/user/login', data, APPLICATION_JSON)
+        },
+        detail: () => {
+            return get('/admin/user/info')
         }
     }
 }

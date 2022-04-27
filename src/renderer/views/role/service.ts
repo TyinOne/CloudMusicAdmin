@@ -10,6 +10,7 @@ interface Page {
 export default function getService() {
     const handleRoleRef = ref(null)
     let keywords = ref('')
+    let loading = ref(false)
     const dataSource = ref([]);
     const pagination = ref({
         current: 1,
@@ -31,6 +32,7 @@ export default function getService() {
             current: page.current,
             size: page.size
         }
+        loading.value = true
         useRoleApi().getRoleList(params).then(res => {
             dataSource.value = res.result.list
             pagination.value = {
@@ -38,6 +40,9 @@ export default function getService() {
                 size: res.result.size,
                 total: res.result.total
             }
+            loading.value = false
+        }).catch(e => {
+            loading.value = false
         })
     }
     const onOpenAddRole = () => {
@@ -62,7 +67,7 @@ export default function getService() {
         await searchRole()
     })
     return {
-        keywords, dataSource, pagination, searchRole, onHandleCurrentChange, onOpenAddRole, onOpenEditRole, onRowDel,
+        keywords, dataSource, pagination, loading, searchRole, onHandleCurrentChange, onOpenAddRole, onOpenEditRole, onRowDel,
         handleRoleRef,
     }
 }

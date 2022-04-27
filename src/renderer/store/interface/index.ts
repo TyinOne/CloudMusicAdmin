@@ -74,7 +74,7 @@ export interface UserInfosState {
         authBtnList: string[];
         avatar: string;
         roles: string[];
-        name: string;
+        nickName: string;
     };
 }
 

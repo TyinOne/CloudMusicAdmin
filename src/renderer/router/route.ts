@@ -72,13 +72,28 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                                     roles: ['admin'],
                                     icon: 'ele-Guide',
                                 },
+                            },
+                            {
+                                path: '/system/redis/view',
+                                name: 'systemRedisView',
+                                component: () => import('@renderer/views/system/redis/index.vue'),
+                                meta: {
+                                    title: '缓存监控',
+                                    isLink: '',
+                                    isHide: false,
+                                    isKeepAlive: true,
+                                    isAffix: false,
+                                    isIframe: false,
+                                    roles: ['admin'],
+                                    icon: 'ele-Guide',
+                                },
                             }
                         ]
                     },
                     {
                         path: '/system/menu',
                         name: 'systemMenu',
-                        component: () => import('@renderer/views/system/menu/index.vue'),
+                        component: () => import('@renderer/views/menu/index.vue'),
                         meta: {
                             title: '菜单设置',
                             isLink: '',
@@ -93,7 +108,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     {
                         path: '/system/role',
                         name: 'systemRole',
-                        component: () => import('@renderer/views/system/role/index.vue'),
+                        component: () => import('@renderer/views/role/index.vue'),
                         meta: {
                             title: '角色设置',
                             isLink: '',
@@ -122,6 +137,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     isHide: true
                 }
             },
+            {
+                path: '/gitee',
+                name: 'layoutIframeView',
+                component: () => import('@renderer/layout/routerView/iframes.vue'),
+                meta: {
+                    title: 'Gitee',
+                    isLink: 'https://gitee.com/tyin-zero/cloud-music-admin',
+                    isHide: true,
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: true,
+                    roles: ['admin'],
+                    icon: 'ele-Flag',
+                },
+            },
         ]
     }
 ];
@@ -142,5 +172,5 @@ export const staticRoutes: Array<RouteRecordRaw> = [
         meta: {
             title: '找不到此页面',
         },
-    }
+    },
 ];

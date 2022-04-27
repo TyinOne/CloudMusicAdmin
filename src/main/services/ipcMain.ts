@@ -1,4 +1,4 @@
-import { ipcMain, dialog, BrowserWindow, app } from 'electron'
+import { ipcMain, dialog, BrowserWindow, app, shell } from 'electron'
 import config from '@config/index'
 import { winURL } from '../config/StaticPath'
 import { updater } from './HotUpdater'
@@ -65,7 +65,11 @@ export default {
     ipcMain.handle('start-download', (event, msg) => {
       new DownloadFile(BrowserWindow.fromWebContents(event.sender), msg.downloadUrl).start()
     })
+    ipcMain.handle('open-web', (event, arg) => {
+      shell.openExternal(arg).then(r => {})
+    })
     ipcMain.handle('open-win', (event, arg) => {
+      console.log('other-win')
       const ChildWin = new BrowserWindow({
         titleBarStyle: config.IsUseSysTitle ? 'default' : 'hidden',
         ...Object.assign(otherWindowConfig, {})

@@ -17,7 +17,7 @@
           新增角色
         </el-button>
       </div>
-      <el-table :data="dataSource" style="width: 100%">
+      <el-table :data="dataSource" style="width: 100%" v-loading="loading">
         <el-table-column type="index" label="序号" width="60"/>
         <el-table-column prop="name" label="角色名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="value" label="角色标识" show-overflow-tooltip></el-table-column>
@@ -59,15 +59,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import getService from "@renderer/views/system/role/service";
-import HandleRole from '@renderer/views/system/role/components/handleRole.vue'
+import getService from "@renderer/views/role/service";
+import HandleRole from '@renderer/views/role/components/handleRole.vue'
 
 const {
   handleRoleRef,
   keywords,
   dataSource,
   pagination,
-
+  loading,
   searchRole,
   onHandleCurrentChange,
   onOpenAddRole,

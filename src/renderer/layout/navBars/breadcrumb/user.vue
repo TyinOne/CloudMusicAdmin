@@ -34,7 +34,7 @@
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.avatar" class="layout-navbars-breadcrumb-user-link-photo mr5"  alt=""/>
-				{{ getUserInfos.name === '' ? 'common' : getUserInfos.name }}
+				{{ getUserInfos.nickName === '' ? 'common' : getUserInfos.nickName }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
 				</el-icon>
@@ -42,8 +42,9 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item command="/home">{{ '首页' }}</el-dropdown-item>
-          <el-dropdown-item command="wareHouse">{{ '代码仓库' }}</el-dropdown-item>
+          <el-dropdown-item command="/gitee">{{ '代码仓库' }}</el-dropdown-item>
           <el-dropdown-item command="/personal">{{ '个人中心' }}</el-dropdown-item>
+          <el-dropdown-item command="open">{{ '百度' }}</el-dropdown-item>
           <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>
           <el-dropdown-item divided command="logOut">{{ '退出登录' }}</el-dropdown-item>
         </el-dropdown-menu>
@@ -63,6 +64,7 @@ import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
 import screenfull from 'screenfull';
 import UserNews from '@renderer/layout/navBars/breadcrumb/userNews.vue'
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
+const { ipcRenderer } = require("electron")
 const { proxy } = <any>getCurrentInstance();
 const router = useRouter();
 const store = useStore();
@@ -133,8 +135,8 @@ const onHandleCommandClick = (path: string) => {
           }, 500);
         })
         .catch(() => {});
-  } else if (path === 'wareHouse') {
-    window.open('https://www.baidu.com');
+  } else if (path === 'open') {
+    ipcRenderer.invoke('open-web','https://www.baidu.com');
   } else {
     router.push(path);
   }

@@ -7,7 +7,7 @@ const userInfosModule: Module<UserInfosState, RootStateTypes> = {
     state: {
         token: '',
         userInfos: {
-            name: '',
+            nickName: '',
             avatar: '',
             roles: [],
             authBtnList: [],

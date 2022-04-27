@@ -4,7 +4,7 @@
         class="layout-scrollbar"
         ref="layoutScrollbarRef"
     >
-      <LayoutParentView :style="{ minHeight: `calc(100vh - ${state.headerHeight} - 30px)` }"/>
+      <LayoutParentView :style="{ minHeight: `calc(100vh - 114px - 30px)` }"/>
     </el-scrollbar>
   </el-main>
 </template>

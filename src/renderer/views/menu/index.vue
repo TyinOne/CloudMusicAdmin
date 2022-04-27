@@ -34,7 +34,7 @@
           新增菜单
         </el-button>
       </div>
-      <el-table row-key="path" :data="state.dataSource" style="width: 100%"
+      <el-table row-key="path" :data="state.dataSource" style="width: 100%"  v-loading="loading"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       >
         <el-table-column label="菜单名称" show-overflow-tooltip>
@@ -74,11 +74,11 @@
 <script lang="ts" setup>
 
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
-import getService from "@renderer/views/system/menu/service";
-import HandleMenu from "@renderer/views/system/menu/components/handleMenu.vue";
+import getService from "@renderer/views/menu/service";
+import HandleMenu from "@renderer/views/menu/components/handleMenu.vue";
 
 const {
-  state, handleMenuRef, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
+  state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
 } = getService()
 
 

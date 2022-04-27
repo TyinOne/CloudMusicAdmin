@@ -11,7 +11,7 @@ export default function getService(){
         dataSource: [],
         roleOptions: []
     })
-
+    let loading = ref(false)
     const handleMenuRef = ref()
     const searchMenu = () => {
         let params = {
@@ -19,8 +19,12 @@ export default function getService(){
             roleId: state.roleId,
             disabled: state.disabled
         }
+        loading.value = true
         useMenuApi().getMenuRes(params).then(res => {
             state.dataSource = res.result.list
+            loading.value = false
+        }).catch(e => {
+            loading.value = false
         })
     }
     const onOpenAddMenu = () => {
@@ -53,6 +57,6 @@ export default function getService(){
         }
     }
     return {
-        state, handleMenuRef, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
+        state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
     }
 }

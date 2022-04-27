@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import LoginTextField from '@renderer/views/login/loginTextField.vue'
 import LoginSubmit from '@renderer/views/login/loginSubmit.vue'
-import {userApi} from "@renderer/api/user";
+import {useUserApi} from "@renderer/api/user";
 import {Session} from '@renderer/utils/storage'
 import router from "@renderer/router";
 import {store} from "@renderer/store";
@@ -49,9 +49,9 @@ const submit = async () => {
     username: 'TyinZero',
     password: 'tyinzero'
   }
-  userApi().login(params).then(res => {
+  useUserApi().login(params).then(res => {
     let userInfo = {
-      name: res.result.name,
+      nickName: res.result.nickName,
       avatar: res.result.avatar,
       roles: res.result.roles,
       authBtnList: res.result.btn,
