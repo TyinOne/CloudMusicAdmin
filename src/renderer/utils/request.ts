@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {Session} from '@renderer/utils/storage';
-import config from '@renderer/api';
 // import {AxiosInstance} from "a-axios";
 
 export const APPLICATION_JSON = 'application/json';

@@ -1,7 +1,7 @@
 <template>
   <span class="login_checkbox">
     <input :id="id" type="checkbox"/>
-    <label :for="id">{{label}}</label>
+    <label :for="id">{{ label }}</label>
   </span>
 </template>
 <script lang="ts" setup>
@@ -24,6 +24,7 @@ export default {
 .login_checkbox input {
   display: none;
 }
+
 .login_checkbox label::before,
 .login_checkbox label::after {
   content: '';
@@ -34,11 +35,13 @@ export default {
   height: 14px;
   vertical-align: top;
 }
+
 .login_checkbox label::before {
   border-radius: 3px;
   background-color: white;
   box-shadow: 0 1px 1px #2a2a2a;
 }
+
 .login_checkbox label::after {
   content: '\f00c';
   position: relative;
@@ -52,11 +55,10 @@ export default {
   color: #232323;
   float: left;
 }
-.login_checkbox input:checked+label::after {
+
+.login_checkbox input:checked + label::after {
   display: inline-block;
 }
-
-
 
 
 </style>

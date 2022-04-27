@@ -1,45 +1,45 @@
 <template>
   <div class="system-add-role-container">
-    <el-dialog :title="dialogMessage.title" destroy-on-close v-model="isShowDialog" width="769px" draggable>
-      <el-form ref="formRef" v-loading="loading" :rules="rules" :model="form" size="default" label-width="90px"
+    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="769px">
+      <el-form ref="formRef" v-loading="loading" :model="form" :rules="rules" label-width="90px" size="default"
                style="display: flex">
         <div :style="dialogMessage.init ? {width: '50%'} : {width: '100%'}">
           <el-row :gutter="12">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="角色名称" prop="name">
-                <el-input v-model="form.name" placeholder="请输入角色名称" clearable></el-input>
+                <el-input v-model="form.name" clearable placeholder="请输入角色名称"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="权限标识" prop="value">
-                <el-input v-model="form.value" placeholder="请输入权限标识" clearable></el-input>
+                <el-input v-model="form.value" clearable placeholder="请输入权限标识"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="排序">
-                <el-input-number v-model="form.sort" :min="0" :max="999" controls-position="right" placeholder="请输入排序"
-                                 class="w100"/>
+                <el-input-number v-model="form.sort" :max="999" :min="0" class="w100" controls-position="right"
+                                 placeholder="请输入排序"/>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="角色状态">
                 <el-switch v-model="form.disabled" active-text="禁用" inactive-text="启用"></el-switch>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="角色描述">
-                <el-input v-model="form.description" type="textarea" placeholder="请输入角色描述" maxlength="150"></el-input>
+                <el-input v-model="form.description" maxlength="150" placeholder="请输入角色描述" type="textarea"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </div>
         <div v-if="dialogMessage.init" style="width: 50%">
           <el-row>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="24" class="mb20">
               <el-form-item label="菜单权限">
-                <el-scrollbar height="280px" always>
-                  <el-tree ref="menuTree" node-key="id" check-on-click-node :data="menuData"
-                           :props="menuProps" show-checkbox class="menu-data-tree"/>
+                <el-scrollbar always height="280px">
+                  <el-tree ref="menuTree" :data="menuData" :props="menuProps" check-on-click-node
+                           class="menu-data-tree" node-key="id" show-checkbox/>
                 </el-scrollbar>
               </el-form-item>
             </el-col>
@@ -49,9 +49,9 @@
 
       <template #footer>
 				<span class="dialog-footer">
-					<el-button :loading="loading" @click.stop="onCancel" size="default">取 消</el-button>
-					<el-button :loading="loading" type="primary" @click.stop="onSubmit"
-                     size="default">{{ dialogMessage.submit }}</el-button>
+					<el-button :loading="loading" size="default" @click.stop="onCancel">取 消</el-button>
+					<el-button :loading="loading" size="default" type="primary"
+                     @click.stop="onSubmit">{{ dialogMessage.submit }}</el-button>
 				</span>
       </template>
     </el-dialog>

@@ -1,6 +1,6 @@
-import { InjectionKey } from 'vue';
-import { createStore, useStore as baseUseStore, Store } from 'vuex';
-import { RootStateTypes } from '@renderer/store/interface';
+import {InjectionKey} from 'vue';
+import {createStore, Store, useStore as baseUseStore} from 'vuex';
+import {RootStateTypes} from '@renderer/store/interface';
 
 // Vite supports importing multiple modules from the file system using the special import.meta.glob function
 // see https://cn.vitejs.dev/guide/features.html#glob-import
@@ -20,7 +20,7 @@ const modules = pathList.reduce((modules: { [x: string]: any }, modulePath: stri
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol();
 
-export const store = createStore<RootStateTypes>({ modules });
+export const store = createStore<RootStateTypes>({modules});
 
 export function useStore() {
     return baseUseStore(key);

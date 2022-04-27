@@ -1,5 +1,5 @@
-import { Module } from 'vuex';
-import { KeepAliveNamesState, RootStateTypes } from '@renderer/store/interface/index';
+import {Module} from 'vuex';
+import {KeepAliveNamesState, RootStateTypes} from '@renderer/store/interface/index';
 
 const keepAliveNamesModule: Module<KeepAliveNamesState, RootStateTypes> = {
     namespaced: true,
@@ -14,7 +14,7 @@ const keepAliveNamesModule: Module<KeepAliveNamesState, RootStateTypes> = {
     },
     actions: {
         // 设置路由缓存（name字段）
-        async setCacheKeepAlive({ commit }, data: Array<string>) {
+        async setCacheKeepAlive({commit}, data: Array<string>) {
             commit('getCacheKeepAlive', data);
         },
     },

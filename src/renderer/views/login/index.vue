@@ -1,6 +1,6 @@
 <template>
   <div class="login_container">
-    <div class="login" :class="{login_sign_in: isSignIn, login_sign_up : isSignUp}">
+    <div :class="{login_sign_in: isSignIn, login_sign_up : isSignUp}" class="login">
       <login-tabs @click.native="switchState"></login-tabs>
       <login-form/>
     </div>
@@ -9,8 +9,7 @@
 <script lang="ts" setup>
 import LoginTabs from '@renderer/views/login/loginTabs.vue'
 import LoginForm from '@renderer/views/login/loginForm.vue'
-import {computed, onMounted, ref} from "vue";
-import LoginSubmit from '@renderer/views/login/loginSubmit.vue'
+import {computed, ref} from "vue";
 
 let state = ref(1);
 
@@ -38,6 +37,7 @@ export default {
   align-items: center;
   background: #2a2a2a;
 }
+
 .login {
   width: 100%;
   color: white;
@@ -46,7 +46,8 @@ export default {
   max-height: 400px;
   max-width: 400px;
 }
-.login_sign_up,.login_sign_in {
+
+.login_sign_up, .login_sign_in {
   position: relative;
   bottom: 100px;
 }

@@ -1,8 +1,8 @@
-import {onMounted, reactive, ref, toRefs} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {useMenuApi} from "@renderer/api/menu";
 import {useRoleApi} from "@renderer/api/role";
 
-export default function getService(){
+export default function getService() {
 
     let state = reactive({
         keywords: '',

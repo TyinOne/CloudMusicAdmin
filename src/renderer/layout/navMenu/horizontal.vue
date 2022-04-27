@@ -1,24 +1,24 @@
 <template>
   <div class="el-menu-horizontal-warp">
-    <el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-      <el-menu router :default-active="state.defaultActive" background-color="transparent" mode="horizontal">
+    <el-scrollbar ref="elMenuHorizontalScrollRef" @wheel.native.prevent="onElMenuHorizontalScroll">
+      <el-menu :default-active="state.defaultActive" background-color="transparent" mode="horizontal" router>
         <template v-for="val in menuLists">
-          <el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
+          <el-sub-menu v-if="val.children && val.children.length > 0" :key="val.path" :index="val.path">
             <template #title>
-              <SvgIcon :name="val.meta.icon" />
+              <SvgIcon :name="val.meta.icon"/>
               <span>{{ val.meta.title }}</span>
             </template>
-            <SubItem :chil="val.children" />
+            <SubItem :chil="val.children"/>
           </el-sub-menu>
           <template v-else>
-            <el-menu-item :index="val.path" :key="val.path">
-              <template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-                <SvgIcon :name="val.meta.icon" />
+            <el-menu-item :key="val.path" :index="val.path">
+              <template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)" #title>
+                <SvgIcon :name="val.meta.icon"/>
                 {{ val.meta.title }}
               </template>
-              <template #title v-else>
-                <a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
-                  <SvgIcon :name="val.meta.icon" />
+              <template v-else #title>
+                <a :href="val.meta.isLink" class="w100" rel="opener" target="_blank">
+                  <SvgIcon :name="val.meta.icon"/>
                   {{ val.meta.title }}
                 </a>
               </template>
@@ -42,7 +42,7 @@ const props = defineProps({
     default: () => [],
   },
 })
-const { proxy } = <any>getCurrentInstance();
+const {proxy} = <any>getCurrentInstance();
 const route = useRoute();
 const store = useStore();
 const state = reactive({
@@ -82,8 +82,8 @@ const setSendClassicChildren = (path: string) => {
   filterRoutesFun(store.state.routesList.routesList).map((v, k) => {
     if (v.path === `/${currentPathSplit[1]}`) {
       v['k'] = k;
-      currentData['item'] = [{ ...v }];
-      currentData['children'] = [{ ...v }];
+      currentData['item'] = [{...v}];
+      currentData['children'] = [{...v}];
       if (v.children) currentData['children'] = v.children;
     }
   });
@@ -91,7 +91,7 @@ const setSendClassicChildren = (path: string) => {
 };
 // 设置页面当前路由高亮
 const setCurrentRouterHighlight = (currentRoute: any) => {
-  const { path, meta } = currentRoute;
+  const {path, meta} = currentRoute;
   if (store.state.themeConfig.themeConfig.layout === 'classic') {
     (<any>state.defaultActive) = `/${path.split('/')[1]}`;
   } else {
@@ -113,12 +113,11 @@ onBeforeRouteUpdate((to) => {
   // 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
   setCurrentRouterHighlight(to);
   // 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
-  let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+  let {layout, isClassicSplitMenu} = store.state.themeConfig.themeConfig;
   if (layout === 'classic' && isClassicSplitMenu) {
     proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
   }
 });
-
 
 
 </script>
@@ -129,17 +128,20 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .el-menu-horizontal-warp {
   flex: 1;
   overflow: hidden;
   margin-right: 30px;
+
   ::v-deep(.el-scrollbar__bar.is-vertical) {
     display: none;
   }
+
   ::v-deep(a) {
     width: 100%;
   }
+
   .el-menu.el-menu--horizontal {
     display: flex;
     height: 100%;

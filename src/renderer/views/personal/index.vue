@@ -1,34 +1,36 @@
 <template>
   <div class="personal-container">
     <el-card shadow="hover">
-<!--      <div>{{ user.info }}</div>-->
+      <!--      <div>{{ user.info }}</div>-->
       <el-card>
         <el-form>
           <el-form-item label="用户头像:">
             <div class="avatar-uploader">
               <div class="el-upload">
-                <el-image v-if="user.info.avatar" :src="user.info.avatar" class="avatar" alt=""/>
-                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+                <el-image v-if="user.info.avatar" :src="user.info.avatar" alt="" class="avatar"/>
+                <el-icon v-else class="avatar-uploader-icon">
+                  <Plus/>
+                </el-icon>
               </div>
             </div>
           </el-form-item>
           <el-form-item label="用户名:">
-            {{user.info.account}}
+            {{ user.info.account }}
           </el-form-item>
           <el-form-item label="昵称:">
-            {{user.info.nickName}}
+            {{ user.info.nickName }}
           </el-form-item>
           <el-form-item label="邮箱:">
-            {{user.info.mail}}
+            {{ user.info.mail }}
           </el-form-item>
           <el-form-item label="身份:">
-            {{user.info.role}}
+            {{ user.info.role }}
           </el-form-item>
           <el-form-item label="联系方式:">
-            {{user.info.phone}}
+            {{ user.info.phone }}
           </el-form-item>
           <el-form-item label="生日:">
-            {{user.info.birth}}
+            {{ user.info.birth }}
           </el-form-item>
         </el-form>
       </el-card>
@@ -39,7 +41,7 @@
 import {useUserApi} from "@renderer/api/user";
 import {onMounted, reactive, ref} from "vue";
 import type {UploadFile} from 'element-plus'
-import {Delete, Plus, ZoomIn, Download} from "@element-plus/icons-vue";
+import {Plus} from "@element-plus/icons-vue";
 
 let user = reactive({
   info: {
@@ -85,6 +87,7 @@ export default {
   height: 178px;
   display: block;
 }
+
 :deep(.avatar-uploader .el-upload) {
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;

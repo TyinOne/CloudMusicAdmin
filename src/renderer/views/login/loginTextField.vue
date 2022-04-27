@@ -2,7 +2,7 @@
   <span class="login_text_field">
     <label>
       <i v-if="icon" :class="['fa', `fa-${icon}`]"></i>
-      <i style="width: 60px"> {{label}}</i>
+      <i style="width: 60px"> {{ label }}</i>
       <input :type="type" autocomplete="off"/>
     </label>
   </span>
@@ -23,9 +23,6 @@ const props = defineProps({
 })
 
 
-
-
-
 </script>
 <script lang="ts">
 export default {
@@ -43,6 +40,7 @@ export default {
   background-color: white;
   box-shadow: 0 1px 1px #1c1c1c;
 }
+
 .login_text_field label {
   margin-right: 10px;
   color: #1c1c1c;
@@ -52,9 +50,11 @@ export default {
   align-items: center;
   width: 100%
 }
+
 .login_text_field label i {
   width: 20px;
 }
+
 .login_text_field input {
   flex: 1;
   width: 100px;

@@ -3,11 +3,11 @@
 </template>
 
 
-
 <script lang="ts">
 import {useStore} from '@renderer/store'
 import {computed, defineAsyncComponent, getCurrentInstance, onBeforeMount, onUnmounted} from 'vue';
 import {Local} from "@renderer/utils/storage";
+
 export default {
   name: "index",
   components: {
@@ -17,7 +17,7 @@ export default {
     columns: defineAsyncComponent(() => import('@renderer/layout/main/columns.vue')),
   },
   setup() {
-    const { proxy } = <any>getCurrentInstance();
+    const {proxy} = <any>getCurrentInstance();
     const store = useStore();
     // 获取布局配置信息
     const getThemeConfig = computed(() => {

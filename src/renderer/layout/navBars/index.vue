@@ -1,11 +1,11 @@
 <template>
   <div class="layout-navbars-container">
-    <BreadcrumbIndex />
-    <TagsView v-if="setShowTagsView" />
+    <BreadcrumbIndex/>
+    <TagsView v-if="setShowTagsView"/>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useStore} from "@renderer/store";
 import {computed} from "vue";
 import BreadcrumbIndex from '@renderer/layout/navBars/breadcrumb/index.vue'
@@ -14,7 +14,7 @@ import TagsView from '@renderer/layout/navBars/tagsView/tagsView.vue'
 const store = useStore();
 // 是否显示 tagsView
 const setShowTagsView = computed(() => {
-  let { layout, isTagsview } = store.state.themeConfig.themeConfig;
+  let {layout, isTagsview} = store.state.themeConfig.themeConfig;
   return layout !== 'classic' && isTagsview;
 });
 

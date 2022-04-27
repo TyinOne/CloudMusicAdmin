@@ -24,9 +24,11 @@ export default {
   flex: 1;
   overflow: hidden;
 }
+
 .login_button span:active {
   /*background-color: #8d8d8d;*/
 }
+
 .login_button input {
   display: block;
   flex: 1;
@@ -37,6 +39,7 @@ export default {
   outline: none;
   background-color: #8a8a8a;
 }
+
 .login_button label {
   position: absolute;
   width: 100%;
@@ -52,6 +55,7 @@ export default {
   text-align: center;
   user-select: none;
 }
+
 .login_button label:hover {
   background-color: #676767;
 }

@@ -7,12 +7,12 @@ import '@renderer/theme/loading.scss';
  * @method done 移除 loading
  */
 export const NextLoading = {
-	// 创建 loading
-	start: () => {
-		const bodys: Element = document.body;
-		const div = <HTMLElement>document.createElement('div');
-		div.setAttribute('class', 'loading-next');
-		div.innerHTML = `
+    // 创建 loading
+    start: () => {
+        const bodys: Element = document.body;
+        const div = <HTMLElement>document.createElement('div');
+        div.setAttribute('class', 'loading-next');
+        div.innerHTML = `
 			<div class="loading-next-box">
 			<div class="loading-next-box-warp">
 				<div class="loading-next-box-item"></div>
@@ -27,15 +27,15 @@ export const NextLoading = {
 			</div>
 		</div>
 		`;
-		bodys.insertBefore(div, bodys.childNodes[0]);
-		window.nextLoading = true;
-	},
-	// 移除 loading
-	done: () => {
-		nextTick(() => {
-			window.nextLoading = false;
-			const el = <HTMLElement>document.querySelector('.loading-next');
-			el?.parentNode?.removeChild(el);
-		});
-	},
+        bodys.insertBefore(div, bodys.childNodes[0]);
+        window.nextLoading = true;
+    },
+    // 移除 loading
+    done: () => {
+        nextTick(() => {
+            window.nextLoading = false;
+            const el = <HTMLElement>document.querySelector('.loading-next');
+            el?.parentNode?.removeChild(el);
+        });
+    },
 };

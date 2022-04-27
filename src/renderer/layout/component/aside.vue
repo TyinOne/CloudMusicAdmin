@@ -1,21 +1,22 @@
 <template>
-  <div class="h100" v-show="!isTagsViewCurrenFull">
-    <el-aside class="layout-aside" :class="setCollapseStyle">
-      <Logo v-if="setShowLogo" />
-      <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef" @mouseenter="onAsideEnterLeave(true)" @mouseleave="onAsideEnterLeave(false)">
-        <Vertical :menuList="state.menuList" />
+  <div v-show="!isTagsViewCurrenFull" class="h100">
+    <el-aside :class="setCollapseStyle" class="layout-aside">
+      <Logo v-if="setShowLogo"/>
+      <el-scrollbar ref="layoutAsideScrollbarRef" class="flex-auto" @mouseenter="onAsideEnterLeave(true)"
+                    @mouseleave="onAsideEnterLeave(false)">
+        <Vertical :menuList="state.menuList"/>
       </el-scrollbar>
     </el-aside>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Logo from '@renderer/layout/logo/index.vue'
 import Vertical from '@renderer/layout/navMenu/vertical.vue'
 import {computed, getCurrentInstance, onBeforeMount, reactive, watch} from "vue";
 import {useStore} from "@renderer/store";
 
-const { proxy } = <any>getCurrentInstance();
+const {proxy} = <any>getCurrentInstance();
 const store = useStore();
 const state = reactive({
   menuList: [],
@@ -27,7 +28,7 @@ const isTagsViewCurrenFull = computed(() => {
 });
 // 设置菜单展开/收起时的宽度
 const setCollapseStyle = computed(() => {
-  const { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
+  const {layout, isCollapse, menuBar} = store.state.themeConfig.themeConfig;
   const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff'];
   const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : '';
   // 判断是否是手机端
@@ -76,7 +77,7 @@ const closeLayoutAsideMobileMode = () => {
 };
 // 设置显示/隐藏 logo
 const setShowLogo = computed(() => {
-  let { layout, isShowLogo } = store.state.themeConfig.themeConfig;
+  let {layout, isShowLogo} = store.state.themeConfig.themeConfig;
   return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
 });
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
@@ -100,7 +101,7 @@ const initMenuFixed = (clientWidth: number) => {
 };
 // 鼠标移入、移出
 const onAsideEnterLeave = (bool: Boolean) => {
-  let { layout } = store.state.themeConfig.themeConfig;
+  let {layout} = store.state.themeConfig.themeConfig;
   if (layout !== 'columns') return false;
   if (!bool) proxy.mittBus.emit('restoreDefault');
   store.dispatch('routesList/setColumnsMenuHover', bool);
@@ -114,7 +115,7 @@ watch(store.state.themeConfig.themeConfig, (val) => {
 });
 // 监听vuex值的变化，动态赋值给菜单中
 watch(store.state, (val) => {
-  let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
+  let {layout, isClassicSplitMenu} = val.themeConfig.themeConfig;
   if (layout === 'classic' && isClassicSplitMenu) return false;
   setFilterRoutes();
 });
@@ -128,7 +129,7 @@ onBeforeMount(() => {
     state.menuList = res.children;
   });
   proxy.mittBus.on('setSendClassicChildren', (res: any) => {
-    let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+    let {layout, isClassicSplitMenu} = store.state.themeConfig.themeConfig;
     if (layout === 'classic' && isClassicSplitMenu) {
       state.menuList = [];
       state.menuList = res.children;

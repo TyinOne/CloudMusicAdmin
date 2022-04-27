@@ -2,7 +2,7 @@
   <div class="layout-navbars-breadcrumb-index">
     <Logo v-if="setIsShowLogo"/>
     <Breadcrumb/>
-    <Horizontal :menuList="state.menuList" v-if="isLayoutTransverse"/>
+    <Horizontal v-if="isLayoutTransverse" :menuList="state.menuList"/>
     <User/>
   </div>
 </template>
@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-navbars-breadcrumb-index {
   height: 50px;
   display: flex;

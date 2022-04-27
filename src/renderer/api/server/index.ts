@@ -1,4 +1,4 @@
-import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
+import {get} from '@renderer/utils/request';
 
 export const useServerApi = () => {
     return {

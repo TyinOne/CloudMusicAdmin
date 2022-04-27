@@ -1,48 +1,48 @@
 <template>
-  <div class="layout-navbars-tagsview"
-       :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }">
+  <div :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }"
+       class="layout-navbars-tagsview">
     <el-scrollbar ref="scrollbarRef" @wheel.native.prevent="onHandleScroll">
-      <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle" ref="tagsUlRef">
+      <ul ref="tagsUlRef" :class="setTagsStyle" class="layout-navbars-tagsview-ul">
         <li
             v-for="(v, k) in state.tagsViewList"
             :key="k"
-            class="layout-navbars-tagsview-ul-li"
-            :data-url="v.url"
-            :class="{ 'is-active': isActive(v) }"
-            @contextmenu.prevent="onContextmenu(v, $event)"
-            @click="onTagsClick(v, k)"
             :ref="
 						(el) => {
 							if (el) tagsRefs[k] = el;
 						}
 					"
+            :class="{ 'is-active': isActive(v) }"
+            :data-url="v.url"
+            class="layout-navbars-tagsview-ul-li"
+            @click="onTagsClick(v, k)"
+            @contextmenu.prevent="onContextmenu(v, $event)"
         >
-          <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v)"></i>
-          <SvgIcon :name="v.meta.icon" v-if="getThemeConfig.isTagsviewIcon" class="pr5"/>
+          <i v-if="isActive(v)" class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont"></i>
+          <SvgIcon v-if="getThemeConfig.isTagsviewIcon" :name="v.meta.icon" class="pr5"/>
           <span>{{ v.meta.title }}</span>
           <template v-if="isActive(v)">
             <SvgIcon
-                name="ele-RefreshRight"
                 class="ml5 layout-navbars-tagsview-ul-li-refresh"
+                name="ele-RefreshRight"
                 @click.stop="refreshCurrentTagsView($route.fullPath)"
             />
             <SvgIcon
-                name="ele-Close"
-                class="layout-navbars-tagsview-ul-li-icon layout-icon-active"
                 v-if="!v.meta.isAffix"
+                class="layout-navbars-tagsview-ul-li-icon layout-icon-active"
+                name="ele-Close"
                 @click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
             />
           </template>
           <SvgIcon
-              name="ele-Close"
-              class="layout-navbars-tagsview-ul-li-icon layout-icon-three"
               v-if="!v.meta.isAffix"
+              class="layout-navbars-tagsview-ul-li-icon layout-icon-three"
+              name="ele-Close"
               @click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
           />
         </li>
       </ul>
     </el-scrollbar>
-    <Contextmenu :dropdown="state.dropdown" ref="contextmenuRef" @currentContextmenuClick="onCurrentContextmenuClick"/>
+    <Contextmenu ref="contextmenuRef" :dropdown="state.dropdown" @currentContextmenuClick="onCurrentContextmenuClick"/>
   </div>
 </template>
 <script lang="ts" setup>
@@ -537,7 +537,7 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-navbars-tagsview {
   background-color: var(--el-color-white);
   border-bottom: 1px solid var(--next-border-color-light);

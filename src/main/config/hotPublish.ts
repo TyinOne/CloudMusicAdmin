@@ -1,4 +1,5 @@
-import { build } from '@config/index.js'
+import {build} from '@config/index.js'
+
 interface hotPublish {
     url: string;
     configName: string;

@@ -1,14 +1,13 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw, RouterOptions} from 'vue-router';
+import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { store } from '@renderer/store';
-import { Session } from '@renderer/utils/storage';
+import {store} from '@renderer/store';
+import {Session} from '@renderer/utils/storage';
 import {NextLoading} from '@renderer/utils/loading'
-import { staticRoutes, dynamicRoutes } from '@renderer/router/route';
+import {dynamicRoutes, staticRoutes} from '@renderer/router/route';
 import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
 import {initBackEndControlRoutes} from "@renderer/router/backEnd";
 import Performance from '@renderer/utils/performance'
-
 
 /**
  * 创建一个可以被 Vue 应用程序使用的路由实例
@@ -57,7 +56,14 @@ export function formatTwoStageRoutes(arr: any) {
     const cacheList: Array<string> = [];
     arr.forEach((v: any) => {
         if (v.path === '/') {
-            newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] });
+            newArr.push({
+                component: v.component,
+                name: v.name,
+                path: v.path,
+                redirect: v.redirect,
+                meta: v.meta,
+                children: []
+            });
         } else {
             // 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
             // 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
@@ -65,7 +71,7 @@ export function formatTwoStageRoutes(arr: any) {
                 v.meta['isDynamic'] = true;
                 v.meta['isDynamicPath'] = v.path;
             }
-            newArr[0].children.push({ ...v });
+            newArr[0].children.push({...v});
             // 存 name 值，keep-alive 中 include 使用，实现路由的缓存
             // 路径：/@/layout/routerView/parent.vue
             if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
@@ -109,7 +115,7 @@ export function hasRoles(roles: any, route: any) {
 export function setFilterHasRolesMenu(routes: any, roles: any) {
     const menu: any = [];
     routes.forEach((route: any) => {
-        const item = { ...route };
+        const item = {...route};
         if (hasRoles(roles, item)) {
             if (item.children) item.children = setFilterHasRolesMenu(item.children, roles);
             menu.push(item);
@@ -142,7 +148,7 @@ export function setFilterRoute(child: any) {
             route.meta.roles.forEach((metaRoles: any) => {
                 store.state.userInfos.userInfos.roles.forEach((roles: any) => {
                     if (metaRoles === roles) {
-                        filterRoute.push({ ...route });
+                        filterRoute.push({...route});
                     }
                 });
             });
@@ -159,7 +165,7 @@ export function setFilterRoute(child: any) {
 export function setFilterRouteEnd() {
     let routes = formatFlatteningRoutes(dynamicRoutes);
     let filterRouteEnd: any = formatTwoStageRoutes(routes);
-    filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), { ...pathMatch }];
+    filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), {...pathMatch}];
     return filterRouteEnd;
 }
 
@@ -190,13 +196,13 @@ export async function resetRoute() {
 }
 
 // isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/store/modules/themeConfig.ts`
-const { isRequestRoutes } = store.state.themeConfig.themeConfig;
+const {isRequestRoutes} = store.state.themeConfig.themeConfig;
 // 前端控制路由：初始化方法，防止刷新时路由丢失
 if (!isRequestRoutes) initFrontEndControlRoutes();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-    NProgress.configure({ showSpinner: false });
+    NProgress.configure({showSpinner: false});
     if (to.meta.title) NProgress.start();
     const token = Session.get('Authentication');
     if (to.path === '/login' && !token) {
@@ -223,7 +229,7 @@ router.beforeEach(async (to, from, next) => {
                     // 动态添加路由：防止非首页刷新时跳转回首页的问题
                     // 确保 addRoute() 时动态添加的路由已经被完全加载上去
                     console.log(router.getRoutes())
-                    next({ ...to, replace: true });
+                    next({...to, replace: true});
                 }
             } else {
                 if (to.matched.length == 0) {

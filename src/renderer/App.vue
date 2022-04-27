@@ -1,14 +1,13 @@
 <template>
   <title-bar v-if="!isWeb"/>
-  <title-placeholder v-else/>
   <el-config-provider>
     <router-view v-show="getThemeConfig.lockScreenTime !== 0"/>
-    <Settings ref="settingsRef" v-show="getThemeConfig.lockScreenTime !== 0"/>
+    <Settings v-show="getThemeConfig.lockScreenTime !== 0" ref="settingsRef"/>
     <CloseFull/>
   </el-config-provider>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {computed, getCurrentInstance, nextTick, onBeforeMount, onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import {useStore} from '@renderer/store';
@@ -18,7 +17,6 @@ import {Local, Session} from "@renderer/utils/storage";
 import other from "@renderer/utils/other";
 import CloseFull from '@renderer/layout/navBars/breadcrumb/closeFull.vue'
 import TitleBar from '@renderer/components/titleBar/index.vue'
-import TitlePlaceholder from '@renderer/components/titleBar/placeholder.vue'
 
 const {proxy} = <any>getCurrentInstance();
 const settingsRef = ref();

@@ -36,6 +36,7 @@ export const lazyImg = (el: any, arr: any) => {
     }).then(r => {
     });
 };
+
 /**
  * 判断是否是移动端
  */
@@ -59,6 +60,7 @@ export function useTitle() {
         document.title = `${webTitle} - ${globalTitle}` || globalTitle;
     });
 }
+
 export default {
     elSvg: (app: App) => {
         elSvg(app);

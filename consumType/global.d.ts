@@ -1,4 +1,4 @@
-import { ipcRenderer, shell } from "electron"
+import {ipcRenderer, shell} from "electron"
 
 interface AnyObject {
     [key: string]: any

@@ -1,22 +1,23 @@
 <template>
   <div class="layout-search-dialog">
-    <el-dialog v-model="state.isShowSearch" width="300px" destroy-on-close :modal="false" fullscreen :show-close="false">
+    <el-dialog v-model="state.isShowSearch" :modal="false" :show-close="false" destroy-on-close fullscreen
+               width="300px">
       <el-autocomplete
+          ref="layoutMenuAutocompleteRef"
           v-model="state.menuQuery"
           :fetch-suggestions="menuSearch"
           :placeholder="'菜单搜索：支持中文、路由路径'"
-          ref="layoutMenuAutocompleteRef"
-          @select="onHandleSelect"
           @blur="onSearchBlur"
+          @select="onHandleSelect"
       >
         <template #prefix>
           <el-icon class="el-input__icon">
-            <ele-Search />
+            <ele-Search/>
           </el-icon>
         </template>
         <template #default="{ item }">
           <div>
-            <SvgIcon :name="item.meta.icon" class="mr5" />
+            <SvgIcon :name="item.meta.icon" class="mr5"/>
             {{ item.meta.title }}
           </div>
         </template>
@@ -35,12 +36,14 @@ interface SearchState {
   menuQuery: string;
   tagsViewList: object[];
 }
+
 interface Restaurant {
   path: string;
   meta: {
     title: string;
   };
 }
+
 const layoutMenuAutocompleteRef = ref();
 const store = useStore();
 const router = useRouter();
@@ -84,12 +87,12 @@ const createFilter: any = (queryString: string) => {
 const initTageView = () => {
   if (state.tagsViewList.length > 0) return false;
   store.state.tagsViewRoutes.tagsViewRoutes.map((v: any) => {
-    if (!v.meta.isHide) state.tagsViewList.push({ ...v });
+    if (!v.meta.isHide) state.tagsViewList.push({...v});
   });
 };
 // 当前菜单选中时
 const onHandleSelect = (item: any) => {
-  let { path, redirect } = item;
+  let {path, redirect} = item;
   if (item.meta.isLink && !item.meta.isIframe) window.open(item.meta.isLink);
   else if (redirect) router.push(redirect);
   else router.push(path);
@@ -107,13 +110,14 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-search-dialog {
   ::v-deep(.el-dialog) {
     box-shadow: unset !important;
     border-radius: 0 !important;
     background: rgba(0, 0, 0, 0.5);
   }
+
   ::v-deep(.el-autocomplete) {
     width: 560px;
     position: absolute;

@@ -1,14 +1,15 @@
 <template>
   <el-main class="layout-main">
     <el-scrollbar
-        class="layout-scrollbar"
         ref="layoutScrollbarRef"
+        :style="{ padding: state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe ? 0 : '', transition: 'padding 0.3s ease-in-out' }"
+        class="layout-scrollbar"
     >
-      <LayoutParentView :style="{ minHeight: `calc(100vh - 114px - 30px)` }"/>
+      <LayoutParentView :style="{ minHeight: `calc(100vh - ${state.headerHeight})` }"/>
     </el-scrollbar>
   </el-main>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import LayoutParentView from '@renderer/layout/routerView/parent.vue'
 import {computed, getCurrentInstance, onMounted, reactive, watch} from "vue";
 import {useRoute} from "vue-router";

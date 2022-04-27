@@ -1,5 +1,5 @@
 <template>
-  <div class="system-server-container" v-loading="state.loading">
+  <div v-loading="state.loading" class="system-server-container">
     <el-card shadow="hover">
       {{ state }}
       <div style="display: flex">

@@ -1,9 +1,8 @@
-import { store } from '@renderer/store';
-import { Session } from '@renderer/utils/storage';
-import { NextLoading } from '@renderer/utils/loading';
-import { setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '@renderer/router/index';
-import { dynamicRoutes } from '@renderer/router/route';
-import { useMenuApi } from '@renderer/api/menu';
+import {store} from '@renderer/store';
+import {Session} from '@renderer/utils/storage';
+import {NextLoading} from '@renderer/utils/loading';
+import {setAddRoute, setFilterMenuAndCacheTagsViewRoutes} from '@renderer/router/index';
+import {useMenuApi} from '@renderer/api/menu';
 
 const menuApi = useMenuApi();
 
@@ -14,7 +13,7 @@ const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
  * @method import.meta.glob
  * @link 参考：https://cn.vitejs.dev/guide/features.html#json
  */
-const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...layoutModules }, { ...viewsModules });
+const dynamicViewsModules: Record<string, Function> = Object.assign({}, {...layoutModules}, {...viewsModules});
 
 /**
  * 后端控制路由：初始化方法，防止刷新时路由丢失
@@ -48,7 +47,7 @@ export async function initBackEndControlRoutes() {
  * @description isRequestRoutes 为 true，则开启后端控制路由
  * @returns 返回后端路由菜单数据
  */
-export function getBackEndControlRoutes():any {
+export function getBackEndControlRoutes(): any {
     // 模拟 admin 与 test
     const auth = store.state.userInfos.userInfos.roles[0];
     // 管理员 admin

@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent, shell } from "electron"
-import { platform, release, arch } from 'os'
+import {contextBridge, ipcRenderer, IpcRendererEvent, shell} from "electron"
+import {arch, platform, release} from 'os'
 
 contextBridge.exposeInMainWorld("ipcRenderer", {
     send: (channel: string, args?: any) => ipcRenderer.send(channel, args),

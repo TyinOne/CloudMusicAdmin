@@ -1,5 +1,5 @@
 <template>
-  <div class="window-title" v-if="!IsUseSysTitle && isNotMac && !IsWeb">
+  <div v-if="!IsUseSysTitle && isNotMac && !IsWeb" class="window-title">
     <!--    &lt;!&ndash; 软件logo预留位置 &ndash;&gt;-->
     <!--    <div style="-webkit-app-region: drag" class="logo">-->
     <!--      <div class="windows-icon-bg" @click="Mini">-->
@@ -26,12 +26,12 @@
     <!-- 菜单栏位置 -->
     <div></div>
     <!-- 中间标题位置 -->
-    <div style="-webkit-app-region: drag" class="title"></div>
+    <div class="title" style="-webkit-app-region: drag"></div>
   </div>
   <div v-else-if="!IsUseSysTitle && !isNotMac" class="window-title">
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import {ref} from "vue";
 
@@ -70,7 +70,7 @@ const Close = () => {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
 .window-title {
   width: 100%;
   height: 30px;

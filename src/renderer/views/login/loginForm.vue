@@ -2,17 +2,17 @@
   <form class="login_form">
     <div class="login_form_r1">
       <div class="login_text">
-        <login-text-field label="姓名" icon="user"></login-text-field>
+        <login-text-field icon="user" label="姓名"></login-text-field>
       </div>
     </div>
     <div class="login_form_r2">
-      <login-text-field label="邮箱" icon="envelope"></login-text-field>
+      <login-text-field icon="envelope" label="邮箱"></login-text-field>
     </div>
     <div class="login_form_r3">
-      <login-text-field type="password" label="密码" icon="lock"></login-text-field>
+      <login-text-field icon="lock" label="密码" type="password"></login-text-field>
     </div>
     <div class="login_form_r4">
-      <login-text-field label="重复密码" icon="lock"></login-text-field>
+      <login-text-field icon="lock" label="重复密码"></login-text-field>
     </div>
     <div class="login_form_r5">
       <label></label>
@@ -35,6 +35,7 @@ import {computed, reactive} from "vue";
 import {formatAxis} from "@renderer/utils/formatTime";
 import {useRoute} from "vue-router";
 import {ElMessage} from "element-plus";
+
 const route = useRoute();
 
 const state = reactive({

@@ -58,11 +58,11 @@ class MainInit {
         //
         // }
         this.mainWindow.webContents.openDevTools({mode: 'undocked', activate: true})
-        this.mainWindow.webContents.session.webRequest.onHeadersReceived({ urls: [ "*://*/*" ] },
-            (d, c)=>{
-                if(d.responseHeaders['X-Frame-Options']){
+        this.mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ["*://*/*"]},
+            (d, c) => {
+                if (d.responseHeaders['X-Frame-Options']) {
                     delete d.responseHeaders['X-Frame-Options'];
-                } else if(d.responseHeaders['x-frame-options']) {
+                } else if (d.responseHeaders['x-frame-options']) {
                     delete d.responseHeaders['x-frame-options'];
                 }
                 c({cancel: false, responseHeaders: d.responseHeaders});

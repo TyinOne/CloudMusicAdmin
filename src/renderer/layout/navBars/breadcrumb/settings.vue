@@ -1,10 +1,10 @@
 <template>
   <div class="layout-breadcrumb-setting">
     <el-drawer
-        :title="'布局配置'"
         v-model="getThemeConfig.isDrawer"
-        direction="rtl"
+        :title="'布局配置'"
         destroy-on-close
+        direction="rtl"
         size="260px"
         @close="onDrawerClose"
     >
@@ -74,38 +74,38 @@
         </div>
 
         <!-- 分栏设置 -->
-        <el-divider content-position="left" :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">{{
+        <el-divider :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }" content-position="left">{{
             '分栏设置'
           }}
         </el-divider>
-        <div class="layout-breadcrumb-setting-bar-flex"
-             :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏菜单背景' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-color-picker
                 v-model="getThemeConfig.columnsMenuBar"
+                :disabled="getThemeConfig.layout !== 'columns'"
                 size="default"
                 @change="onBgColorPickerChange('columnsMenuBar')"
-                :disabled="getThemeConfig.layout !== 'columns'"
             >
             </el-color-picker>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex"
-             :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏菜单默认字体颜色' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-color-picker
                 v-model="getThemeConfig.columnsMenuBarColor"
+                :disabled="getThemeConfig.layout !== 'columns'"
                 size="default"
                 @change="onBgColorPickerChange('columnsMenuBarColor')"
-                :disabled="getThemeConfig.layout !== 'columns'"
             >
             </el-color-picker>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex mt14"
-             :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex mt14">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{
               '分栏菜单背景渐变'
             }}
@@ -113,9 +113,9 @@
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-switch
                 v-model="getThemeConfig.isColumnsMenuBarColorGradual"
+                :disabled="getThemeConfig.layout !== 'columns'"
                 size="small"
                 @change="onColumnsMenuBarGradualChange"
-                :disabled="getThemeConfig.layout !== 'columns'"
             ></el-switch>
           </div>
         </div>
@@ -140,8 +140,8 @@
             <el-switch v-model="getThemeConfig.isFixedHeader" size="small" @change="onIsFixedHeaderChange"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex mt15"
-             :style="{ opacity: getThemeConfig.layout !== 'classic' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'classic' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex mt15">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '经典布局分割菜单' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-switch
@@ -164,12 +164,12 @@
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-input-number
                 v-model="getThemeConfig.lockScreenTime"
-                controls-position="right"
-                :min="1"
                 :max="9999"
-                @change="setLocalThemeConfig"
+                :min="1"
+                controls-position="right"
                 size="default"
                 style="width: 90px"
+                @change="setLocalThemeConfig"
             >
             </el-input-number>
           </div>
@@ -184,8 +184,8 @@
           </div>
         </div>
         <div
-            class="layout-breadcrumb-setting-bar-flex mt15"
             :style="{ opacity: getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse' ? 0.5 : 1 }"
+            class="layout-breadcrumb-setting-bar-flex mt15"
         >
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '开启 Breadcrumb' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
@@ -221,7 +221,7 @@
             <el-switch v-model="getThemeConfig.isCacheTagsView" size="small" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex mt15" :style="{ opacity: isMobile ? 0.5 : 1 }">
+        <div :style="{ opacity: isMobile ? 0.5 : 1 }" class="layout-breadcrumb-setting-bar-flex mt15">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '开启 TagsView 拖拽' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-switch
@@ -296,16 +296,16 @@
             </el-select>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex mt15"
-             :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex mt15">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏高亮风格' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-select
                 v-model="getThemeConfig.columnsAsideStyle"
+                :disabled="getThemeConfig.layout !== 'columns'"
                 placeholder="请选择"
                 size="default"
                 style="width: 90px"
-                :disabled="getThemeConfig.layout !== 'columns'"
                 @change="setLocalThemeConfig"
             >
               <el-option label="圆角" value="columns-round"></el-option>
@@ -313,16 +313,16 @@
             </el-select>
           </div>
         </div>
-        <div class="layout-breadcrumb-setting-bar-flex mt15 mb27"
-             :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+        <div :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }"
+             class="layout-breadcrumb-setting-bar-flex mt15 mb27">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '分栏布局风格' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
             <el-select
                 v-model="getThemeConfig.columnsAsideLayout"
+                :disabled="getThemeConfig.layout !== 'columns'"
                 placeholder="请选择"
                 size="default"
                 style="width: 90px"
-                :disabled="getThemeConfig.layout !== 'columns'"
                 @change="setLocalThemeConfig"
             >
               <el-option label="水平" value="columns-horizontal"></el-option>
@@ -336,15 +336,15 @@
         <div class="layout-drawer-content-flex">
           <!-- defaults 布局 -->
           <div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
-            <section class="el-container el-circular"
-                     :class="{ 'drawer-layout-active': getThemeConfig.layout === 'defaults' }">
+            <section :class="{ 'drawer-layout-active': getThemeConfig.layout === 'defaults' }"
+                     class="el-container el-circular">
               <aside class="el-aside" style="width: 20px"></aside>
               <section class="el-container is-vertical">
                 <header class="el-header" style="height: 10px"></header>
                 <main class="el-main"></main>
               </section>
             </section>
-            <div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'defaults' }">
+            <div :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'defaults' }" class="layout-tips-warp">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">{{ '默认' }}</p>
               </div>
@@ -352,8 +352,8 @@
           </div>
           <!-- classic 布局 -->
           <div class="layout-drawer-content-item" @click="onSetLayout('classic')">
-            <section class="el-container is-vertical el-circular"
-                     :class="{ 'drawer-layout-active': getThemeConfig.layout === 'classic' }">
+            <section :class="{ 'drawer-layout-active': getThemeConfig.layout === 'classic' }"
+                     class="el-container is-vertical el-circular">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
                 <aside class="el-aside" style="width: 20px"></aside>
@@ -362,7 +362,7 @@
                 </section>
               </section>
             </section>
-            <div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'classic' }">
+            <div :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'classic' }" class="layout-tips-warp">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">{{ '经典' }}</p>
               </div>
@@ -370,8 +370,8 @@
           </div>
           <!-- transverse 布局 -->
           <div class="layout-drawer-content-item" @click="onSetLayout('transverse')">
-            <section class="el-container is-vertical el-circular"
-                     :class="{ 'drawer-layout-active': getThemeConfig.layout === 'transverse' }">
+            <section :class="{ 'drawer-layout-active': getThemeConfig.layout === 'transverse' }"
+                     class="el-container is-vertical el-circular">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
                 <section class="el-container is-vertical">
@@ -379,8 +379,8 @@
                 </section>
               </section>
             </section>
-            <div class="layout-tips-warp"
-                 :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'transverse' }">
+            <div :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'transverse' }"
+                 class="layout-tips-warp">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">{{ '横向' }}</p>
               </div>
@@ -388,8 +388,8 @@
           </div>
           <!-- columns 布局 -->
           <div class="layout-drawer-content-item" @click="onSetLayout('columns')">
-            <section class="el-container el-circular"
-                     :class="{ 'drawer-layout-active': getThemeConfig.layout === 'columns' }">
+            <section :class="{ 'drawer-layout-active': getThemeConfig.layout === 'columns' }"
+                     class="el-container el-circular">
               <aside class="el-aside-dark" style="width: 10px"></aside>
               <aside class="el-aside" style="width: 20px"></aside>
               <section class="el-container is-vertical">
@@ -397,7 +397,7 @@
                 <main class="el-main"></main>
               </section>
             </section>
-            <div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'columns' }">
+            <div :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'columns' }" class="layout-tips-warp">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">{{ '分栏' }}</p>
               </div>
@@ -405,16 +405,16 @@
           </div>
         </div>
         <div class="copy-config">
-          <el-alert :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'" type="warning"
-                    :closable="false"></el-alert>
-          <el-button size="default" class="copy-config-btn" type="primary" ref="copyConfigBtnRef"
+          <el-alert :closable="false" :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'"
+                    type="warning"></el-alert>
+          <el-button ref="copyConfigBtnRef" class="copy-config-btn" size="default" type="primary"
                      @click="onCopyConfigClick">
             <el-icon class="mr5">
               <ele-CopyDocument/>
             </el-icon>
             {{ '一键复制配置' }}
           </el-button>
-          <el-button size="default" class="copy-config-btn-reset" type="info" @click="onResetConfigClick">
+          <el-button class="copy-config-btn-reset" size="default" type="info" @click="onResetConfigClick">
             <el-icon class="mr5">
               <ele-RefreshRight/>
             </el-icon>
@@ -682,7 +682,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-breadcrumb-setting-bar {
   height: calc(100vh - 50px);
   padding: 0 15px;

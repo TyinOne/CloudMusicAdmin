@@ -1,5 +1,6 @@
-import type { App } from 'vue'
-import { nextTick } from "vue"
+import type {App} from 'vue'
+import {nextTick} from "vue"
+
 export const errorHandler = (App: App<Element>) => {
     App.config.errorHandler = (err, vm, info) => {
         nextTick(() => {

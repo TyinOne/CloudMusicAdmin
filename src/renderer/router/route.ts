@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import {RouteRecordRaw} from 'vue-router';
 import Layout from '@renderer/layout/index.vue'
 
 export const dynamicRoutes: Array<RouteRecordRaw> = [
@@ -57,7 +57,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                             roles: ['admin'],
                             icon: 'ele-Grid',
                         },
-                        children:[
+                        children: [
                             {
                                 path: '/system/server/view',
                                 name: 'systemServerView',

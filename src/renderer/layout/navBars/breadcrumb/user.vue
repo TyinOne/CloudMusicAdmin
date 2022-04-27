@@ -1,42 +1,42 @@
 <template>
-  <div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
+  <div :style="{ flex: layoutUserFlexNum }" class="layout-navbars-breadcrumb-user">
     <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
       <el-icon :title="'菜单搜索'">
-        <ele-Search />
+        <ele-Search/>
       </el-icon>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSettingClick">
-      <i class="icon-skin iconfont" :title="'布局配置'"></i>
+      <i :title="'布局配置'" class="icon-skin iconfont"></i>
     </div>
 
     <div class="layout-navbars-breadcrumb-user-icon" @click="onReloadClick">
-      <svg-icon name="ele-RefreshLeft" :title="'刷新'"></svg-icon>
+      <svg-icon :title="'刷新'" name="ele-RefreshLeft"></svg-icon>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon">
-      <el-popover placement="bottom" trigger="click" :width="300">
+      <el-popover :width="300" placement="bottom" trigger="click">
         <template #reference>
           <el-badge :is-dot="true">
             <el-icon :title="'消息'">
-              <ele-Bell />
+              <ele-Bell/>
             </el-icon>
           </el-badge>
         </template>
-        <UserNews />
+        <UserNews/>
       </el-popover>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
       <i
-          class="iconfont"
-          :title="state.isScreenfull ? '开全屏' : '关全屏'"
           :class="!state.isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
+          :title="state.isScreenfull ? '开全屏' : '关全屏'"
+          class="iconfont"
       ></i>
     </div>
-    <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
+    <el-dropdown :hide-timeout="50" :show-timeout="70" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
-				<img :src="getUserInfos.avatar" class="layout-navbars-breadcrumb-user-link-photo mr5"  alt=""/>
+				<img :src="getUserInfos.avatar" alt="" class="layout-navbars-breadcrumb-user-link-photo mr5"/>
 				{{ getUserInfos.nickName === '' ? 'common' : getUserInfos.nickName }}
 				<el-icon class="el-icon--right">
-					<ele-ArrowDown />
+					<ele-ArrowDown/>
 				</el-icon>
 			</span>
       <template #dropdown>
@@ -46,26 +46,27 @@
           <el-dropdown-item command="/personal">{{ '个人中心' }}</el-dropdown-item>
           <el-dropdown-item command="open">{{ '百度' }}</el-dropdown-item>
           <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>
-          <el-dropdown-item divided command="logOut">{{ '退出登录' }}</el-dropdown-item>
+          <el-dropdown-item command="logOut" divided>{{ '退出登录' }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <Search ref="searchRef" />
+    <Search ref="searchRef"/>
   </div>
 </template>
 <script lang="ts" setup>
 import {computed, getCurrentInstance, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useStore} from "@renderer/store";
-import {Local, Session} from "@renderer/utils/storage";
+import {Session} from "@renderer/utils/storage";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {resetRoute} from "@renderer/router";
 import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
 import screenfull from 'screenfull';
 import UserNews from '@renderer/layout/navBars/breadcrumb/userNews.vue'
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
-const { ipcRenderer } = window;
-const { proxy } = <any>getCurrentInstance();
+
+const {ipcRenderer} = window;
+const {proxy} = <any>getCurrentInstance();
 const router = useRouter();
 const store = useStore();
 const searchRef = ref();
@@ -86,7 +87,7 @@ const getThemeConfig = computed(() => {
 // 设置分割样式
 const layoutUserFlexNum = computed(() => {
   let num: string | number = '';
-  const { layout, isClassicSplitMenu } = getThemeConfig.value;
+  const {layout, isClassicSplitMenu} = getThemeConfig.value;
   const layoutArr: string[] = ['defaults', 'columns'];
   if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
   else num = '';
@@ -134,9 +135,10 @@ const onHandleCommandClick = (path: string) => {
             window.location.href = ''; // 去登录页
           }, 500);
         })
-        .catch(() => {});
+        .catch(() => {
+        });
   } else if (path === 'open') {
-    ipcRenderer.invoke('open-web','https://www.baidu.com');
+    ipcRenderer.invoke('open-web', 'https://www.baidu.com');
   } else {
     router.push(path);
   }
@@ -164,22 +166,25 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-navbars-breadcrumb-user {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
   &-link {
     height: 100%;
     display: flex;
     align-items: center;
     white-space: nowrap;
+
     &-photo {
       width: 25px;
       height: 25px;
       border-radius: 100%;
     }
   }
+
   &-icon {
     padding: 0 10px;
     cursor: pointer;
@@ -188,23 +193,28 @@ export default {
     line-height: 50px;
     display: flex;
     align-items: center;
+
     &:hover {
       background: var(--next-color-user-hover);
+
       i {
         display: inline-block;
         animation: logoAnimation 0.3s ease-in-out;
       }
     }
   }
+
   ::v-deep(.el-dropdown) {
     color: var(--next-bg-topBarColor);
   }
+
   ::v-deep(.el-badge) {
     height: 40px;
     line-height: 40px;
     display: flex;
     align-items: center;
   }
+
   ::v-deep(.el-badge__content.is-fixed) {
     top: 12px;
   }

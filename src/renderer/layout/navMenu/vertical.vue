@@ -1,14 +1,14 @@
 <template>
   <el-menu
-      router
-      :default-active="state.defaultActive"
-      background-color="transparent"
       :collapse="state.isCollapse"
-      :unique-opened="getThemeConfig.isUniqueOpened"
       :collapse-transition="false"
+      :default-active="state.defaultActive"
+      :unique-opened="getThemeConfig.isUniqueOpened"
+      background-color="transparent"
+      router
   >
     <template v-for="val in menuLists">
-      <el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
+      <el-sub-menu v-if="val.children && val.children.length > 0" :key="val.path" :index="val.path">
         <template #title>
           <SvgIcon :name="val.meta.icon"/>
           <span>{{ val.meta.title }}</span>
@@ -16,20 +16,20 @@
         <SubItem :child="val.children"/>
       </el-sub-menu>
       <template v-else>
-        <el-menu-item :index="val.path" :key="val.path">
+        <el-menu-item :key="val.path" :index="val.path">
           <SvgIcon :name="val.meta.icon"/>
-          <template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+          <template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)" #title>
             <span>{{ val.meta.title }}</span>
           </template>
-          <template #title v-else>
-            <a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">{{ val.meta.title }}</a>
+          <template v-else #title>
+            <a :href="val.meta.isLink" class="w100" rel="opener" target="_blank">{{ val.meta.title }}</a>
           </template>
         </el-menu-item>
       </template>
     </template>
   </el-menu>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useStore} from "@renderer/store";
 import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {computed, onMounted, reactive, watch} from "vue";

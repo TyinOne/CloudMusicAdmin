@@ -9,6 +9,7 @@
 <script lang="ts" setup>
 import {useServerApi} from "@renderer/api/server";
 import {onMounted, reactive} from "vue";
+
 let state = reactive({
   redis: {}
 })

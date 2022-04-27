@@ -1,7 +1,7 @@
 <template>
-  <el-container class="layout-container">
+  <el-container id="layout-container" class="layout-container">
     <Aside/>
-    <el-container class="flex-center" :class="{ 'layout-backtop': !isFixedHeader }">
+    <el-container :class="{ 'layout-backtop': !isFixedHeader }" class="flex-center">
       <Header v-if="isFixedHeader"/>
       <el-scrollbar ref="layoutDefaultsScrollbarRef" :class="{ 'layout-backtop': isFixedHeader }">
         <Header v-if="!isFixedHeader"/>

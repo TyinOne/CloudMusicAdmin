@@ -67,7 +67,15 @@ export default function getService() {
         await searchRole()
     })
     return {
-        keywords, dataSource, pagination, loading, searchRole, onHandleCurrentChange, onOpenAddRole, onOpenEditRole, onRowDel,
+        keywords,
+        dataSource,
+        pagination,
+        loading,
+        searchRole,
+        onHandleCurrentChange,
+        onOpenAddRole,
+        onOpenEditRole,
+        onRowDel,
         handleRoleRef,
     }
 }

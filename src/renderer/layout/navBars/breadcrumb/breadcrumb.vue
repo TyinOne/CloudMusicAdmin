@@ -1,19 +1,22 @@
 <template>
-  <div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
+  <div :style="{ display: isShowBreadcrumb }" class="layout-navbars-breadcrumb">
     <SvgIcon
-        class="layout-navbars-breadcrumb-icon"
         :name="getThemeConfig.isCollapse ? 'ele-Expand' : 'ele-Fold'"
         :size="16"
+        class="layout-navbars-breadcrumb-icon"
         @click="onThemeConfigChange"
     />
     <el-breadcrumb class="layout-navbars-breadcrumb-hide">
-      <transition-group name="breadcrumb" mode="out-in">
+      <transition-group mode="out-in" name="breadcrumb">
         <el-breadcrumb-item v-for="(v, k) in state.breadcrumbList" :key="v.meta.title">
 					<span v-if="k === state.breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
-						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ v.meta.title }}
+						<SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon"
+                     class="layout-navbars-breadcrumb-iconfont"/>{{ v.meta.title }}
 					</span>
           <a v-else @click.prevent="onBreadcrumbClick(v)">
-            <SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ v.meta.title }}
+            <SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon"
+                     class="layout-navbars-breadcrumb-iconfont"/>
+            {{ v.meta.title }}
           </a>
         </el-breadcrumb-item>
       </transition-group>
@@ -33,6 +36,7 @@ interface BreadcrumbState {
   routeSplitFirst: string;
   routeSplitIndex: number;
 }
+
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -49,13 +53,13 @@ const getThemeConfig = computed(() => {
 // 动态设置经典、横向布局不显示
 const isShowBreadcrumb = computed(() => {
   initRouteSplit(route.path);
-  const { layout, isBreadcrumb } = store.state.themeConfig.themeConfig;
+  const {layout, isBreadcrumb} = store.state.themeConfig.themeConfig;
   if (layout === 'classic' || layout === 'transverse') return 'none';
   else return isBreadcrumb ? '' : 'none';
 });
 // 面包屑点击时
 const onBreadcrumbClick = (v: any) => {
-  const { redirect, path } = v;
+  const {redirect, path} = v;
   if (redirect) router.push(redirect);
   else router.push(path);
 };
@@ -108,34 +112,40 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .layout-navbars-breadcrumb {
   flex: 1;
   height: inherit;
   display: flex;
   align-items: center;
   padding-left: 15px;
+
   .layout-navbars-breadcrumb-icon {
     cursor: pointer;
     font-size: 18px;
     margin-right: 15px;
     color: var(--next-bg-topBarColor);
   }
+
   .layout-navbars-breadcrumb-span {
     opacity: 0.7;
     color: var(--next-bg-topBarColor);
   }
+
   .layout-navbars-breadcrumb-iconfont {
     font-size: 14px;
     margin-right: 5px;
   }
+
   ::v-deep(.el-breadcrumb__separator) {
     opacity: 0.7;
     color: var(--next-bg-topBarColor);
   }
+
   ::v-deep(.el-breadcrumb__inner a, .el-breadcrumb__inner.is-link) {
     font-weight: unset !important;
     color: var(--next-bg-topBarColor);
+
     &:hover {
       color: var(--el-color-primary) !important;
     }

@@ -2,10 +2,10 @@
   <div class="system-role-container">
     <el-card shadow="hover">
       <div class="system-user-search mb15">
-        <el-input size="default" placeholder="请输入菜单名称" style="max-width: 180px"
-                  v-model:model-value="state.keywords" clearable></el-input>
-        <el-select size="default" placeholder="请选择角色"
-                   v-model:model-value="state.roleId"
+        <el-input v-model:model-value="state.keywords" clearable placeholder="请输入菜单名称"
+                  size="default" style="max-width: 180px"></el-input>
+        <el-select v-model:model-value="state.roleId" placeholder="请选择角色"
+                   size="default"
                    style="max-width: 180px">
           <el-option :value="0" label="全部"></el-option>
           <el-option
@@ -14,28 +14,28 @@
               :label="item.label"
               :value="item.value"></el-option>
         </el-select>
-        <el-select size="default" placeholder="请选择状态"
-                   v-model:model-value="state.disabled"
+        <el-select v-model:model-value="state.disabled" placeholder="请选择状态"
+                   size="default"
                    style="max-width: 100px">
-          <el-option value="" label="全部"></el-option>
-          <el-option value="false" label="启用"></el-option>
-          <el-option value="true" label="禁用"></el-option>
+          <el-option label="全部" value=""></el-option>
+          <el-option label="启用" value="false"></el-option>
+          <el-option label="禁用" value="true"></el-option>
         </el-select>
-        <el-button size="default" type="primary" class="ml10" @click="searchMenu">
+        <el-button class="ml10" size="default" type="primary" @click="searchMenu">
           <el-icon>
             <ele-Search/>
           </el-icon>
           查询
         </el-button>
-        <el-button size="default" type="success" class="ml10" @click="onOpenAddMenu">
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu">
           <el-icon>
             <ele-FolderAdd/>
           </el-icon>
           新增菜单
         </el-button>
       </div>
-      <el-table row-key="path" :data="state.dataSource" style="width: 100%"  v-loading="loading"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      <el-table v-loading="loading" :data="state.dataSource" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
+                style="width: 100%"
       >
         <el-table-column label="菜单名称" show-overflow-tooltip>
           <template #default="scope">
@@ -43,11 +43,11 @@
             <span class="ml10">{{ scope.row['metaTitle'] }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="path" label="路由路径" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="component" label="组件路径" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="security" label="权限标识" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="metaRoles" label="角色标识" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="sort" label="排序" show-overflow-tooltip></el-table-column>
+        <el-table-column label="路由路径" prop="path" show-overflow-tooltip></el-table-column>
+        <el-table-column label="组件路径" prop="component" show-overflow-tooltip></el-table-column>
+        <el-table-column label="权限标识" prop="security" show-overflow-tooltip></el-table-column>
+        <el-table-column label="角色标识" prop="metaRoles" show-overflow-tooltip></el-table-column>
+        <el-table-column label="排序" prop="sort" show-overflow-tooltip></el-table-column>
         <el-table-column label="类型" show-overflow-tooltip>
           <template #default="scope">
             <el-tag class="link" type="success">{{ getMenuType(scope.row.type) }}</el-tag>
