@@ -1,17 +1,17 @@
 <template>
   <div class="window-title" v-if="!IsUseSysTitle && isNotMac && !IsWeb">
-<!--    &lt;!&ndash; 软件logo预留位置 &ndash;&gt;-->
-<!--    <div style="-webkit-app-region: drag" class="logo">-->
-<!--      <div class="windows-icon-bg" @click="Mini">-->
-<!--        <SvgIcon name="/assets/mac_min.svg"></SvgIcon>-->
-<!--      </div>-->
-<!--      <div class="windows-icon-bg" @click="MixOrReduction">-->
-<!--        <SvgIcon name="/assets/mac_max.svg"></SvgIcon>-->
-<!--      </div>-->
-<!--      <div class="windows-icon-bg close-icon" @click="Close">-->
-<!--        <SvgIcon name="/assets/mac_close.svg"></SvgIcon>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    &lt;!&ndash; 软件logo预留位置 &ndash;&gt;-->
+    <!--    <div style="-webkit-app-region: drag" class="logo">-->
+    <!--      <div class="windows-icon-bg" @click="Mini">-->
+    <!--        <SvgIcon name="/assets/mac_min.svg"></SvgIcon>-->
+    <!--      </div>-->
+    <!--      <div class="windows-icon-bg" @click="MixOrReduction">-->
+    <!--        <SvgIcon name="/assets/mac_max.svg"></SvgIcon>-->
+    <!--      </div>-->
+    <!--      <div class="windows-icon-bg close-icon" @click="Close">-->
+    <!--        <SvgIcon name="/assets/mac_close.svg"></SvgIcon>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div class="controls-container">
       <div class="windows-icon-bg close-icon" @click="Close">
         <SvgIcon name="/assets/mac_close.svg"></SvgIcon>
@@ -33,16 +33,29 @@
 </template>
 <script setup lang="ts">
 
-import { ref } from "vue";
-const IsWeb = ref(process.env.BUILD_TARGET);
-const { ipcRenderer } = require("electron")
+import {ref} from "vue";
+
+let {ipcRenderer, systemInfo} = window;
 
 const IsUseSysTitle = ref(false);
 const mix = ref(false);
-const isNotMac = ref(process.platform !== "darwin");
-ipcRenderer.invoke("IsUseSysTitle").then((res) => {
-  IsUseSysTitle.value = res;
-});
+const isNotMac = ref(false);
+const IsWeb = ref(process.env.IS_WEB);
+
+if (!ipcRenderer) {
+  ipcRenderer = {} as any;
+  ipcRenderer.on =
+      ipcRenderer.invoke =
+          ipcRenderer.removeAllListeners =
+              (...args: any): any => {
+                console.log("not electron");
+              };
+} else {
+  isNotMac.value = systemInfo.platform !== "darwin";
+  ipcRenderer.invoke("IsUseSysTitle").then((res) => {
+    IsUseSysTitle.value = res;
+  });
+}
 
 const Mini = () => {
   ipcRenderer.invoke("windows-mini");
@@ -68,6 +81,7 @@ const Close = () => {
   //position: fixed;
   top: 0;
   z-index: 99999;
+
   .icon-logo {
     width: 1em;
     height: 1em;
@@ -75,12 +89,15 @@ const Close = () => {
     fill: currentColor;
     overflow: hidden;
   }
+
   .title {
     text-align: center;
   }
+
   .logo {
     margin-left: 20px;
   }
+
   .controls-container {
     display: flex;
     flex-grow: 0;
@@ -98,6 +115,7 @@ const Close = () => {
       height: 100%;
       width: 33.34%;
       color: rgba(129, 129, 129, 0.6);
+
       .icon-size {
         width: 12px;
         height: 15px;
@@ -106,10 +124,12 @@ const Close = () => {
         overflow: hidden;
       }
     }
+
     .windows-icon-bg:hover {
       background-color: rgba(182, 182, 182, 0.2);
       color: #333;
     }
+
     .close-icon:hover {
       background-color: rgba(232, 17, 35, 0.9);
       color: #fff;

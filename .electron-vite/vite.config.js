@@ -44,7 +44,7 @@ const config = defineConfig({
     ],
     optimizeDeps: {
     },
-    publicDir: resolve('assets')
+    publicDir: resolve('static')
 })
 
 module.exports = config

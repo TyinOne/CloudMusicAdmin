@@ -1,4 +1,5 @@
 import config from '@config/index'
+import {BrowserWindowConstructorOptions} from "electron";
 
 
 export const mainWindowConfig = {
@@ -21,7 +22,7 @@ export const mainWindowConfig = {
     }
 };
 
-export const otherWindowConfig = {
+export const otherWindowConfig: BrowserWindowConstructorOptions = {
     height: 595,
     useContentSize: true,
     width: 1140,
@@ -30,8 +31,6 @@ export const otherWindowConfig = {
     frame: config.IsUseSysTitle,
     show: false,
     webPreferences: {
-        contextIsolation: false,
-        nodeIntegration: true,
         webSecurity: false,
         // 如果是开发模式可以使用devTools
         devTools: process.env.NODE_ENV === 'development',

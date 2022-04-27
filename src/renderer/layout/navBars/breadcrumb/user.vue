@@ -64,7 +64,7 @@ import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
 import screenfull from 'screenfull';
 import UserNews from '@renderer/layout/navBars/breadcrumb/userNews.vue'
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
-const { ipcRenderer } = require("electron")
+const { ipcRenderer } = window;
 const { proxy } = <any>getCurrentInstance();
 const router = useRouter();
 const store = useStore();

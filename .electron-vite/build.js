@@ -1,12 +1,12 @@
 'use strict'
 process.env.NODE_ENV = 'production'
 
-const { say } = require('cfonts')
-const { sync } = require('del')
+const {say} = require('cfonts')
+const {sync} = require('del')
 
 const chalk = require('chalk')
 const rollup = require("rollup")
-const { build } = require('vite')
+const {build} = require('vite')
 const Multispinner = require('multispinner')
 
 const mainOptions = require('./rollup.config');

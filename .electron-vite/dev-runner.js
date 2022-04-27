@@ -7,13 +7,14 @@ const rollup = require("rollup")
 const Portfinder = require("portfinder")
 const config = require('../config')
 
-const { say } = require('cfonts')
-const { spawn } = require('child_process')
-const { createServer } = require('vite')
+const {say} = require('cfonts')
+const {spawn} = require('child_process')
+const {createServer} = require('vite')
 
 const rendererOptions = require("./vite.config")
-const mainOptions = require("./rollup.config")
-const opt = mainOptions(process.env.NODE_ENV);
+const rollupOptions = require("./rollup.config")
+const mainOpt = rollupOptions(process.env.NODE_ENV, "main");
+const preloadOpt = rollupOptions(process.env.NODE_ENV, "preload")
 
 let electronProcess = null
 let manualRestart = false
@@ -70,9 +71,8 @@ function startRenderer() {
             } else {
                 const server = await createServer(rendererOptions)
                 process.env.PORT = port
-                server.listen(port).then(() => {
-                    console.log('\n\n' + chalk.blue(`${config.dev.chineseLog ? '  正在准备主进程，请等待...' : '  Preparing main process, please wait...'}`) + '\n\n')
-                })
+                await server.listen(port)
+                console.log('\n\n' + chalk.blue(`${config.dev.chineseLog ? '  正在准备主进程，请等待...' : '  Preparing main process, please wait...'}`) + '\n\n')
                 resolve()
             }
         })
@@ -81,12 +81,12 @@ function startRenderer() {
 
 function startMain() {
     return new Promise((resolve, reject) => {
-        const watcher = rollup.watch(opt);
-        watcher.on('change', filename => {
+        const MainWatcher = rollup.watch(mainOpt);
+        MainWatcher.on('change', filename => {
             // 主进程日志部分
             logStats(`${config.dev.chineseLog ? '主进程文件变更' : 'Main-FileChange'}`, filename)
         });
-        watcher.on('event', event => {
+        MainWatcher.on('event', event => {
             if (event.code === 'END') {
                 if (electronProcess && electronProcess.kill) {
                     manualRestart = true
@@ -106,6 +106,38 @@ function startMain() {
             }
         })
     })
+}
+
+function startPreload() {
+    console.log('\n\n' + chalk.blue(`${config.dev.chineseLog ? '  正在准备预加载脚本，请等待...' : '  Preparing preLoad File, please wait...'}`) + '\n\n')
+    return new Promise((resolve, reject) => {
+        const PreloadWatcher = rollup.watch(preloadOpt)
+        PreloadWatcher.on('change', filename => {
+            // 预加载脚本日志部分
+            logStats(`${config.dev.chineseLog ? '预加载脚本文件变更' : 'preLoad-FileChange'}`, filename)
+        });
+        PreloadWatcher.on('event', event => {
+            if (event.code === 'END') {
+                if (electronProcess && electronProcess.kill) {
+                    manualRestart = true
+                    process.kill(electronProcess.pid)
+                    electronProcess = null
+                    startElectron()
+
+                    setTimeout(() => {
+                        manualRestart = false
+                    }, 5000)
+                }
+
+                resolve()
+
+            } else if (event.code === 'ERROR') {
+                reject(event.error)
+            }
+        })
+    })
+
+
 }
 
 function startElectron() {
@@ -178,6 +210,7 @@ async function init() {
     try {
         await startRenderer()
         await startMain()
+        await startPreload()
         await startElectron()
     } catch (error) {
         console.error(error)

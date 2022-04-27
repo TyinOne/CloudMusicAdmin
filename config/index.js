@@ -2,12 +2,8 @@ module.exports = {
   build: {
     DisableF12: true,
     env: require('./prod.env'),
-    // 热更新
-    hotPublishUrl:"http://localhost:5000",
-    hotPublishConfigName: "update-config",
-    hotPublishGzipDirectory: "gzip",
-    hotPublishTempDirectory: "update_temp",
-    hostPublishOldDirectory: "old_temp",
+    hotPublishUrl:"",
+    hotPublishConfigName: "update-config"
   },
   dev: {
     env: require('./dev.env'),
