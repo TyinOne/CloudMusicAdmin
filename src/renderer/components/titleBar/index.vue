@@ -27,7 +27,7 @@
           <div class="link">开发者工具</div>
         </div>
         <div class="no-hover menu-item">
-          <div>v0.0.1456</div>
+          <div>{{ 'v' + version }}</div>
         </div>
       </div>
       <!-- 中间标题位置 -->
@@ -37,19 +37,19 @@
   <div v-else-if="!IsUseSysTitle && !isNotMac" class="window-title">
   </div>
   <el-dialog
-      title="进度"
       v-model="dialogVisible"
       :before-close="handleClose"
       center
-      width="14%"
+      title="进度"
       top="45vh"
+      width="14%"
   >
     <div class="conten">
       <el-progress
-          type="dashboard"
-          :percentage="percentage"
           :color="colors"
+          :percentage="percentage"
           :status="progressStatus"
+          type="dashboard"
       ></el-progress>
     </div>
   </el-dialog>
@@ -62,6 +62,7 @@ import macMin from '@renderer/assets/mac_min.svg'
 import macClose from '@renderer/assets/mac_close.svg'
 import UpdateProgress from "@renderer/components/updateProgress/index.vue";
 import {ref} from "vue";
+import packageConfig from '../../../../package.json'
 
 let dialogVisible = ref(false);
 let showForcedUpdate = ref(false);
@@ -70,11 +71,11 @@ let filePath = ref("");
 let updateStatus = ref("");
 let percentage = ref(0);
 let colors = ref([
-  { color: "#f56c6c", percentage: 20 },
-  { color: "#e6a23c", percentage: 40 },
-  { color: "#6f7ad3", percentage: 60 },
-  { color: "#1989fa", percentage: 80 },
-  { color: "#5cb87a", percentage: 100 },
+  {color: "#f56c6c", percentage: 20},
+  {color: "#e6a23c", percentage: 40},
+  {color: "#6f7ad3", percentage: 60},
+  {color: "#1989fa", percentage: 80},
+  {color: "#5cb87a", percentage: 100},
 ] as string | ColorInfo[]);
 
 let {ipcRenderer, systemInfo} = window;
@@ -83,7 +84,7 @@ const IsUseSysTitle = ref(false);
 const mix = ref(false);
 const isNotMac = ref(false);
 const IsWeb = ref(process.env.IS_WEB);
-
+const version = packageConfig.version
 if (!ipcRenderer) {
   ipcRenderer = {} as any;
   ipcRenderer.on =

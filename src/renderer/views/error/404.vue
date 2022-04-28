@@ -2,47 +2,50 @@
   <div style="background: #f0f2f5; margin-top: -20px; height: calc(100vh - 30px);">
     <div class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" :src="img_404" alt="404" />
-        <img class="pic-404__child left" :src="img_404_cloud" alt="404" />
-        <img class="pic-404__child mid" :src="img_404_cloud" alt="404" />
-        <img class="pic-404__child right" :src="img_404_cloud" alt="404" />
+        <img :src="img_404" alt="404" class="pic-404__parent"/>
+        <img :src="img_404_cloud" alt="404" class="pic-404__child left"/>
+        <img :src="img_404_cloud" alt="404" class="pic-404__child mid"/>
+        <img :src="img_404_cloud" alt="404" class="pic-404__child right"/>
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">OOPS!</div>
         <div class="bullshit__info">您似乎进到了一个次元世界，请点击以下按钮返回主页或者发送错误报告</div>
-        <a href="/" class="bullshit__return-home" >返回首页</a>
+        <a class="bullshit__return-home" href="/">返回首页</a>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import img_404 from "@renderer/assets/404_images/404.png";
-import img_404_cloud from "@renderer/assets/404_images/404_cloud.png";
-</script>
+import img_404_cloud from "@renderer/assets/404_images/404_cloud.png";</script>
 <script lang="ts">
 export default {
   name: "404"
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
 .wscn-http404 {
   position: relative;
   width: 1200px;
   margin: 20px auto 60px;
   padding: 0 100px;
   overflow: hidden;
+
   .pic-404 {
     position: relative;
     float: left;
     width: 600px;
     padding: 150px 0;
     overflow: hidden;
+
     &__parent {
       width: 100%;
     }
+
     &__child {
       position: absolute;
+
       &.left {
         width: 80px;
         top: 17px;
@@ -54,6 +57,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
+
       &.mid {
         width: 46px;
         top: 10px;
@@ -65,6 +69,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1.2s;
       }
+
       &.right {
         width: 62px;
         top: 100px;
@@ -76,6 +81,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
+
       @keyframes cloudLeft {
         0% {
           top: 17px;
@@ -144,12 +150,14 @@ export default {
       }
     }
   }
+
   .bullshit {
     position: relative;
     float: left;
     width: 300px;
     padding: 150px 0;
     overflow: hidden;
+
     &__oops {
       font-size: 32px;
       font-weight: bold;
@@ -161,6 +169,7 @@ export default {
       animation-duration: 0.5s;
       animation-fill-mode: forwards;
     }
+
     &__headline {
       font-size: 20px;
       line-height: 24px;
@@ -172,6 +181,7 @@ export default {
       animation-delay: 0.1s;
       animation-fill-mode: forwards;
     }
+
     &__info {
       font-size: 13px;
       line-height: 21px;
@@ -183,6 +193,7 @@ export default {
       animation-delay: 0.2s;
       animation-fill-mode: forwards;
     }
+
     &__return-home {
       display: block;
       float: left;
@@ -201,6 +212,7 @@ export default {
       animation-delay: 0.3s;
       animation-fill-mode: forwards;
     }
+
     @keyframes slideUp {
       0% {
         transform: translateY(60px);

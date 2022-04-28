@@ -34,7 +34,8 @@
           新增菜单
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="state.dataSource" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
+      <el-table v-loading="loading" :data="state.dataSource"
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
                 style="width: 100%"
       >
         <el-table-column label="菜单名称" show-overflow-tooltip>

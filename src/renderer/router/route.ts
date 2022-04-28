@@ -138,6 +138,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 }
             },
             {
+                path: '/download',
+                name: 'download',
+                component: () => import('@renderer/views/download/index.vue'),
+                meta: {
+                    roles: ['admin', 'common'],
+                    icon: 'ele-Download',
+                    title: '下载中心',
+                    isLink: '',
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    isHide: true
+                }
+            },
+            {
                 path: '/gitee',
                 name: 'layoutIframeView',
                 component: () => import('@renderer/layout/routerView/iframes.vue'),

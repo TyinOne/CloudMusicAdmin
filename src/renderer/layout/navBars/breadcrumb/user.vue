@@ -53,7 +53,7 @@
             <SvgIcon name="ele-Lock"></SvgIcon>
             {{ '安全中心' }}
           </el-dropdown-item>
-          <el-dropdown-item command="/download">
+          <el-dropdown-item v-if="ipcRenderer" command="/download">
             <SvgIcon name="ele-Download"></SvgIcon>
             {{ '下载中心' }}
           </el-dropdown-item>
@@ -63,7 +63,10 @@
             {{ '代码仓库' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>-->
-          <el-dropdown-item command="logOut" divided>{{ '退出登录' }}</el-dropdown-item>
+          <el-dropdown-item command="logOut" divided>
+            <SvgIcon name="ele-SwitchButton"></SvgIcon>
+            {{ '退出登录' }}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

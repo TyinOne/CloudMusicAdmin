@@ -12,7 +12,7 @@
       <ul class="el-dropdown-menu">
         <template v-for="(v, k) in dropdownList">
           <li
-              v-if="!v.affix"
+              v-if="!v.affix && !v.link"
               :key="k"
               aria-disabled="false"
               class="el-dropdown-menu__item"
@@ -49,16 +49,19 @@ export default defineComponent({
     const state = reactive({
       isShow: false,
       dropdownList: [
-        {contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'ele-RefreshRight'},
-        {contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'ele-Close'},
-        {contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'ele-CircleClose'},
-        {contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'ele-FolderDelete'},
+        {contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'ele-RefreshRight', link: false},
+        {contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'ele-Close', link: false},
+        {contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'ele-CircleClose', link: false},
+        {contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'ele-FolderDelete', link: false},
         {
           contextMenuClickId: 4,
           txt: '当前页全屏',
           affix: false,
           icon: 'iconfont icon-fullscreen',
+          link: false
         },
+
+        {contextMenuClickId: 5, txt: '网页中打开', affix: false, icon: 'ele-Cloudy', link: false},
       ],
       item: {},
       arrowLeft: 10,
@@ -83,6 +86,7 @@ export default defineComponent({
     const openContextmenu = (item: any) => {
       state.item = item;
       item.meta.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
+      item.meta.isLink ? (state.dropdownList[5].link = false) : (state.dropdownList[5].link = true)
       closeContextmenu();
       setTimeout(() => {
         state.isShow = true;

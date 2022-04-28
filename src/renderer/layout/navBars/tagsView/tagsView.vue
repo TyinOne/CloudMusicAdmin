@@ -68,6 +68,8 @@ import other from "@renderer/utils/other";
 import {ElMessage} from "element-plus";
 import Sortable from 'sortablejs';
 
+let {ipcRenderer} = window;
+
 interface TagsViewState {
   routeActive: string;
   routePath: string | unknown;
@@ -339,6 +341,12 @@ const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
     case 4:
       // 开启当前页面全屏
       await openCurrenFullscreen(getThemeConfig.value.isShareTagsView ? path : url);
+      break;
+    case 5:
+      let u = meta.isLink
+      if (ipcRenderer) {
+        ipcRenderer.invoke('open-web', u);
+      }
       break;
   }
 };

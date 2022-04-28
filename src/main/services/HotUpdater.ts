@@ -7,7 +7,6 @@ import {join, resolve} from 'path'
 import {promisify} from 'util'
 import {pipeline} from 'stream'
 import {app, BrowserWindow} from 'electron'
-import {gt} from 'semver'
 import {createHmac} from 'crypto'
 import extract from 'extract-zip'
 import {version} from '../../../package.json'
@@ -27,7 +26,7 @@ const request = axios.create()
  * @author umbrella22
  * @date 2021-03-05
  */
-function hash(data, type = 'sha256', key = 'Sky'): string {
+function hash(data, type = 'sha256', key = 'Tyin'): string {
     const hmac = createHmac(type, key)
     hmac.update(data)
     return hmac.digest('hex')
@@ -68,8 +67,8 @@ interface Res extends AxiosResponse<any> {
 export const updater = async (windows?: BrowserWindow): Promise<void> => {
     try {
         const res: Res = await request({url: `${hotPublishConfig.hotPublishHost}/${hotPublishConfig.hotPublishCheck}`})
-        console.log(hotPublishConfig)
-        if (gt(res.data.result.version, version)) {
+        console.log(res.data)
+        if (res.data.result.version != version) {
             await emptyDir(updatePath)
             const filePath = join(updatePath, res.data.result.name)
             updateInfo.status = 'downloading'
@@ -79,6 +78,9 @@ export const updater = async (windows?: BrowserWindow): Promise<void> => {
             const sha256 = hash(buffer)
             if (sha256 !== res.data.result.hash) throw new Error('sha256 error')
             const appPathTemp = join(updatePath, 'temp')
+            console.log(appPathTemp)
+            console.log(filePath)
+            console.log(appPath)
             await extract(filePath, {dir: appPathTemp})
             updateInfo.status = 'moving'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
@@ -87,6 +89,7 @@ export const updater = async (windows?: BrowserWindow): Promise<void> => {
             await copy(appPathTemp, appPath)
             updateInfo.status = 'finished'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
+            console.log('更新完成')
         }
     } catch (error) {
         console.log(error)

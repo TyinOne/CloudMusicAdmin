@@ -1,5 +1,5 @@
 <template>
-  <div class="mask-box" @click="closeMask" v-if="visible">
+  <div v-if="visible" class="mask-box" @click="closeMask">
     <div class="title-box">
       <div class="title">
         <!-- <ali-svg-icon :icon-class="icon_name" class-name="cuowu"></ali-svg-icon> -->
@@ -8,19 +8,19 @@
       <div class="content">{{ message }}</div>
       <div class="download-progress">
         <el-progress
-            :percentage="percentage"
             :color="colors"
+            :percentage="percentage"
             :status="progressStaus"
         ></el-progress>
       </div>
-      <div class="progress-content" v-if="winOS">
+      <div v-if="winOS" class="progress-content">
         注：当提示您安全警告时，请点击“运行(R)”，或者点击“更多信息”，选择仍要运行
       </div>
       <div class="bom-box">
         <el-button
+            v-if="progressStaus == 'success'"
             type="text"
             @click="openfile"
-            v-if="progressStaus == 'success'"
         >
           查看文件位置
         </el-button>
@@ -30,10 +30,11 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { onUnmounted, ref, watch } from "vue";
-import type { Ref } from "vue";
-const { ipcRenderer, shell, systemInfo } = window;
+<script lang="ts" setup>
+import type {Ref} from "vue";
+import {onUnmounted, ref, watch} from "vue";
+
+const {ipcRenderer, shell, systemInfo} = window;
 const props = defineProps({
   modelValue: Boolean,
 });
@@ -53,11 +54,11 @@ interface Colors {
 }
 
 const colors: Ref<Colors[] | string> = ref([
-  { color: "#f56c6c", percentage: 20 },
-  { color: "#e6a23c", percentage: 40 },
-  { color: "#6f7ad3", percentage: 60 },
-  { color: "#1989fa", percentage: 80 },
-  { color: "#5cb87a", percentage: 100 },
+  {color: "#f56c6c", percentage: 20},
+  {color: "#e6a23c", percentage: 40},
+  {color: "#6f7ad3", percentage: 60},
+  {color: "#1989fa", percentage: 80},
+  {color: "#5cb87a", percentage: 100},
 ]);
 const percentage = ref(0);
 const progressStaus = ref(null);
