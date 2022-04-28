@@ -28,11 +28,12 @@ export default {
   },
   setup(props: SvgIconProps) {
     // 定义变量
-    const linesString: any[] = ['https', 'http', '/src', '/assets'];
+    const linesString: any[] = ['https', 'http', '/src', '/assets', './assets'];
     const onLineStyle: string = `font-size: ${props.size}px;color: ${props.color}`;
     const localsStyle: string = `width: ${props.size}px;height: ${props.size}px`;
     const eleSetStyle = {class: 'el-icon', style: onLineStyle};
-
+    // console.log(props)
+    // console.log(props.name)
     // 逻辑判断
     if (props.name?.startsWith('ele-')) {
       return () => h('i', eleSetStyle, [props.name === 'ele-' ? '' : h(resolveComponent(props.name))]);

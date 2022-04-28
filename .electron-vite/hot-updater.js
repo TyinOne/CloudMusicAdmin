@@ -16,7 +16,7 @@ const platformName = platform().includes('win32') ? 'win' : platform().includes(
 const buildPath = join('.', 'build', `${platformName === 'mac' ? 'mac' : platformName + '-unpacked'}`)
 
 const hash = (data, type = 'sha256') => {
-    const hmac = crypto.createHmac(type, 'Sky')
+    const hmac = crypto.createHmac(type, 'Tyin')
     hmac.update(data)
     return hmac.digest('hex')
 }
@@ -95,7 +95,7 @@ const start = async () => {
             const hashName = sha256.slice(7, 12);
             await copy(zipPath, join(outputPath, `${hashName}.zip`));
             await remove(zipPath);
-            await outputJSON(join(outputPath, `${build.hotPublishConfigName}.json`),
+            await outputJSON(join(outputPath, 'updateVersion.json'),
                 {
                     version: packageFile.version,
                     name: `${hashName}.zip`,

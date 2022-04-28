@@ -2,8 +2,6 @@ module.exports = {
     build: {
         DisableF12: true,
         env: require('./prod.env'),
-        hotPublishUrl: "",
-        hotPublishConfigName: "update-config"
     },
     dev: {
         env: require('./dev.env'),
@@ -15,5 +13,9 @@ module.exports = {
     HotUpdateFolder: 'update',
     UseStartupChart: true,
     IsUseSysTitle: false,
-    BuiltInServerPort: 8888
+    BuiltInServerPort: 8888,
+    hotUpdate: {
+        hotPublishHost: "http://127.0.0.1:8888",
+        hotPublishCheck: "admin/update/check",
+    }
 }

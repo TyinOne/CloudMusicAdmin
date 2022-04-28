@@ -30,7 +30,28 @@ const config = defineConfig({
         outDir: IsWeb ? resolve('dist/web') : resolve('dist/electron/renderer'),
         emptyOutDir: true,
         target: 'esnext',
-        minify: 'esbuild'
+        minify: 'esbuild',
+        rollupOptions: {
+            output: {
+                entryFileNames: `assets/[name].${new Date().getTime()}.js`,
+                chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
+                assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
+                compact: true,
+                manualChunks: {
+                    vue: ['vue', 'vue-router', 'vuex'],
+                },
+            },
+        },
+        terserOptions: {
+            compress: {
+                drop_console: false,
+                drop_debugger: true,
+            },
+            ie8: true,
+            output: {
+                comments: true,
+            },
+        },
     },
     server: {
     },

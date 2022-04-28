@@ -67,16 +67,17 @@ interface Res extends AxiosResponse<any> {
  */
 export const updater = async (windows?: BrowserWindow): Promise<void> => {
     try {
-        const res: Res = await request({url: `${hotPublishConfig.url}/${hotPublishConfig.configName}.json?time=${new Date().getTime()}`,})
-        if (gt(res.data.version, version)) {
+        const res: Res = await request({url: `${hotPublishConfig.hotPublishHost}/${hotPublishConfig.hotPublishCheck}`})
+        console.log(hotPublishConfig)
+        if (gt(res.data.result.version, version)) {
             await emptyDir(updatePath)
-            const filePath = join(updatePath, res.data.name)
+            const filePath = join(updatePath, res.data.result.name)
             updateInfo.status = 'downloading'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
-            await download(`${hotPublishConfig.url}/${res.data.name}`, filePath);
+            await download(`${res.data.result.path}`, filePath);
             const buffer = await readFile(filePath)
             const sha256 = hash(buffer)
-            if (sha256 !== res.data.hash) throw new Error('sha256 error')
+            if (sha256 !== res.data.result.hash) throw new Error('sha256 error')
             const appPathTemp = join(updatePath, 'temp')
             await extract(filePath, {dir: appPathTemp})
             updateInfo.status = 'moving'
@@ -87,9 +88,8 @@ export const updater = async (windows?: BrowserWindow): Promise<void> => {
             updateInfo.status = 'finished'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
         }
-
-
     } catch (error) {
+        console.log(error)
         updateInfo.status = 'failed'
         updateInfo.message = error
         if (windows) windows.webContents.send('hot-update-status', updateInfo)

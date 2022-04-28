@@ -1,11 +1,10 @@
-import {build} from '@config/index.js'
+import {hotUpdate} from '@config/index.js'
 
-interface hotPublish {
-    url: string;
-    configName: string;
+interface hotPublishConfig {
+    hotPublishHost: string,
+    hotPublishCheck: string,
 }
-
-export const hotPublishConfig: hotPublish = {
-    url: build.hotPublishUrl,
-    configName: build.hotPublishConfigName
+export const hotPublishConfig: hotPublishConfig = {
+    hotPublishHost: hotUpdate.hotPublishHost,
+    hotPublishCheck: hotUpdate.hotPublishCheck
 }

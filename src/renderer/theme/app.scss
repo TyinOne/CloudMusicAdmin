@@ -37,7 +37,13 @@ body,
   overflow: hidden;
   position: relative;
 }
-
+.e-popover {
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+  box-shadow: unset !important;
+  transform: translate(136px, 0px) !important;
+}
 /* 主布局样式
 ------------------------------- */
 .layout-container {

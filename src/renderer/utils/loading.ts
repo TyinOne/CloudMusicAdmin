@@ -9,6 +9,7 @@ import '@renderer/theme/loading.scss';
 export const NextLoading = {
     // 创建 loading
     start: () => {
+        console.log('start')
         const bodys: Element = document.body;
         const div = <HTMLElement>document.createElement('div');
         div.setAttribute('class', 'loading-next');

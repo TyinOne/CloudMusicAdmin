@@ -63,9 +63,12 @@ const submit = async () => {
       token: res.result.token,
       userInfos: userInfo,
     }).then(() => {
+      state.loading.signIn = false;
       initFrontEndControlRoutes().then(() => {
         signInSuccess();
       });
+    }).catch(e => {
+      state.loading.signIn = false;
     })
   })
 }

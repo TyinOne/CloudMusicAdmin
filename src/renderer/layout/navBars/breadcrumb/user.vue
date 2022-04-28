@@ -41,11 +41,28 @@
 			</span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item command="/home">{{ '首页' }}</el-dropdown-item>
-          <el-dropdown-item command="/gitee">{{ '代码仓库' }}</el-dropdown-item>
-          <el-dropdown-item command="/personal">{{ '个人中心' }}</el-dropdown-item>
-          <el-dropdown-item command="open">{{ '百度' }}</el-dropdown-item>
-          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>
+          <el-dropdown-item command="/personal">
+            <SvgIcon name="ele-User"></SvgIcon>
+            {{ '个人中心' }}
+          </el-dropdown-item>
+          <el-dropdown-item command="/message">
+            <SvgIcon name="ele-Message"></SvgIcon>
+            {{ '通知中心' }}
+          </el-dropdown-item>
+          <el-dropdown-item command="/security">
+            <SvgIcon name="ele-Lock"></SvgIcon>
+            {{ '安全中心' }}
+          </el-dropdown-item>
+          <el-dropdown-item command="/download">
+            <SvgIcon name="ele-Download"></SvgIcon>
+            {{ '下载中心' }}
+          </el-dropdown-item>
+          <!--          <el-dropdown-item command="open:https://www.baidu.com">{{ '百度' }}</el-dropdown-item>-->
+          <el-dropdown-item command="open:/gitee">
+            <SvgIcon name="ele-Link"></SvgIcon>
+            {{ '代码仓库' }}
+          </el-dropdown-item>
+          <!--          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>-->
           <el-dropdown-item command="logOut" divided>{{ '退出登录' }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -137,8 +154,30 @@ const onHandleCommandClick = (path: string) => {
         })
         .catch(() => {
         });
-  } else if (path === 'open') {
-    ipcRenderer.invoke('open-web', 'https://www.baidu.com');
+  } else if (path.startsWith('open:')) {
+    let strings = path.split('open:');
+    let url: any = strings[1]
+    if (url.startsWith('/')) {
+      console.log(url)
+      //客户端内链。 浏览器外链。
+      let routes = router.getRoutes().filter(i => i.path === url)
+      if (routes && routes.length > 0) {
+        if (ipcRenderer) {
+          router.push(url);
+        } else {
+          let url: any = routes[0].meta.isLink
+          window.open(url)
+        }
+      }
+    } else {
+      console.log(url)
+      //外链
+      if (ipcRenderer) {
+        ipcRenderer.invoke('open-web', url);
+      } else {
+        window.open(url)
+      }
+    }
   } else {
     router.push(path);
   }
