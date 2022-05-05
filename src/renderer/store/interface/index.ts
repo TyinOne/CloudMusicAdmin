@@ -41,7 +41,6 @@ export interface ThemeConfigState {
         columnsAsideStyle: string;
         columnsAsideLayout: string;
         layout: string;
-        isRequestRoutes: boolean;
         globalTitle: string;
         globalViceTitle: string;
         globalI18n: string;
@@ -69,8 +68,8 @@ export interface TagsViewRoutesState {
 
 // 用户信息
 export interface UserInfosState {
-    token: string,
     userInfos: {
+        token: string,
         authBtnList: string[];
         avatar: string;
         roles: string[];

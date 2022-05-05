@@ -70,7 +70,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                                     isAffix: false,
                                     isIframe: false,
                                     roles: ['admin'],
-                                    icon: 'ele-Guide',
+                                    icon: 'ele-Monitor',
                                 },
                             },
                             {
@@ -85,7 +85,22 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                                     isAffix: false,
                                     isIframe: false,
                                     roles: ['admin'],
-                                    icon: 'ele-Guide',
+                                    icon: 'ele-Coin',
+                                },
+                            },
+                            {
+                                path: '/system/log/view',
+                                name: 'systemLogView',
+                                component: () => import('@renderer/views/system/log/index.vue'),
+                                meta: {
+                                    title: '日志监控',
+                                    isLink: '',
+                                    isHide: false,
+                                    isKeepAlive: true,
+                                    isAffix: false,
+                                    isIframe: false,
+                                    roles: ['admin'],
+                                    icon: 'ele-Platform',
                                 },
                             }
                         ]

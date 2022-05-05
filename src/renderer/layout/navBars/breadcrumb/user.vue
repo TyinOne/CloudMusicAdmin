@@ -77,7 +77,7 @@
 import {computed, getCurrentInstance, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useStore} from "@renderer/store";
-import {Session} from "@renderer/utils/storage";
+import {Local, Session} from "@renderer/utils/storage";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {resetRoute} from "@renderer/router";
 import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
@@ -149,6 +149,7 @@ const onHandleCommandClick = (path: string) => {
     })
         .then(async () => {
           Session.clear(); // 清除缓存/token等
+          Local.remove('Authentication')
           await resetRoute(); // 删除/重置路由
           ElMessage.success('安全退出成功！');
           setTimeout(() => {

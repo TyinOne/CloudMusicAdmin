@@ -27,7 +27,7 @@
 import LoginTextField from '@renderer/views/login/loginTextField.vue'
 import LoginSubmit from '@renderer/views/login/loginSubmit.vue'
 import {useUserApi} from "@renderer/api/user";
-import {Session} from '@renderer/utils/storage'
+import {Session, Local} from '@renderer/utils/storage'
 import router from "@renderer/router";
 import {store} from "@renderer/store";
 import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
@@ -58,9 +58,10 @@ const submit = async () => {
       authBtnList: res.result.btn,
     }
     Session.set('Authentication', res.result.token)
+    Local.set('Authentication', res.result.token)
     Session.set('userInfo', userInfo)
     store.dispatch('userInfos/setUserInfos', {
-      token: res.result.token,
+      Authentication: res.result.token,
       userInfos: userInfo,
     }).then(() => {
       state.loading.signIn = false;

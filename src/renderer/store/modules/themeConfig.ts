@@ -94,7 +94,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
             // 是否开启水印
             isWartermark: false,
             // 水印文案
-            wartermarkText: 'small@小柒',
+            wartermarkText: 'Tyin',
 
             /**
              * 其它设置
@@ -120,8 +120,6 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
             /**
              * 后端控制路由
              */
-            // 是否开启后端控制路由
-            isRequestRoutes: false,
 
             /**
              * 全局网站标题 / 副标题

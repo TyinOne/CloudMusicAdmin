@@ -6,6 +6,7 @@
           <component :is="Component" :key="state.refreshRouterViewKey" :style="{ minHeight }" class="w100"/>
         </keep-alive>
       </transition>
+      <div style="height: 30px;width: 100%"></div>
     </router-view>
   </div>
 </template>

@@ -5,6 +5,9 @@ export const useUserApi = () => {
         login: (data) => {
             return post('/admin/user/login', data, APPLICATION_JSON)
         },
+        getUserSession: () => {
+            return get('/admin/user/session')
+        },
         detail: () => {
             return get('/admin/user/info')
         }

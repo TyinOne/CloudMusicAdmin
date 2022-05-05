@@ -7,6 +7,9 @@ export const useServerApi = () => {
         },
         getRedisInfo: () => {
             return get('/admin/sys/server/redis')
+        },
+        getLogList: (params) => {
+            return get('/admin/log/list', params)
         }
     }
 }
