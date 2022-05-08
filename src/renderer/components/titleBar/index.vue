@@ -23,8 +23,8 @@
         <div class="menu-item">
           <div class="link" @click="checkUpdate('three')">检查更新</div>
         </div>
-        <div class="menu-item">
-          <div class="link">开发者工具</div>
+        <div :class="isOpenDevTools ? 'menu-item-open' : 'menu-item'">
+          <div :class="'link'" @click="openDevTools">开发者工具</div>
         </div>
         <div class="no-hover menu-item">
           <div>{{ 'v' + version }}</div>
@@ -61,7 +61,7 @@ import macMax from '@renderer/assets/mac_max.svg'
 import macMin from '@renderer/assets/mac_min.svg'
 import macClose from '@renderer/assets/mac_close.svg'
 import UpdateProgress from "@renderer/components/updateProgress/index.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import packageConfig from '../../../../package.json'
 
 let dialogVisible = ref(false);
@@ -85,6 +85,9 @@ const mix = ref(false);
 const isNotMac = ref(false);
 const IsWeb = ref(process.env.IS_WEB);
 const version = packageConfig.version
+
+let isOpenDevTools = ref(false);
+
 if (!ipcRenderer) {
   ipcRenderer = {} as any;
   ipcRenderer.on =
@@ -112,6 +115,18 @@ const Close = () => {
   ipcRenderer.invoke("window-close");
 };
 
+const openDevTools = async () => {
+  isOpenDevTools.value = await ipcRenderer.invoke('open-devtools', {mode: 'right', activate: true})
+}
+
+const getDevToolsStatus = async () => {
+  isOpenDevTools.value = await ipcRenderer.invoke('devtools-status-get')
+}
+
+ipcRenderer.on('devtools-status', (event: any, msg: boolean) => {
+  isOpenDevTools.value = msg
+})
+
 const checkUpdate = (data) => {
   switch (data) {
     case "one":
@@ -137,7 +152,9 @@ const checkUpdate = (data) => {
 const handleClose = () => {
   dialogVisible.value = false;
 }
-
+onMounted(() => {
+  getDevToolsStatus()
+})
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
@@ -195,7 +212,7 @@ const handleClose = () => {
 
   .menu-container {
     display: flex;
-
+    min-width: 340px;
     .menu-item {
       display: inline-block;
       -webkit-app-region: no-drag;
@@ -203,6 +220,16 @@ const handleClose = () => {
       text-align: center;
       color: rgba(112, 109, 109, 1);
       user-select: none;
+    }
+
+    .menu-item-open {
+      display: inline-block;
+      -webkit-app-region: no-drag;
+      padding: 0 10px;
+      text-align: center;
+      user-select: none;
+      background-color: rgb(222, 222, 222);
+      color: #000000;
     }
 
     .menu-item:hover {

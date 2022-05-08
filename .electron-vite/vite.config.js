@@ -33,9 +33,9 @@ const config = defineConfig({
         minify: 'esbuild',
         rollupOptions: {
             output: {
-                entryFileNames: `assets/[name].${new Date().getTime()}.js`,
-                chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
-                assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
+                entryFileNames: `assets/js/[name]-[hash].js`,
+                chunkFileNames: `assets/js/[name]-[hash].js`,
+                assetFileNames:  `assets/[ext]/[name]-[hash][extname]`,
                 compact: true,
                 manualChunks: {
                     vue: ['vue', 'vue-router', 'vuex'],

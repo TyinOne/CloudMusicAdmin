@@ -5,6 +5,7 @@ import {app, BrowserWindow, dialog, Menu} from 'electron'
 import {loadingURL, winURL} from '../config/StaticPath'
 import {join} from "path"
 import {mainWindowConfig} from "../config/windowsConfig"
+import ipcMain from "./ipcMain";
 
 setIpc.Mainfunc()
 
@@ -57,7 +58,6 @@ class MainInit {
         // if (process.env.NODE_ENV === 'development') {
         //
         // }
-        this.mainWindow.webContents.openDevTools({mode: 'undocked', activate: true})
         this.mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ["*://*/*"]},
             (d, c) => {
                 if (d.responseHeaders['X-Frame-Options']) {
@@ -105,6 +105,13 @@ class MainInit {
                 if (res.response === 0) this.mainWindow.reload()
                 else this.mainWindow.close()
             })
+        })
+
+        this.mainWindow.webContents.on('devtools-opened', event => {
+            this.mainWindow.webContents.send('devtools-status',  true)
+        })
+        this.mainWindow.webContents.on('devtools-closed', event => {
+            this.mainWindow.webContents.send('devtools-status',  false)
         })
 
         // 不知道什么原因，反正就是这个窗口里的页面触发了假死时执行

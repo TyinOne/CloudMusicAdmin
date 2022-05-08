@@ -17,7 +17,7 @@
           新增角色
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource" style="width: 100%">
+      <el-table v-loading="loading" :data="dataSource"  style="width: 100%" height="calc(100vh - 280px)">
         <el-table-column label="序号" type="index" width="60"/>
         <el-table-column label="角色名称" prop="name" show-overflow-tooltip></el-table-column>
         <el-table-column label="角色标识" prop="value" show-overflow-tooltip></el-table-column>

@@ -5,11 +5,11 @@ export const useMenuApi = () => {
         getMenuAdmin: async () => {
             console.log(123)
         },
-        getMenuPermission: async () => {
-            console.log(123)
+        getMenuPermission: () => {
+            return get('/admin/router/permission')
         },
         getMenuLabel: (params) => {
-            return get('/admin/menu/label', params)
+            return get('/admin/label/menu', params)
         },
         getMenuRes: (params) => {
             return get('/admin/menu/list/tree', params)

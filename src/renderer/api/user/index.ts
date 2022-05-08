@@ -8,8 +8,14 @@ export const useUserApi = () => {
         getUserSession: () => {
             return get('/admin/user/session')
         },
-        detail: () => {
+        getUserList: (params) => {
+            return get('/admin/account/list', params)
+        },
+        getUserDetail: (params) => {
+            return get('/admin/account/detail', params)
+        },
+        getPersonalDetail: () => {
             return get('/admin/user/info')
-        }
+        },
     }
 }

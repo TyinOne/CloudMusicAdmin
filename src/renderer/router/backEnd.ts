@@ -50,12 +50,7 @@ export async function initBackEndControlRoutes() {
  * @returns 返回后端路由菜单数据
  */
 export function getBackEndControlRoutes(): any {
-    // 模拟 admin 与 test
-    const auth = store.state.userInfos.userInfos.roles[0];
-    // 管理员 admin
-    if (auth === 'admin') return menuApi.getMenuAdmin();
-    // 其它用户 test
-    else return menuApi.getMenuPermission();
+   return menuApi.getMenuPermission();
 }
 
 /**

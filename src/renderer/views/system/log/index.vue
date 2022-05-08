@@ -2,7 +2,8 @@
   <div class="system-log-container">
     <el-card shadow="hover">
       <div class="system-user-search mb15">
-        <el-date-picker type="daterange" v-model="options.date" value-format="YYYY-MM-DD" style="max-width: 240px"></el-date-picker>
+        <el-date-picker type="daterange" v-model="options.date" start-placeholder="开始日期"
+                        end-placeholder="结束日期" value-format="YYYY-MM-DD" style="max-width: 240px"></el-date-picker>
         <el-input clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
         <el-button class="ml10" size="default" type="primary" @click="query">
@@ -16,7 +17,7 @@
         <el-table-column label="ID" width="60" prop="id"/>
         <el-table-column label="IP地址" width="120" show-overflow-tooltip prop="ip"/>
         <el-table-column label="请求地址" show-overflow-tooltip prop="uri"/>
-        <el-table-column label="请求时间" show-overflow-tooltip prop="created"/>
+        <el-table-column label="请求时间" width="160" show-overflow-tooltip prop="created"/>
         <el-table-column label="执行方法" show-overflow-tooltip prop="method"/>
         <el-table-column label="执行耗时" show-overflow-tooltip prop="elapsed"/>
         <el-table-column label="操作" width="100">
@@ -51,11 +52,11 @@
 import {onMounted, reactive, ref, unref} from "vue";
 import {useServerApi} from "@renderer/api/server";
 let options = reactive({
-  date: ''
+  date: []
 })
 let dataSource = ref([])
 let loading = ref(false)
-const pagination = ref({
+let pagination = ref({
   current: 1,
   size: 20,
   total: 0,
@@ -88,9 +89,9 @@ const getData = (page) => {
     loading.value = false
   })
 }
-const onHandleCurrentChange = async (val: number) => {
+const onHandleCurrentChange = (val: number) => {
   pagination.value.current = val;
-  await getData(pagination.value)
+  getData(pagination.value)
 };
 onMounted(() => {
   searchLog()

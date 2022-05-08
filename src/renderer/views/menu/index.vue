@@ -36,7 +36,7 @@
       </div>
       <el-table v-loading="loading" :data="state.dataSource"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
-                style="width: 100%"
+                style="width: 100%" height="calc(100vh - 237px)"
       >
         <el-table-column label="菜单名称" show-overflow-tooltip>
           <template #default="scope">

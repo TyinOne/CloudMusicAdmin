@@ -35,7 +35,7 @@ export default defineComponent({
       let {isTagsview} = store.state.themeConfig.themeConfig;
       let {isTagsViewCurrenFull} = store.state.tagsViewRoutes;
       if (isTagsViewCurrenFull) {
-        return `1px`;
+        return `31px`;
       } else {
         if (isTagsview) {
           return `114px`;

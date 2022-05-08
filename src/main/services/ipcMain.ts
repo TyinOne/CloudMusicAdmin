@@ -59,10 +59,22 @@ export default {
         ipcMain.handle('start-download', (event, msg) => {
             new DownloadFile(BrowserWindow.fromWebContents(event.sender), msg.downloadUrl).start()
         })
-        ipcMain.handle('open-web', (event, arg) => {
-            shell.openExternal(arg).then(r => {
-            })
+        ipcMain.handle('open-web',   (event, arg) => {
+            shell.openExternal(arg)
         })
+
+        ipcMain.handle('open-devtools', (event, arg) => {
+            let isOpen = BrowserWindow.fromWebContents(event.sender).webContents.isDevToolsOpened()
+            if (isOpen) {
+                BrowserWindow.fromWebContents(event.sender).webContents.closeDevTools()
+            } else {
+                BrowserWindow.fromWebContents(event.sender).webContents.openDevTools(arg)
+            }
+        })
+        ipcMain.handle('devtools-status-get', async (event) => {
+            return BrowserWindow.fromWebContents(event.sender).webContents.isDevToolsOpened()
+        })
+
         ipcMain.handle('open-win', (event, arg) => {
             const ChildWin = new BrowserWindow({
                 titleBarStyle: config.IsUseSysTitle ? 'default' : 'hidden',

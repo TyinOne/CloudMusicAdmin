@@ -135,6 +135,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                             icon: 'ele-ColdDrink',
                         },
                     },
+                    {
+                        path: '/system/user',
+                        name: 'systemUser',
+                        component: () => import('@renderer/views/user/index.vue'),
+                        meta: {
+                            title: '用户管理',
+                            isLink: '',
+                            isHide: false,
+                            isKeepAlive: true,
+                            isAffix: false,
+                            isIframe: false,
+                            roles: ['admin'],
+                            icon: 'ele-User',
+                        },
+                    },
                 ]
             },
             {

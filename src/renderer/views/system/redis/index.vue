@@ -102,21 +102,34 @@ const initEcharts = () => {
   })
   mem.setOption({
     tooltip: {
-      formatter: "{b} <br/>{a} : " + state.redis.info['used_memory_human'],
+      formatter: "{b} <br/>{a} : " + ((state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1)/1024).toFixed(2) + 'MB'),
     },
     series: [
       {
         name: "峰值",
         type: "gauge",
         min: 0,
-        max: 5000,
+        max: 500,
+        center: ['50%', '40%'],
         detail: {
-          formatter: state.redis.info['used_memory_human'],
+          formatter: (state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1)/1024).toFixed(2) + 'MB',
         },
         data: [
           {
-            value: parseFloat(state.redis.info['used_memory_human']),
+            value: (parseFloat(state.redis.info['used_memory_human'])/1024).toFixed(2),
             name: "内存消耗",
+            detail: {
+              offsetCenter: ["0%", "100%"],
+              fontWeight: 400,
+              fontSize: 14
+            },
+            title: {
+              offsetCenter: ["0", "70%"]
+            },
+            axisLabel: {
+              fontWeight: "bold",
+              fontSize: 12
+            }
           },
         ],
       },

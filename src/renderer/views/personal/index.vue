@@ -59,7 +59,7 @@ let user = reactive({
 const disabled = ref(false)
 const dialogVisible = ref(false)
 const getUserInfo = () => {
-  useUserApi().detail().then(res => {
+  useUserApi().getPersonalDetail().then(res => {
     user.info = res.result
   })
 }
