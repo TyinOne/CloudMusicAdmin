@@ -3,13 +3,18 @@
     <label>
       <i v-if="icon" :class="['fa', `fa-${icon}`]"></i>
       <i style="width: 60px"> {{ label }}</i>
-      <input :type="type" autocomplete="off"/>
+      <input v-model="value" :type="type" autocomplete="off" required spellcheck="false" @input="changeInput"/>
     </label>
   </span>
 </template>
 
 <script lang="ts" setup>
+
 const props = defineProps({
+  value: {
+    type: String,
+    default: ''
+  },
   label: {
     type: String
   },
@@ -21,7 +26,11 @@ const props = defineProps({
     default: 'text'
   }
 })
+const emits = defineEmits(['update:value'])
 
+function changeInput(e) {
+  emits('update:value', e.target.value)
+}
 
 </script>
 <script lang="ts">

@@ -1,60 +1,88 @@
 <template>
-  <form class="login_form">
+  <form ref="form" class="login_form">
     <div class="login_form_r1">
-      <div class="login_text">
-        <login-text-field icon="user" label="姓名"></login-text-field>
-      </div>
+      <login-text-field v-model:value="state.params.mail" icon="envelope" label="邮箱"></login-text-field>
     </div>
     <div class="login_form_r2">
-      <login-text-field icon="envelope" label="邮箱"></login-text-field>
+      <login-text-field v-model:value="state.params.account" icon="user" label="用户名"></login-text-field>
     </div>
     <div class="login_form_r3">
-      <login-text-field icon="lock" label="密码" type="password"></login-text-field>
+      <login-text-field v-model:value="state.params.password" icon="lock" label="密码" type="password"></login-text-field>
     </div>
     <div class="login_form_r4">
-      <login-text-field icon="lock" label="重复密码"></login-text-field>
+      <login-text-field v-model:value="state.params.rePassword" icon="lock" label="重复密码"
+                        type="password"></login-text-field>
     </div>
     <div class="login_form_r5">
       <label></label>
       <label>忘记密码?</label>
     </div>
     <div>
-      <login-submit @submit="submit"/>
+      <login-submit v-loading="state.loading.signIn" @submit="submit"/>
     </div>
   </form>
 </template>
 <script lang="ts" setup>
 import LoginTextField from '@renderer/views/login/loginTextField.vue'
 import LoginSubmit from '@renderer/views/login/loginSubmit.vue'
-import {useUserApi} from "@renderer/api/user";
-import {Session, Local} from '@renderer/utils/storage'
 import router from "@renderer/router";
-import {store} from "@renderer/store";
-import {initFrontEndControlRoutes} from "@renderer/router/frontEnd";
-import {computed, reactive} from "vue";
+import {computed, reactive, ref, watch} from "vue";
 import {formatAxis} from "@renderer/utils/formatTime";
 import {useRoute} from "vue-router";
 import {ElMessage} from "element-plus";
+import {useUserApi} from "@renderer/api/user";
+import {Local, Session} from "@renderer/utils/storage";
+import {useStore} from "@renderer/store";
+import {initBackEndControlRoutes} from "@renderer/router/backEnd";
 
 const route = useRoute();
-
+const store = useStore();
+const props = defineProps({
+  tab: {
+    type: Number
+  }
+})
+let form = ref()
+watch(() => props.tab, i => {
+  state.params = paramsTemplate
+})
 const state = reactive({
   loading: {
     signIn: false,
   },
+  params: {
+    mail: '',
+    account: '',
+    password: '',
+    rePassword: '',
+  }
 });
+
+const paramsTemplate = {
+  mail: '',
+  account: '',
+  password: '',
+  rePassword: '',
+}
 
 const submit = async () => {
   state.loading.signIn = true;
-  let params = {
-    username: 'TyinZero',
-    password: 'tyinzero'
+  switch (props.tab) {
+    case 1:
+      signIn()
+      break
+    case 2:
+      signUp()
+      break
   }
+}
+const signIn = () => {
+  let {account, password} = state.params
+  let params = {account, password}
   useUserApi().login(params).then(res => {
     let userInfo = {
       nickName: res.result.nickName,
       avatar: res.result.avatar,
-      roles: res.result.roles,
       authBtnList: res.result.btn,
     }
     Session.set('Authentication', res.result.token)
@@ -65,13 +93,19 @@ const submit = async () => {
       userInfos: userInfo,
     }).then(() => {
       state.loading.signIn = false;
-      initFrontEndControlRoutes().then(() => {
+      initBackEndControlRoutes().then(() => {
         signInSuccess();
       });
     }).catch(e => {
       state.loading.signIn = false;
     })
+  }).catch(e => {
+    state.loading.signIn = false;
   })
+}
+const signUp = () => {
+  let {mail, account, password, rePassword} = state.params
+  let params = {mail, account, password, rePassword}
 }
 // 时间获取
 const currentTime = computed(() => {
@@ -106,7 +140,15 @@ export default {
   name: "loginForm"
 }
 </script>
+<style scoped>
+:deep(.el-loading-spinner .path) {
+  stroke: white !important;
+}
 
+:deep(.el-loading-mask) {
+  background-color: #3e3e3f !important;
+}
+</style>
 <style>
 .login_form {
   padding: 20px;

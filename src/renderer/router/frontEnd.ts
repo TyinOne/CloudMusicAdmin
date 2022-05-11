@@ -2,11 +2,14 @@ import {store} from "@renderer/store";
 import {NextLoading} from "@renderer/utils/loading";
 import {Local, Session} from "@renderer/utils/storage";
 import {setAddRoute, setFilterMenuAndCacheTagsViewRoutes} from "@renderer/router/index";
+import {getBackEndControlRoutes} from "@renderer/router/backEnd";
 
 
 export async function initFrontEndControlRoutes() {
     // 界面 loading 动画开始执行
     if (window.nextLoading === undefined) NextLoading.start();
+    const res = await getBackEndControlRoutes();
+    console.log(res)
     try {
         // 无 token 停止执行下一步
         if (!Session.get('Authentication') && !Local.get('Authentication')) return false;

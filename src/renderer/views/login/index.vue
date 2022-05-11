@@ -2,7 +2,7 @@
   <div class="login_container">
     <div :class="{login_sign_in: isSignIn, login_sign_up : isSignUp}" class="login">
       <login-tabs @click.native="switchState"></login-tabs>
-      <login-form/>
+      <login-form :tab="state"/>
     </div>
   </div>
 </template>

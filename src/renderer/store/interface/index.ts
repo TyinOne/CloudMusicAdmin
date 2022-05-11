@@ -70,9 +70,7 @@ export interface TagsViewRoutesState {
 export interface UserInfosState {
     userInfos: {
         token: string,
-        authBtnList: string[];
         avatar: string;
-        roles: string[];
         nickName: string;
     };
 }

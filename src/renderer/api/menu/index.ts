@@ -6,7 +6,7 @@ export const useMenuApi = () => {
             console.log(123)
         },
         getMenuPermission: () => {
-            return get('/admin/router/permission')
+            return get('/admin/router/getRouter')
         },
         getMenuLabel: (params) => {
             return get('/admin/label/menu', params)

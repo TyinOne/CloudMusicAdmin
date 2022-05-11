@@ -34,8 +34,9 @@ export async function initBackEndControlRoutes() {
     // 获取路由菜单数据
     const res = await getBackEndControlRoutes();
     // 存储接口原始路由（未处理component），根据需求选择使用
-    let routers = res.result
-    await store.dispatch('requestOldRoutes/setBackEndControlRoutes', JSON.parse(JSON.stringify(routers)));
+    let routers = res.result.list
+    console.log(routers)
+    // await store.dispatch('routesList/setBackEndControlRoutes', JSON.parse(JSON.stringify(routers)));
     // 处理路由（component），替换 dynamicRoutes（@renderer/router/route）第一个顶级 children 的路由
     dynamicRoutes[0].children = await backEndComponent(routers);
     // 添加动态路由
@@ -86,6 +87,8 @@ export function dynamicImport(dynamicViewsModules: Record<string, Function>, com
     const keys = Object.keys(dynamicViewsModules);
     const matchKeys = keys.filter((key) => {
         const k = key.replace(/..\/views|../, '');
+        // console.log(k)
+        // console.log(`${component}`)
         return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
     });
     if (matchKeys?.length === 1) {

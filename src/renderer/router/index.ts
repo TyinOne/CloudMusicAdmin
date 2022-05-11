@@ -90,20 +90,9 @@ export function formatTwoStageRoutes(arr: any) {
 export function setCacheTagsViewRoutes() {
 
     // 获取有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
-    let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, store.state.userInfos.userInfos.roles);
+    let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes);
     // 添加到 vuex setTagsViewRoutes 中
     store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children);
-}
-
-/**
- * 判断路由 `meta.roles` 中是否包含当前登录用户权限字段
- * @param roles 用户权限标识，在 userInfos（用户信息）的 roles（登录页登录时缓存到浏览器）数组
- * @param route 当前循环时的路由项
- * @returns 返回对比后有权限的路由项
- */
-export function hasRoles(roles: any, route: any) {
-    if (route.meta && route.meta.roles) return roles.some((role: any) => route.meta.roles.includes(role));
-    else return true;
 }
 
 /**
@@ -112,14 +101,12 @@ export function hasRoles(roles: any, route: any) {
  * @param roles 用户权限标识，在 userInfos（用户信息）的 roles（登录页登录时缓存到浏览器）数组
  * @returns 返回有权限的路由数组 `meta.roles` 中控制
  */
-export function setFilterHasRolesMenu(routes: any, roles: any) {
+export function setFilterHasRolesMenu(routes: any) {
     const menu: any = [];
     routes.forEach((route: any) => {
         const item = {...route};
-        if (hasRoles(roles, item)) {
-            if (item.children) item.children = setFilterHasRolesMenu(item.children, roles);
-            menu.push(item);
-        }
+        if (item.children) item.children = setFilterHasRolesMenu(item.children,);
+        menu.push(item);
     });
     return menu;
 }
@@ -130,7 +117,7 @@ export function setFilterHasRolesMenu(routes: any, roles: any) {
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
 export function setFilterMenuAndCacheTagsViewRoutes() {
-    store.dispatch('routesList/setRoutesList', setFilterHasRolesMenu(dynamicRoutes[0].children, store.state.userInfos.userInfos.roles));
+    store.dispatch('routesList/setRoutesList', setFilterHasRolesMenu(dynamicRoutes[0].children));
     setCacheTagsViewRoutes();
 }
 
@@ -144,15 +131,7 @@ export function setFilterMenuAndCacheTagsViewRoutes() {
 export function setFilterRoute(child: any) {
     let filterRoute: any = [];
     child.forEach((route: any) => {
-        if (route.meta.roles) {
-            route.meta.roles.forEach((metaRoles: any) => {
-                store.state.userInfos.userInfos.roles.forEach((roles: any) => {
-                    if (metaRoles === roles) {
-                        filterRoute.push({...route});
-                    }
-                });
-            });
-        }
+        filterRoute.push({...route});
     });
     return filterRoute;
 }
@@ -196,7 +175,7 @@ export async function resetRoute() {
 }
 
 // isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/store/modules/themeConfig.ts`
-const isRequestRoutes = false
+const isRequestRoutes = true
 // 前端控制路由：初始化方法，防止刷新时路由丢失
 // if (!isRequestRoutes)  initFrontEndControlRoutes();
 
@@ -215,7 +194,6 @@ router.beforeEach(async (to, from, next) => {
     } else {
         if (!hasToken()) {
             //初始路由
-            await resetRoute();
             return next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
         }
         //刷新后重载路由
