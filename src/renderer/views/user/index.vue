@@ -78,9 +78,10 @@ import {onMounted, reactive, ref, unref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";
 import UserDetail from "@renderer/views/user/components/userDetail.vue";
+import {Label} from "@renderer/types/interface";
 let loading = ref(false)
 let dataSource = ref([])
-let roleLabel = ref([])
+let roleLabel = ref<Array<Label>>([])
 let userDetailRef = ref(null)
 let state = reactive({
   name: '',

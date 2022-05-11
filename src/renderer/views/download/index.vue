@@ -1,28 +1,37 @@
 <template>
   <div class="download-container">
     <el-card style="min-height: calc(100vh - 150px);max-height: calc(100vh - 150px)">
-      <el-tabs
-          v-model="activeName"
-          class="tabs"
-      >
-        <el-tab-pane label="进行中" name="loading">
-          进行中
-        </el-tab-pane>
-        <el-tab-pane label="已完成" name="finished">
-          已完成
-        </el-tab-pane>
-        <el-tab-pane label="回收站" name="recycle">
-          回收站
-        </el-tab-pane>
-      </el-tabs>
+      <el-button @click="initIma">123</el-button>
+      <img ref="image" :src="'http://files.ubuntu.wsl/files/images/avatar/admin_1649211122000.jpg'">
+<!--      <el-tabs-->
+<!--          v-model="activeName"-->
+<!--          class="tabs"-->
+<!--      >-->
+<!--        <el-tab-pane label="进行中" name="loading">-->
+<!--          进行中-->
+<!--        </el-tab-pane>-->
+<!--        <el-tab-pane label="已完成" name="finished">-->
+<!--          已完成-->
+<!--        </el-tab-pane>-->
+<!--        <el-tab-pane label="回收站" name="recycle">-->
+<!--          回收站-->
+<!--        </el-tab-pane>-->
+<!--      </el-tabs>-->
     </el-card>
   </div>
 </template>
 <script lang="ts" setup>
 import {ref} from "vue";
-
+import Cropper from "cropperjs";
 let activeName = ref('loading')
+let image = ref()
+let cropper = ref()
+const initIma = () => {
+  console.log(image.value)
+  cropper = new Cropper(image.value, {
 
+  })
+}
 </script>
 <script lang="ts">
 export default {

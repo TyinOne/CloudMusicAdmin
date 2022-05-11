@@ -102,7 +102,22 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                                     roles: ['admin'],
                                     icon: 'ele-Platform',
                                 },
-                            }
+                            },
+                            {
+                                path: '/system/dict/view',
+                                name: 'systemDictView',
+                                component: () => import('@renderer/views/system/dict/index.vue'),
+                                meta: {
+                                    title: '字典管理',
+                                    isLink: '',
+                                    isHide: false,
+                                    isKeepAlive: true,
+                                    isAffix: false,
+                                    isIframe: false,
+                                    roles: ['admin'],
+                                    icon: 'ele-Operation',
+                                },
+                            },
                         ]
                     },
                     {

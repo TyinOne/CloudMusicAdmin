@@ -63,8 +63,6 @@ let pagination = ref({
 })
 const query = () => {
   const [startDate, endDate] = options.date
-  console.log(startDate)
-  console.log(endDate)
 }
 const searchLog = () => {
   let page = unref(pagination)

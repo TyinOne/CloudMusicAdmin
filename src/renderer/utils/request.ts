@@ -101,7 +101,7 @@ export const upLoad = async (url, data): Promise<Response> => {
         url: url,
         data: data,
         method: 'post',
-        headers: {'Content-Type': APPLICATION_FILE}
+        // headers: {'Content-Type': APPLICATION_FILE}
     })
 }
 

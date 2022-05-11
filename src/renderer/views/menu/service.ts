@@ -1,6 +1,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useMenuApi} from "@renderer/api/menu";
 import {useRoleApi} from "@renderer/api/role";
+import {Label} from "@renderer/types/interface";
 
 export default function getService() {
 
@@ -9,7 +10,7 @@ export default function getService() {
         roleId: 0,
         disabled: '',
         dataSource: [],
-        roleOptions: []
+        roleOptions: <Array<Label>>[]
     })
     let loading = ref(false)
     const handleMenuRef = ref()

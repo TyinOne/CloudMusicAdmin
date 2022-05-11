@@ -9,10 +9,10 @@ import other from "@renderer/utils/other";
 import mitt from 'mitt';
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {errorHandler} from "@renderer/error";
-
+import UpdatePicture from '@renderer/components/updatePicture/index.vue'
 const app = createApp(App);
 other.elSvg(app);
-
+app.component('update-picture', UpdatePicture)
 app.use(router).use(store, key).use(ElementPlus, {locale}).mount('#app');
 app.config.globalProperties.mittBus = mitt();
 
