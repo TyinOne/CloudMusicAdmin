@@ -1,4 +1,4 @@
-import {get} from '@renderer/utils/request';
+import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
 
 export const useDictApi = () => {
     return {
@@ -7,6 +7,9 @@ export const useDictApi = () => {
         },
         getDictLabel: () => {
             return get('/admin/label/dict')
+        },
+        saveDict: (params) => {
+            return post('/admin/dict/save', params, APPLICATION_JSON)
         }
     }
 }

@@ -6,13 +6,13 @@
                   size="default" style="max-width: 180px"></el-input>
         <el-button class="ml10" size="default" type="primary" @click="searchRole">
           <el-icon>
-            <ele-Search/>
+            <SvgIcon name="ele-Search"></SvgIcon>
           </el-icon>
           查询
         </el-button>
         <el-button class="ml10" size="default" type="success" @click="onOpenAddRole">
           <el-icon>
-            <ele-FolderAdd/>
+            <SvgIcon name="ele-FolderAdd"></SvgIcon>
           </el-icon>
           新增角色
         </el-button>

@@ -16,7 +16,7 @@
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
           <el-icon>
-            <ele-Search/>
+            <SvgIcon name="ele-Search"></SvgIcon>
           </el-icon>
           {{'查询'}}
         </el-button>
@@ -79,6 +79,7 @@ import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";
 import UserDetail from "@renderer/views/user/components/userDetail.vue";
 import {Label} from "@renderer/types/interface";
+
 let loading = ref(false)
 let dataSource = ref([])
 let roleLabel = ref<Array<Label>>([])

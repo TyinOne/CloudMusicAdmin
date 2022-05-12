@@ -9,13 +9,25 @@
         <el-select placeholder="请选择类型" v-model="state.dictType"
                    size="default" style="max-width: 180px" @change="query">
           <el-option value="" label="全部(字典类型)"></el-option>
-          <el-option v-for="item in dictOptions" :value="item.value" :label="item.label"  :key="item.value"/>
+          <el-option v-for="item in dictOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
           <el-icon>
-            <ele-Search/>
+            <SvgIcon name="ele-Search"></SvgIcon>
           </el-icon>
           查询
+        </el-button>
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddDict">
+          <el-icon>
+            <SvgIcon name="ele-FolderAdd"></SvgIcon>
+          </el-icon>
+          新增字典
+        </el-button>
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddDict">
+          <el-icon>
+            <SvgIcon name="ele-FolderAdd"></SvgIcon>
+          </el-icon>
+          新增分类
         </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
@@ -37,7 +49,8 @@
         <el-table-column label="描述" show-overflow-tooltip prop="dictDescription"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text">修改
+            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text"
+                       @click="onOpenEditDict(scope.row)">修改
             </el-button>
             <el-button :disabled="scope.row.value === 'admin'" size="small" type="text">
               删除
@@ -59,6 +72,7 @@
       >
       </el-pagination>
     </el-card>
+    <handle-dict ref="handleDictRef"></handle-dict>
   </div>
 </template>
 <script lang="ts" setup name="DictIndex">
@@ -66,6 +80,8 @@
 import {onMounted, reactive, ref} from "vue";
 import {useDictApi} from "@renderer/api/dict";
 import {Label} from "@renderer/types/interface";
+import HandleDict from "@renderer/views/system/dict/components/handleDict.vue";
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 
 let state = reactive({
@@ -73,6 +89,7 @@ let state = reactive({
   dictTypeKey: '',
   keywords: ''
 })
+let handleDictRef = ref()
 let dictOptions = ref<Array<Label>>([])
 let dataSource = ref([])
 let loading = ref(false)
@@ -115,6 +132,20 @@ const getDictLabel = () => {
     dictOptions.value = res.result.list
     getData(pagination.value)
   })
+}
+const onOpenAddDict = () => {
+  handleDictRef.value.openDialog({
+    title: '新增字典',
+    submit: '新 增',
+    callback: query
+  })
+}
+const onOpenEditDict = (row) => {
+  handleDictRef.value.openDialog({
+    title: '编辑字典',
+    submit: '保 存',
+    callback: query
+  }, row)
 }
 onMounted(() => {
   getDictLabel()

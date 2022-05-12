@@ -15,7 +15,7 @@
       </div>
       <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
         <el-table-column label="ID" width="60" prop="id"/>
-        <el-table-column label="IP地址" width="120" show-overflow-tooltip prop="ip"/>
+        <el-table-column label="IP地址" prop="ip" show-overflow-tooltip width="140"/>
         <el-table-column label="请求地址" show-overflow-tooltip prop="uri"/>
         <el-table-column label="请求时间" width="160" show-overflow-tooltip prop="created"/>
         <el-table-column label="执行方法" show-overflow-tooltip prop="method"/>
@@ -51,6 +51,7 @@
 
 import {onMounted, reactive, ref, unref} from "vue";
 import {useServerApi} from "@renderer/api/server";
+
 let options = reactive({
   date: []
 })
