@@ -29,7 +29,12 @@ export default function getService() {
         })
     }
     const onOpenAddMenu = () => {
-
+        handleMenuRef.value.openDialog({
+            init: false,
+            title: '新增 MENU',
+            submit: '保存',
+            callback: searchMenu
+        })
     }
     const onHandleCurrentChange = (val: number) => {
 

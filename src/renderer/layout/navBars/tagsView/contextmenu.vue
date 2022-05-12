@@ -57,7 +57,7 @@ export default defineComponent({
           contextMenuClickId: 4,
           txt: '当前页全屏',
           affix: false,
-          icon: 'iconfont icon-fullscreen',
+          icon: 'ele-FullScreen',//ele-FullScreen
           link: false
         },
 

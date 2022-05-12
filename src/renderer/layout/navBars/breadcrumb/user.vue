@@ -1,16 +1,14 @@
 <template>
   <div :style="{ flex: layoutUserFlexNum }" class="layout-navbars-breadcrumb-user">
     <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
-      <el-icon :title="'菜单搜索'">
-        <ele-Search/>
-      </el-icon>
+      <SvgIcon name="ele-Search" title="搜索"></SvgIcon>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSettingClick">
-      <i :title="'布局配置'" class="icon-skin iconfont"></i>
+      <SvgIcon :title="'布局配置'" name="ele-Setting"></SvgIcon>
     </div>
 
     <div class="layout-navbars-breadcrumb-user-icon" @click="onReloadClick">
-      <svg-icon :title="'刷新'" name="ele-RefreshLeft"></svg-icon>
+      <SvgIcon :title="'刷新'" name="ele-RefreshLeft"></SvgIcon>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon">
       <el-popover :width="300" placement="bottom" trigger="click">
@@ -25,11 +23,10 @@
       </el-popover>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
-      <i
-          :class="!state.isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
+      <SvgIcon
+          :name="!state.isScreenfull ? 'ele-FullScreen' : 'ele-FullScreen'"
           :title="state.isScreenfull ? '开全屏' : '关全屏'"
-          class="iconfont"
-      ></i>
+      ></SvgIcon>
     </div>
     <el-dropdown :hide-timeout="50" :show-timeout="70" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
@@ -42,29 +39,29 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item command="/personal">
-            <SvgIcon name="ele-User"></SvgIcon>
+            <SvgIcon name="fa-user-o fa"></SvgIcon>
             {{ '个人中心' }}
           </el-dropdown-item>
           <el-dropdown-item command="/message">
-            <SvgIcon name="ele-Message"></SvgIcon>
+            <SvgIcon name="fa-bell-o fa"></SvgIcon>
             {{ '通知中心' }}
           </el-dropdown-item>
           <el-dropdown-item command="/security">
-            <SvgIcon name="ele-Lock"></SvgIcon>
+            <SvgIcon name="fa-eercast fa"></SvgIcon>
             {{ '安全中心' }}
           </el-dropdown-item>
           <el-dropdown-item v-if="ipcRenderer" command="/download">
-            <SvgIcon name="ele-Download"></SvgIcon>
+            <SvgIcon name="bi-download"></SvgIcon>
             {{ '下载中心' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="open:https://www.baidu.com">{{ '百度' }}</el-dropdown-item>-->
           <el-dropdown-item command="open:/gitee">
-            <SvgIcon name="ele-Link"></SvgIcon>
+            <SvgIcon name="bi-github"></SvgIcon>
             {{ '代码仓库' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>-->
           <el-dropdown-item command="logOut" divided>
-            <SvgIcon name="ele-SwitchButton"></SvgIcon>
+            <SvgIcon name="fa-power-off fa"></SvgIcon>
             {{ '退出登录' }}
           </el-dropdown-item>
         </el-dropdown-menu>

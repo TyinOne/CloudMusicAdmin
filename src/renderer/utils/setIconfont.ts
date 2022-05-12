@@ -1,7 +1,7 @@
 // 字体图标 url
 const cssCdnUrlList: Array<string> = [
-    'https://at.alicdn.com/t/font_2298093_y6u00apwst.css',
     'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+    'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css'
 ];
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [];

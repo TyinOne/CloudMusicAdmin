@@ -152,7 +152,6 @@ const onSubmit = () => {
     }
   }
   useUserApi().saveAccount(params).then(async (res) => {
-    console.log(res)
     loading.value = false
   }).catch(e => {
     loading.value = false

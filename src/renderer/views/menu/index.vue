@@ -38,16 +38,19 @@
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
                 style="width: 100%" height="calc(100vh - 237px)"
       >
-        <el-table-column label="菜单名称" show-overflow-tooltip>
+        <el-table-column label="菜单名称" width="180" show-overflow-tooltip>
+          <template #default="scope">
+            <span class="ml10">{{ scope.row['metaTitle'] }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="图标" prop="metaIcons" width="60" show-overflow-tooltip>
           <template #default="scope">
             <SvgIcon :name="scope.row['metaIcons']"></SvgIcon>
-            <span class="ml10">{{ scope.row['metaTitle'] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="路由路径" prop="path" show-overflow-tooltip></el-table-column>
         <el-table-column label="组件路径" prop="component" show-overflow-tooltip></el-table-column>
         <el-table-column label="权限标识" prop="security" show-overflow-tooltip></el-table-column>
-        <el-table-column label="角色标识" prop="metaRoles" show-overflow-tooltip></el-table-column>
         <el-table-column label="排序" prop="sort" show-overflow-tooltip></el-table-column>
         <el-table-column label="类型" show-overflow-tooltip>
           <template #default="scope">
