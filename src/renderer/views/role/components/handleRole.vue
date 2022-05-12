@@ -104,6 +104,9 @@ let menuData = ref([])
 const menuProps = {
   children: 'children',
   label: 'label',
+  disabled: (data) => {
+    return data.id === 1
+  }
 }
 const closeDialog = () => {
   form.value = {

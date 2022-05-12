@@ -85,9 +85,7 @@ const signIn = () => {
       avatar: res.result.avatar,
       authBtnList: res.result.btn,
     }
-    Session.set('Authentication', res.result.token)
     Local.set('Authentication', res.result.token)
-    Session.set('userInfo', userInfo)
     store.dispatch('userInfos/setUserInfos', {
       Authentication: res.result.token,
       userInfos: userInfo,

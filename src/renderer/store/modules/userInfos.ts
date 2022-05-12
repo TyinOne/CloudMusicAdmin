@@ -24,11 +24,10 @@ const userInfosModule: Module<UserInfosState, RootStateTypes> = {
             if (data) {
                 commit('getUserInfos', data);
             } else {
-                if (Session.get('userInfo')) commit('getUserInfos', Session.get('userInfo'));
-                else {
-                    let res = await useUserApi().getUserSession();
-                    commit('getUserInfos', res.result);
-                }
+                let res = await useUserApi().getUserSession();
+                Session.set('Authentication', res.result.token)
+                Session.set('userInfo', res.result)
+                commit('getUserInfos', res.result);
             }
         },
     },

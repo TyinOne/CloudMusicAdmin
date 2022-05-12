@@ -193,8 +193,9 @@ router.beforeEach(async (to, from, next) => {
         }
     } else {
         if (!hasToken()) {
+            // return
             //初始路由
-            return next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+            return next(`/login`);
         }
         //刷新后重载路由
         if (store.state.routesList.routesList.length === 0) {
