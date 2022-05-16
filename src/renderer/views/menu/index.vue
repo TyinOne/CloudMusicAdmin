@@ -27,7 +27,7 @@
           </el-icon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu">
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu(0)">
           <el-icon>
             <ele-FolderAdd/>
           </el-icon>
@@ -40,12 +40,13 @@
       >
         <el-table-column label="菜单名称" width="180" show-overflow-tooltip>
           <template #default="scope">
-            <span class="ml10">{{ scope.row['metaTitle'] }}</span>
+            <span v-if="scope.row.type === 1" class="ml10">{{ scope.row['metaTitle'] }}</span>
+            <el-tag v-else>{{ scope.row['metaTitle'] }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="图标" prop="metaIcons" width="60" show-overflow-tooltip>
           <template #default="scope">
-            <SvgIcon :name="scope.row['metaIcons']"></SvgIcon>
+            <SvgIcon :name="getIconName(scope.row['metaIcons'])"></SvgIcon>
           </template>
         </el-table-column>
         <el-table-column label="路由路径" prop="path" show-overflow-tooltip></el-table-column>
@@ -54,13 +55,13 @@
         <el-table-column label="排序" prop="sort" show-overflow-tooltip></el-table-column>
         <el-table-column label="类型" show-overflow-tooltip>
           <template #default="scope">
-            <el-tag class="link" type="success">{{ getMenuType(scope.row.type) }}</el-tag>
+            <el-tag class="link" :type="scope.row.type === 1 ? 'success' : ''">{{ getMenuType(scope.row.type) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="140">
           <template #default="scope">
             <el-button size="small" type="text"
-                       @click="onOpenEditMenu(scope.row)">新增
+                       @click="onOpenAddMenu(scope.row.id)">新增
             </el-button>
             <el-button size="small" type="text"
                        @click="onOpenEditMenu(scope.row)">修改
@@ -82,7 +83,7 @@ import getService from "@renderer/views/menu/service";
 import HandleMenu from "@renderer/views/menu/components/handleMenu.vue";
 
 const {
-  state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
+  state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType, getIconName
 } = getService()
 
 

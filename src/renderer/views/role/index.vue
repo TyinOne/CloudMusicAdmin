@@ -4,7 +4,7 @@
       <div class="system-user-search mb15">
         <el-input v-model:model-value="keywords" clearable placeholder="请输入角色名称"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button class="ml10" size="default" type="primary" @click="searchRole">
+        <el-button class="ml10" size="default" type="primary" @click="searchRole" v-permission="'queryRole'">
           <el-icon>
             <SvgIcon name="ele-Search"></SvgIcon>
           </el-icon>

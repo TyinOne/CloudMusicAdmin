@@ -1,6 +1,6 @@
 <template>
   <div class="system-handle-role-container">
-    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="400px">
+    <el-dialog custom-class="dialog-self" v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="400px">
       <el-form label-width="90px" label-position="left">
         <el-form-item label="字典类型:">
           <el-select style="width: 100%;" v-model="dialogMessage.data.dictType">

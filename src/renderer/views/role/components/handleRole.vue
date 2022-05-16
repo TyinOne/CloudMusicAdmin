@@ -1,6 +1,6 @@
 <template>
   <div class="system-add-role-container">
-    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="769px">
+    <el-dialog custom-class="dialog-self" v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="769px">
       <el-form ref="formRef" v-loading="loading" :model="form" :rules="rules" label-width="90px" size="default"
                style="display: flex">
         <div :style="dialogMessage.init ? {width: '50%'} : {width: '100%'}">
@@ -72,6 +72,14 @@ let dialogMessage = ref({
   }
 })
 const openDialog = (message, row?) => {
+  form.value = {
+    id: undefined,
+    name: '',
+    value: '',
+    sort: null,
+    disabled: false,
+    description: '',
+  }
   dialogMessage.value = message
   if (dialogMessage.value.init) {
     initDetail(row)
@@ -96,7 +104,7 @@ let form = ref({
   id: undefined,
   name: '',
   value: '',
-  sort: 0,
+  sort: null,
   disabled: false,
   description: '',
 })
@@ -109,33 +117,27 @@ const menuProps = {
   }
 }
 const closeDialog = () => {
-  form.value = {
-    id: undefined,
-    name: '',
-    value: '',
-    sort: 0,
-    disabled: false,
-    description: '',
-  }
+  console.log(form.value)
   isShowDialog.value = false;
   dialogMessage.value.callback();
 };
 const onSubmit = () => {
   loading.value = true
-  // let currentKey = menuTree.value.getCurrentKey(false);
-  let params = {
-    id: form.value.id,
-    name: form.value.name,
-    value: form.value.value,
-    sort: form.value.sort,
-    disabled: form.value.disabled,
-    description: form.value.description,
-    menu: menuTree.value.getCheckedKeys(false),
-    half: menuTree.value.getHalfCheckedKeys()
-  }
   formRef.value.validate((valid) => {
+    let params = {
+      id: form.value.id,
+      name: form.value.name,
+      value: form.value.value,
+      sort: form.value.sort,
+      disabled: form.value.disabled,
+      description: form.value.description,
+      menu: [],
+      half: []
+    }
     if (valid) {
       if (dialogMessage.value.init) {
+        params.menu = menuTree.value.getCheckedKeys(false);
+        params.half = menuTree.value.getHalfCheckedKeys()
         useRoleApi().updateRole(params).then(res => {
           closeDialog()
           loading.value = false

@@ -4,6 +4,9 @@
       <login-tabs @click.native="switchState"></login-tabs>
       <login-form :tab="state"/>
     </div>
+    <div style="position: fixed; bottom: 30px">
+      <a style="color: white" href="https://beian.miit.gov.cn">蜀ICP备2022011812号</a>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -33,6 +36,7 @@ export default {
 .login_container {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: #2a2a2a;

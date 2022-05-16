@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="更换头像" v-model="state.isShowDialog" width="769px">
+    <el-dialog custom-class="dialog-self" title="更换头像" v-model="state.isShowDialog" width="769px">
       <div class="cropper-warp">
         <div class="cropper-warp-left">
           <img :src="state.cropperImg" ref="cropperImgRef" class="cropper-warp-left-img" alt=""/>

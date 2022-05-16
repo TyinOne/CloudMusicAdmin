@@ -72,6 +72,7 @@ export interface UserInfosState {
         token: string,
         avatar: string;
         nickName: string;
+        permissions: Array
     };
 }
 

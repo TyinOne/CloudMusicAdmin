@@ -28,7 +28,7 @@
         <el-table-column label="昵称" width="100" show-overflow-tooltip prop="nickName"/>
         <el-table-column label="邮箱" width="140" show-overflow-tooltip prop="mail"/>
         <el-table-column label="手机" width="140" show-overflow-tooltip prop="phone"/>
-        <el-table-column label="角色" show-overflow-tooltip prop="roles">
+        <el-table-column label="角色" min-width="160" show-overflow-tooltip prop="roles">
           <template #default="scope">
             <el-tag v-if="scope.row.roles" v-for="item in (scope.row.roles.split(','))" class="link" :type="'success'">
               {{ item }}
@@ -36,8 +36,8 @@
             <el-tag v-else class="link" type="danger">{{ '未分配' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="最后登录时间" show-overflow-tooltip prop="lastLoginTime"/>
-        <el-table-column label="是否禁用" show-overflow-tooltip prop="disabled">
+        <el-table-column label="最后登录时间" width="160"  show-overflow-tooltip prop="lastLoginTime"/>
+        <el-table-column label="是否禁用" width="80" show-overflow-tooltip prop="disabled">
           <template #default="scope">
             <el-tag class="link" :type="scope.row.disabled ? 'danger':'success'">{{
                 scope.row.disabled ? '禁用' : '启用'

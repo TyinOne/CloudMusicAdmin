@@ -9,7 +9,8 @@ const userInfosModule: Module<UserInfosState, RootStateTypes> = {
         userInfos: {
             nickName: '',
             avatar: '',
-            token: ''
+            token: '',
+            permissions: []
         },
     },
     mutations: {

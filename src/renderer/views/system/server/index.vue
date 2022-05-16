@@ -1,6 +1,6 @@
 <template>
   <div v-loading="state.loading" class="system-server-container">
-    <div style="display: flex; justify-content: space-between">
+    <div class="view-item flex">
       <el-card style="width: 49%" shadow="never">
         <template #header>
           <div style="max-height: 16px">
@@ -25,7 +25,7 @@
         </el-table>
       </el-card>
     </div>
-    <div style="margin-top: 10px">
+    <div class="view-item">
       <el-card shadow="never">
         <template #header>
           <div style="max-height: 16px">
@@ -40,7 +40,7 @@
         </el-descriptions>
       </el-card>
     </div>
-    <div style="margin-top: 10px">
+    <div class="view-item">
       <el-card shadow="never">
         <template #header>
           <div style="max-height: 16px">
@@ -57,7 +57,7 @@
         </el-descriptions>
       </el-card>
     </div>
-    <div style="margin-top: 10px">
+    <div class="view-item">
       <el-card shadow="never">
         <template #header>
           <div style="max-height: 16px">
@@ -81,7 +81,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script name="serverView" lang="ts" setup>
 import {useServerApi} from "@renderer/api/server";
 import {onMounted, reactive, ref} from "vue";
 
@@ -144,13 +144,16 @@ onMounted(() => {
 })
 </script>
 
-<script lang="ts">
-export default {
-  name: "serverView"
-}
-</script>
-
 <style scoped>
+.view-item {
+  min-width: 850px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between
+}
+
+
 :deep(.el-card__body) {
   padding: 0 10px;
 }

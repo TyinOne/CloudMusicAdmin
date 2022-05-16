@@ -28,19 +28,29 @@ export default function getService() {
             loading.value = false
         })
     }
-    const onOpenAddMenu = () => {
-        handleMenuRef.value.openDialog({
+    const onOpenAddMenu = (parentId:number) => {
+        let message = {
             init: false,
             title: '新增 MENU',
             submit: '保存',
+            parentId: parentId,
             callback: searchMenu
-        })
+        }
+        if (parentId > 0) message.init = true
+        handleMenuRef.value.openDialog(message)
     }
     const onHandleCurrentChange = (val: number) => {
 
     }
     const onOpenEditMenu = (row) => {
-
+        let message = {
+            init: true,
+            title: '修改 MENU',
+            submit: '保存',
+            parentId: row.parentId,
+            callback: searchMenu
+        }
+        handleMenuRef.value.openDialog(message, row)
     }
     const onRowDel = (row) => {
 
@@ -50,10 +60,14 @@ export default function getService() {
             state.roleOptions = res.result.list
         })
     }
-    onMounted(() => {
-        getRoleOptions()
-        searchMenu()
-    })
+    /**
+     * bi图标有自定义style
+     * @param name
+     */
+    const getIconName = (name) => {
+        if (name.indexOf(' bi') == -1) return name;
+        return name.split(' bi')[0]
+    }
     const getMenuType = (val: number) => {
         switch (val) {
             case 1:
@@ -62,7 +76,11 @@ export default function getService() {
                 return '按钮'
         }
     }
+    onMounted(() => {
+        getRoleOptions()
+        searchMenu()
+    })
     return {
-        state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType
+        state, handleMenuRef, loading, searchMenu, onOpenAddMenu, onOpenEditMenu, onRowDel, getMenuType, getIconName
     }
 }
