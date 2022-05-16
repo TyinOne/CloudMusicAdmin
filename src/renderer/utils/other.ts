@@ -63,6 +63,7 @@ export function useTitle() {
 
 export default {
     elSvg: (app: App) => {
+        console.log('ELSvg')
         elSvg(app);
     },
     lazyImg: (el: any, arr: any) => {

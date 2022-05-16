@@ -32,9 +32,7 @@
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.avatar" alt="" class="layout-navbars-breadcrumb-user-link-photo mr5"/>
 				{{ getUserInfos.nickName === '' ? 'common' : getUserInfos.nickName }}
-				<el-icon class="el-icon--right">
-					<ele-ArrowDown/>
-				</el-icon>
+        <SvgIcon name="ele-ArrowDown" class="el-icon--right"></SvgIcon>
 			</span>
       <template #dropdown>
         <el-dropdown-menu>

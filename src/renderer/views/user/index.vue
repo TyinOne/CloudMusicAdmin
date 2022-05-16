@@ -15,9 +15,7 @@
           <el-option :value="1" label="禁用"/>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
-          <el-icon>
-            <SvgIcon name="ele-Search"></SvgIcon>
-          </el-icon>
+          <SvgIcon name="ele-Search"></SvgIcon>
           {{'查询'}}
         </el-button>
       </div>
@@ -45,12 +43,12 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="140">
+        <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button size="small" type="text" @click="showDetail(scope.row.account)">
+            <el-button type="primary" size="small" text @click="showDetail(scope.row.account)">
               详情
             </el-button>
-            <el-button size="small" type="text" style="color: #fd7171">
+            <el-button size="small" text type="danger">
               删除
             </el-button>
           </template>

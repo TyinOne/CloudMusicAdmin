@@ -1,4 +1,8 @@
 export interface Label {
-    value:string
-    label:string
+    value: string | number
+    label: string | number
+}
+
+export interface TypeLabel extends Label {
+    type: number
 }

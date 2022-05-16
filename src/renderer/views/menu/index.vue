@@ -22,15 +22,11 @@
           <el-option label="禁用" value="true"></el-option>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="searchMenu">
-          <el-icon>
-            <ele-Search/>
-          </el-icon>
+          <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu(0)">
-          <el-icon>
-            <ele-FolderAdd/>
-          </el-icon>
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu(null)">
+          <SvgIcon name="ele-FolderAdd"></SvgIcon>
           新增菜单
         </el-button>
       </div>
@@ -40,7 +36,7 @@
       >
         <el-table-column label="菜单名称" width="180" show-overflow-tooltip>
           <template #default="scope">
-            <span v-if="scope.row.type === 1" class="ml10">{{ scope.row['metaTitle'] }}</span>
+            <span v-if="scope.row.type !== 2" class="ml10">{{ scope.row['metaTitle'] }}</span>
             <el-tag v-else>{{ scope.row['metaTitle'] }}</el-tag>
           </template>
         </el-table-column>
@@ -55,18 +51,18 @@
         <el-table-column label="排序" prop="sort" show-overflow-tooltip></el-table-column>
         <el-table-column label="类型" show-overflow-tooltip>
           <template #default="scope">
-            <el-tag class="link" :type="scope.row.type === 1 ? 'success' : ''">{{ getMenuType(scope.row.type) }}</el-tag>
+            <el-tag class="link" :type="scope.row.type !== 2 ? 'success' : ''">{{ getMenuType(scope.row.type) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="140">
+        <el-table-column label="操作" width="120">
           <template #default="scope">
-            <el-button size="small" type="text"
-                       @click="onOpenAddMenu(scope.row.id)">新增
+            <el-button type="primary" size="small" text :disabled="scope.row.type === 2"
+                       @click="onOpenAddMenu(scope.row)">新增
             </el-button>
-            <el-button size="small" type="text"
+            <el-button type="primary" size="small" text
                        @click="onOpenEditMenu(scope.row)">修改
             </el-button>
-            <el-button size="small" type="text" @click="onRowDel(scope.row)">
+            <el-button type="danger" size="small" text @click="onRowDel(scope.row)">
               删除
             </el-button>
           </template>

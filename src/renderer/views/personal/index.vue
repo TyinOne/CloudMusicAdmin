@@ -8,9 +8,7 @@
             <div class="avatar-uploader">
               <div class="el-upload">
                 <el-image v-if="user.info.avatar" :src="user.info.avatar" alt="" class="avatar"/>
-                <el-icon v-else class="avatar-uploader-icon">
-                  <Plus/>
-                </el-icon>
+                <SvgIcon v-else class="avatar-uploader-icon" name="ele-Plus"></SvgIcon>
               </div>
             </div>
           </el-form-item>
@@ -42,6 +40,7 @@ import {useUserApi} from "@renderer/api/user";
 import {onMounted, reactive, ref} from "vue";
 import type {UploadFile} from 'element-plus'
 import {Plus} from "@element-plus/icons-vue";
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 let user = reactive({
   info: {

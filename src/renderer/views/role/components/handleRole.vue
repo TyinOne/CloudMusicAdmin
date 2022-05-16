@@ -39,7 +39,7 @@
               <el-form-item label="菜单权限">
                 <el-scrollbar always height="280px">
                   <el-tree ref="menuTree" :data="menuData" :props="menuProps" check-on-click-node
-                           class="menu-data-tree" node-key="id" show-checkbox/>
+                           class="menu-data-tree" node-key="value" show-checkbox/>
                 </el-scrollbar>
               </el-form-item>
             </el-col>

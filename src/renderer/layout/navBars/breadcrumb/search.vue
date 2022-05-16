@@ -17,7 +17,7 @@
         </template>
         <template #default="{ item }">
           <div>
-            <SvgIcon :name="item.meta.icon" class="mr5"/>
+            <SvgIcon :name="getClass(item.meta.icon)" class="mr5"/>
             {{ item.meta.title }}
           </div>
         </template>
@@ -102,6 +102,9 @@ const onHandleSelect = (item: any) => {
 const onSearchBlur = () => {
   closeSearch();
 };
+const getClass = (icon):string => {
+  return icon.replaceAll(' bi', '');
+}
 
 </script>
 <script lang="ts">

@@ -79,6 +79,7 @@ import {reactive, ref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRegionApi} from "@renderer/api/region";
 import {useRoleApi} from "@renderer/api/role";
+import {ElMessage} from "element-plus";
 
 let loading = ref(true)
 let isShowDialog = ref(false)
@@ -152,6 +153,8 @@ const onSubmit = () => {
     }
   }
   useUserApi().saveAccount(params).then(async (res) => {
+    ElMessage.success('保存成功')
+    closeDialog()
     loading.value = false
   }).catch(e => {
     loading.value = false

@@ -7,9 +7,7 @@
         <el-input clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
         <el-button class="ml10" size="default" type="primary" @click="query">
-          <el-icon>
-            <ele-Search/>
-          </el-icon>
+          <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
       </div>
@@ -22,9 +20,8 @@
         <el-table-column label="执行耗时" show-overflow-tooltip prop="elapsed"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text">详情
-            </el-button>
-<!--            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text">-->
+            <el-button text type="primary">详情</el-button>
+<!--            <el-button :disabled="scope.row.value === 'admin'" size="small" text>-->
 <!--              删除-->
 <!--            </el-button>-->
           </template>
@@ -51,6 +48,7 @@
 
 import {onMounted, reactive, ref, unref} from "vue";
 import {useServerApi} from "@renderer/api/server";
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 let options = reactive({
   date: []
@@ -105,5 +103,7 @@ export default {
 </script>
 
 <style scoped>
-
+:deep(.el-range-editor) {
+  height: var(--el-component-size)
+}
 </style>

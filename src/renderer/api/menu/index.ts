@@ -1,4 +1,4 @@
-import {get} from '@renderer/utils/request';
+import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
 
 export const useMenuApi = () => {
     return {
@@ -11,8 +11,17 @@ export const useMenuApi = () => {
         getMenuLabel: (params) => {
             return get('/admin/label/menu', params)
         },
+        getMenuTreeSelectLabel: () => {
+            return get('/admin/label/menu/select')
+        },
+        getMenuDetail: (params) => {
+            return get('/admin/menu/detail', params)
+        },
         getMenuRes: (params) => {
             return get('/admin/menu/list/tree', params)
+        },
+        saveMenu: (params) => {
+            return post('/admin/menu/save', params, APPLICATION_JSON)
         }
     }
 }

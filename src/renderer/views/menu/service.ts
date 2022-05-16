@@ -28,26 +28,26 @@ export default function getService() {
             loading.value = false
         })
     }
-    const onOpenAddMenu = (parentId:number) => {
+    const onOpenAddMenu = (row?) => {
         let message = {
-            init: false,
+            edit: false,
             title: '新增 MENU',
             submit: '保存',
-            parentId: parentId,
+            parentId: row? row.id : 0,
+            isEdit: false,
             callback: searchMenu
         }
-        if (parentId > 0) message.init = true
-        handleMenuRef.value.openDialog(message)
+        handleMenuRef.value.openDialog(message, row)
     }
     const onHandleCurrentChange = (val: number) => {
 
     }
     const onOpenEditMenu = (row) => {
         let message = {
-            init: true,
+            edit: true,
             title: '修改 MENU',
             submit: '保存',
-            parentId: row.parentId,
+            isEdit: true,
             callback: searchMenu
         }
         handleMenuRef.value.openDialog(message, row)
@@ -70,6 +70,8 @@ export default function getService() {
     }
     const getMenuType = (val: number) => {
         switch (val) {
+            case 0:
+                return '目录'
             case 1:
                 return '菜单'
             case 2:

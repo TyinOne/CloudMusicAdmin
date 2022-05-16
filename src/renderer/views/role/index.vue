@@ -5,15 +5,11 @@
         <el-input v-model:model-value="keywords" clearable placeholder="请输入角色名称"
                   size="default" style="max-width: 180px"></el-input>
         <el-button class="ml10" size="default" type="primary" @click="searchRole" v-permission="'queryRole'">
-          <el-icon>
-            <SvgIcon name="ele-Search"></SvgIcon>
-          </el-icon>
+          <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
         <el-button class="ml10" size="default" type="success" @click="onOpenAddRole">
-          <el-icon>
-            <SvgIcon name="ele-FolderAdd"></SvgIcon>
-          </el-icon>
+          <SvgIcon name="ele-FolderAdd"></SvgIcon>
           新增角色
         </el-button>
       </div>
@@ -32,10 +28,10 @@
         <el-table-column label="创建时间" prop="created" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text"
+            <el-button type="primary" :disabled="scope.row.value === 'admin'" size="small" text
                        @click="onOpenEditRole(scope.row)">修改
             </el-button>
-            <el-button :disabled="scope.row.value === 'admin'" size="small" type="text" @click="onRowDel(scope.row)">
+            <el-button type="danger" :disabled="scope.row.value === 'admin'" size="small" text @click="onRowDel(scope.row)">
               删除
             </el-button>
           </template>

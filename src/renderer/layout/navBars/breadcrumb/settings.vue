@@ -176,7 +176,7 @@
         </div>
 
         <!-- 界面显示 -->
-        <el-divider content-position="left">{{ 'fourTitle' }}</el-divider>
+        <el-divider content-position="left">{{ '界面显示' }}</el-divider>
         <div class="layout-breadcrumb-setting-bar-flex mt15">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ '侧边栏 Logo' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
@@ -273,7 +273,7 @@
         </div>
 
         <!-- 其它设置 -->
-        <el-divider content-position="left">{{ v }}</el-divider>
+        <el-divider content-position="left">{{ '其他设置' }}</el-divider>
         <div class="layout-breadcrumb-setting-bar-flex mt15">
           <div class="layout-breadcrumb-setting-bar-flex-label">{{ 'Tagsview 风格' }}</div>
           <div class="layout-breadcrumb-setting-bar-flex-value">
@@ -409,15 +409,11 @@
                     type="warning"></el-alert>
           <el-button ref="copyConfigBtnRef" class="copy-config-btn" size="default" type="primary"
                      @click="onCopyConfigClick">
-            <el-icon class="mr5">
-              <ele-CopyDocument/>
-            </el-icon>
+            <SvgIcon name="ele-CopyDocument"></SvgIcon>
             {{ '一键复制配置' }}
           </el-button>
           <el-button class="copy-config-btn-reset" size="default" type="info" @click="onResetConfigClick">
-            <el-icon class="mr5">
-              <ele-RefreshRight/>
-            </el-icon>
+            <SvgIcon name="ele-RefreshRight"></SvgIcon>
             {{ '一键恢复默认' }}
           </el-button>
         </div>
@@ -435,9 +431,11 @@ import {Local} from '@renderer/utils/storage';
 import Watermark from '@renderer/utils/wartermark';
 import commonFunction from '@renderer/utils/commonFunction';
 import other from '@renderer/utils/other';
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 export default defineComponent({
   name: 'layoutBreadcrumbsetting',
+  components: {SvgIcon},
   setup() {
     const {proxy} = <any>getCurrentInstance();
     const store = useStore();

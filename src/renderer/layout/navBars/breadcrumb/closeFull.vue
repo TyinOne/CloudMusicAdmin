@@ -5,7 +5,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="closeFull">
 import {useStore} from "@renderer/store";
 import {computed} from "vue";
 
@@ -18,11 +18,6 @@ const isTagsViewCurrenFull = computed(() => {
 const onCloseFullscreen = () => {
   store.dispatch('tagsViewRoutes/setCurrenFullscreen', false);
 };
-</script>
-<script lang="ts">
-export default {
-  name: "closeFull"
-}
 </script>
 
 <style lang="scss" scoped>
