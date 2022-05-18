@@ -115,11 +115,11 @@ let data = reactive({
   }
 })
 const openDialog = (account, callback) => {
-  isShowDialog.value = true;
   data.callback = callback
   initDetail(account)
 }
 const initDetail = async (account) => {
+  isShowDialog.value = true;
   Promise.all([useRegionApi().getRegionLabel(), useUserApi().getUserDetail({account: account}), useRoleApi().getRoleLabel()]).then(([regRes, detailRes, roleRes]) => {
     regionLabel.value = regRes.result.list
     roleCheckList.value = roleRes.result.list
@@ -144,7 +144,7 @@ const onSubmit = () => {
     nickName: nickName,
     mail: mail,
     phone: phone,
-    region: (!region) || region.length === 0 ?  '' : region[region.length - 1],
+    region: (!region) || region.length === 0 ?  '' : typeof(region) === "string" ? region : region[region.length - 1],
     birth: birth,
     roleId: roleId,
     avatar: {

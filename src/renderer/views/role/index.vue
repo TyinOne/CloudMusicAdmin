@@ -4,11 +4,11 @@
       <div class="system-user-search mb15">
         <el-input v-model:model-value="keywords" clearable placeholder="请输入角色名称"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button class="ml10" size="default" type="primary" @click="searchRole" v-permission="'queryRole'">
+        <el-button class="ml10" size="default" type="primary" @click="searchRole" v-permission="'sys:role:query'">
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddRole">
+        <el-button class="ml10" size="default" type="success" @click="onOpenAddRole" v-permission="'sys:role:add'">
           <SvgIcon name="ele-FolderAdd"></SvgIcon>
           新增角色
         </el-button>
@@ -28,10 +28,10 @@
         <el-table-column label="创建时间" prop="created" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button type="primary" :disabled="scope.row.value === 'admin'" size="small" text
+            <el-button type="primary" :disabled="scope.row.value === 'admin'" size="small" text  v-permission="'sys:role:update'"
                        @click="onOpenEditRole(scope.row)">修改
             </el-button>
-            <el-button type="danger" :disabled="scope.row.value === 'admin'" size="small" text @click="onRowDel(scope.row)">
+            <el-button type="danger" :disabled="scope.row.value === 'admin'" size="small" text @click="onRowDel(scope.row)"  v-permission="'sys:role:remove'">
               删除
             </el-button>
           </template>

@@ -113,7 +113,7 @@ const menuProps = {
   children: 'children',
   label: 'label',
   disabled: (data) => {
-    return data.id === 1
+    return data.value === 1
   }
 }
 const closeDialog = () => {

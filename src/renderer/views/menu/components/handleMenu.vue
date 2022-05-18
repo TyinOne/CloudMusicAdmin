@@ -143,19 +143,22 @@
               <el-form-item label="按钮名称:">
                 <el-input style="width: 100%;" v-model="dialogMessage.formData.name"></el-input>
               </el-form-item>
-              <el-form-item label="是否禁用:">
-                <el-radio-group v-model="dialogMessage.formData.disabled">
-                  <el-radio :label="false">否</el-radio>
-                  <el-radio :label="true">是</el-radio>
-                </el-radio-group>
+              <el-form-item label="显示排序:">
+                <el-input-number style="width: 100%;" v-model="dialogMessage.formData.sort"></el-input-number>
               </el-form-item>
             </div>
             <div style="width: 47%">
               <el-form-item label="页面标题:">
                 <el-input style="width: 100%;" v-model="dialogMessage.formData.metaTitle"></el-input>
               </el-form-item>
-              <el-form-item label="显示排序:">
-                <el-input-number style="width: 100%;" v-model="dialogMessage.formData.sort"></el-input-number>
+              <el-form-item label="权限标识:">
+                <el-input style="width: 100%;" v-model="dialogMessage.formData.security"></el-input>
+              </el-form-item>
+              <el-form-item label="是否禁用:">
+                <el-radio-group v-model="dialogMessage.formData.disabled">
+                  <el-radio :label="false">否</el-radio>
+                  <el-radio :label="true">是</el-radio>
+                </el-radio-group>
               </el-form-item>
             </div>
           </div>
@@ -243,6 +246,7 @@ const openDialog = (message, row?) => {
     sort: 0
   }
   dialogMessage.formData.parentId = message.parentId
+  console.log(message)
   typeState.type = 0
   typeState.typeOptions = <Array<TypeLabel>>[
     {label: '目录', value: 0, type: 0},
@@ -251,6 +255,8 @@ const openDialog = (message, row?) => {
   getMenuLabel()
   if (isEdit.value) {
     initDetail(row.id)
+  } else {
+    updateTypeState({type: row.type})
   }
 };
 
@@ -270,6 +276,11 @@ const initDetail = (id) => {
   useMenuApi().getMenuDetail({id: id}).then(res => {
     let result = res.result
     let type = result.type
+    typeState.typeOptions = <Array<TypeLabel>>[
+      {label: '目录', value: 0, type: 0},
+      {label: '菜单', value: 1, type: 1},
+      {label: '按钮', value: 2, type: 2},
+    ]
     typeState.type = type
     switch (type) {
       case 0:
@@ -289,6 +300,7 @@ const initDetail = (id) => {
 }
 
 const updateTypeState = ({type}) => {
+  console.log(type)
   // let type = e.type
   if (!type || type === 0) {
     typeState.type = 0
@@ -307,17 +319,14 @@ const updateTypeState = ({type}) => {
 }
 
 const initDirDetail = (result) => {
-  console.log(result)
   dialogMessage.formData = result
 }
 
 const initPageDetail = (result) => {
-  console.log(result)
   dialogMessage.formData = result
 }
 
 const initButtonDetail = (result) => {
-  console.log(result)
   dialogMessage.formData = result
 }
 

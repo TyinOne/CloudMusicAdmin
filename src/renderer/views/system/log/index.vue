@@ -6,7 +6,7 @@
                         end-placeholder="结束日期" value-format="YYYY-MM-DD" style="max-width: 240px"></el-date-picker>
         <el-input clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button class="ml10" size="default" type="primary" @click="query">
+        <el-button class="ml10" size="default" type="primary" @click="query" v-permission="'sys:log:query'">
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
@@ -20,7 +20,7 @@
         <el-table-column label="执行耗时" show-overflow-tooltip prop="elapsed"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button text type="primary">详情</el-button>
+            <el-button text type="primary" v-permission="'sys:log:detail'">详情</el-button>
 <!--            <el-button :disabled="scope.row.value === 'admin'" size="small" text>-->
 <!--              删除-->
 <!--            </el-button>-->
