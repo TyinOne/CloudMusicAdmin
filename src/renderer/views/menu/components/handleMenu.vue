@@ -246,7 +246,6 @@ const openDialog = (message, row?) => {
     sort: 0
   }
   dialogMessage.formData.parentId = message.parentId
-  console.log(message)
   typeState.type = 0
   typeState.typeOptions = <Array<TypeLabel>>[
     {label: '目录', value: 0, type: 0},
@@ -256,7 +255,7 @@ const openDialog = (message, row?) => {
   if (isEdit.value) {
     initDetail(row.id)
   } else {
-    updateTypeState({type: row.type})
+    updateTypeState({type: null})
   }
 };
 
@@ -300,7 +299,6 @@ const initDetail = (id) => {
 }
 
 const updateTypeState = ({type}) => {
-  console.log(type)
   // let type = e.type
   if (!type || type === 0) {
     typeState.type = 0
