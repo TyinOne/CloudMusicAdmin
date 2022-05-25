@@ -1,7 +1,7 @@
 <template>
   <div class="system-dict-container">
     <el-card shadow="hover">
-      <div class="system-user-search mb15">
+      <div class="system-search mb15">
         <el-input clearable placeholder="请输入关键词" v-model="state.keywords"
                   size="default" style="max-width: 180px"></el-input>
         <el-input clearable placeholder="请输入字典Key" v-model="state.dictTypeKey"
@@ -32,7 +32,7 @@
       </div>
       <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
         <el-table-column label="ID" width="60" prop="id"/>
-        <el-table-column label="字典类型" width="90" prop="dictLabel">
+        <el-table-column label="字典类型" prop="dictLabel" width="120">
           <template #default="scope">
             <el-tooltip
                 class="box-item"
@@ -40,7 +40,7 @@
                 :content="scope.row.dictType"
                 placement="left"
             >
-              {{scope.row.dictLabel}}
+              {{ scope.row.dictLabel }}
             </el-tooltip>
           </template>
         </el-table-column>

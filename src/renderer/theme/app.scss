@@ -55,6 +55,7 @@ body,
   .layout-aside {
     background: var(--next-bg-menuBar);
     box-shadow: 2px 0 6px rgb(0 21 41 / 1%);
+    max-height: calc(100vh - 40px);
     height: inherit;
     position: relative;
     z-index: 1;
@@ -121,11 +122,13 @@ body,
   }
 
   .layout-aside-mobile-close {
+    min-height: 100vh;
     left: -220px;
     transition: all 0.3s cubic-bezier(0.39, 0.58, 0.57, 1);
   }
 
   .layout-aside-mobile-open {
+    min-height: 100vh;
     left: 0;
     transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
@@ -322,11 +325,4 @@ body,
 
 .link {
   cursor: pointer;
-}
-.bi {
-  vertical-align: middle;
-  margin-right: 5px;
-  display: inline-block;
-  text-align: center;
-  width: 24px;
 }

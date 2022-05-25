@@ -13,9 +13,8 @@ module.exports = {
     HotUpdateFolder: 'update',
     UseStartupChart: true,
     IsUseSysTitle: false,
-    BuiltInServerPort: 8888,
     hotUpdate: {
-        hotPublishHost: "http://127.0.0.1:8888",
+        hotPublishHost: "https://api.tyin.vip",
         hotPublishCheck: "admin/update/check",
     }
 }

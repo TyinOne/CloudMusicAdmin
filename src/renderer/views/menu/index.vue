@@ -1,7 +1,7 @@
 <template>
   <div class="system-role-container">
     <el-card shadow="hover">
-      <div class="system-user-search mb15">
+      <div class="system-search mb15">
         <el-input v-model:model-value="state.keywords" clearable placeholder="请输入菜单名称"
                   size="default" style="max-width: 180px"></el-input>
         <el-select v-model:model-value="state.roleId" placeholder="请选择角色"
@@ -25,14 +25,15 @@
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddMenu(null)">
+        <el-button v-permission="'system:menu:add'" class="ml10" size="default" type="success"
+                   @click="onOpenAddMenu(null)">
           <SvgIcon name="ele-FolderAdd"></SvgIcon>
           新增菜单
         </el-button>
       </div>
       <el-table v-loading="loading" :data="state.dataSource"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
-                style="width: 100%" height="calc(100vh - 237px)"
+                height="calc(100vh - 240px)" style="width: 100%"
       >
         <el-table-column label="菜单名称" width="180" show-overflow-tooltip>
           <template #default="scope">
@@ -57,13 +58,14 @@
         <el-table-column label="操作" width="120">
           <template #default="scope">
             <el-button type="primary" size="small" text :disabled="scope.row.type === 2"
+                       v-permission="'system:menu:add'"
                        @click="onOpenAddMenu(scope.row)">新增
             </el-button>
-            <el-button type="primary" size="small" text
+            <el-button v-permission="'system:menu:save'" size="small" text type="primary"
                        @click="onOpenEditMenu(scope.row)">修改
             </el-button>
-            <el-button type="danger" size="small" text @click="onRowDel(scope.row)">
-              删除
+            <el-button v-permission="'system:menu:remove'" size="small" text type="danger" @click="onRowDel(scope.row)">
+              {{ '删除' }}
             </el-button>
           </template>
         </el-table-column>

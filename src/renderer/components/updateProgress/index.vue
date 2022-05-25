@@ -87,7 +87,7 @@ const openfile = () => {
   shell.shell.showItemInFolder(filePath.value);
 };
 const killSys = () => {
-  ipcRenderer.invoke("app-close");
+  ipcRenderer.invoke("appClose");
 };
 // 当且仅当为开发模式才可以关闭
 const closeMask = () => {

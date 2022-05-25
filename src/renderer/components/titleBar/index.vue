@@ -104,42 +104,42 @@ if (!ipcRenderer) {
 }
 
 const Mini = () => {
-  ipcRenderer.invoke("windows-mini");
+  ipcRenderer.invoke("windowsMini");
 };
 const MixOrReduction = () => {
-  ipcRenderer.invoke("window-max").then((res) => {
+  ipcRenderer.invoke("windowMax").then((res) => {
     mix.value = res.status;
   });
 };
 const Close = () => {
-  ipcRenderer.invoke("window-close");
+  ipcRenderer.invoke("windowClose");
 };
 
 const openDevTools = async () => {
-  isOpenDevTools.value = await ipcRenderer.invoke('open-devtools', {mode: 'right', activate: true})
+  isOpenDevTools.value = await ipcRenderer.invoke('openDevtools', {mode: 'right', activate: true})
 }
 
 const getDevToolsStatus = async () => {
-  isOpenDevTools.value = await ipcRenderer.invoke('devtools-status-get')
+  isOpenDevTools.value = await ipcRenderer.invoke('devtoolsStatus')
 }
 
-ipcRenderer.on('devtools-status', (event: any, msg: boolean) => {
+ipcRenderer.on('devtoolsStatus', (event: any, msg: boolean) => {
   isOpenDevTools.value = msg
 })
 
 const checkUpdate = (data) => {
   switch (data) {
     case "one":
-      ipcRenderer.invoke("check-update");
+      ipcRenderer.invoke("checkUpdate");
       console.log("启动检查");
       break;
     case "two":
-      ipcRenderer.invoke("start-download").then(() => {
+      ipcRenderer.invoke("startDownload").then(() => {
         dialogVisible.value = true;
       });
       break;
     case "three":
-      ipcRenderer.invoke("hot-update");
+      ipcRenderer.invoke("hotUpdate");
       break;
     case "four":
       showForcedUpdate.value = true;

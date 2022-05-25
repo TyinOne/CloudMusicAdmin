@@ -53,7 +53,7 @@
             {{ '下载中心' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="open:https://www.baidu.com">{{ '百度' }}</el-dropdown-item>-->
-          <el-dropdown-item command="open:/gitee">
+          <el-dropdown-item command="open:/github">
             <SvgIcon name="bi-github"></SvgIcon>
             {{ '代码仓库' }}
           </el-dropdown-item>
@@ -79,6 +79,7 @@ import Search from '@renderer/layout/navBars/breadcrumb/search.vue'
 import screenfull from 'screenfull';
 import UserNews from '@renderer/layout/navBars/breadcrumb/userNews.vue'
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
+import {useUserApi} from "@renderer/api/user";
 
 const {ipcRenderer} = window;
 const {proxy} = <any>getCurrentInstance();
@@ -127,16 +128,15 @@ const onHandleCommandClick = (path: string) => {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       buttonSize: 'default',
-      beforeClose: (action, instance, done) => {
+      beforeClose: async (action, instance, done) => {
         if (action === 'confirm') {
           instance.confirmButtonLoading = true;
           instance.confirmButtonText = '退出中';
+          await useUserApi().logout()
           setTimeout(() => {
+            instance.confirmButtonLoading = false;
             done();
-            setTimeout(() => {
-              instance.confirmButtonLoading = false;
-            }, 300);
-          }, 700);
+          }, 700)
         } else {
           done();
         }
@@ -157,20 +157,27 @@ const onHandleCommandClick = (path: string) => {
     let strings = path.split('open:');
     let url: any = strings[1]
     if (url.startsWith('/')) {
-      console.log(url)
-      //客户端内链。 浏览器外链。
+      //客户端内链。 浏览器外链。 github 除外
       let routes = router.getRoutes().filter(i => i.path === url)
-      if (routes && routes.length > 0) {
-        if (ipcRenderer) {
-          router.push(url);
-        } else {
+      if (url.startsWith("/git")) {
+        if (routes && routes.length > 0) {
           let url: any = routes[0].meta.isLink
-          window.open(url)
+          ipcRenderer.invoke('open-web', url);
+        } else {
+          routes.push("/404")
+        }
+      } else {
+        if (routes && routes.length > 0) {
+          if (ipcRenderer) {
+            router.push(url);
+          } else {
+            let url: any = routes[0].meta.isLink
+            window.open(url)
+          }
         }
       }
     } else {
-      console.log(url)
-      //外链
+      //醇正的外链， 无配置
       if (ipcRenderer) {
         ipcRenderer.invoke('open-web', url);
       } else {

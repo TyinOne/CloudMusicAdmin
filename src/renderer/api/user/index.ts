@@ -1,4 +1,4 @@
-import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
+import {APPLICATION_JSON, get, post, put} from '@renderer/utils/request';
 
 export const useUserApi = () => {
     return {
@@ -7,6 +7,9 @@ export const useUserApi = () => {
          */
         login: (params) => {
             return post('/admin/user/login', params, APPLICATION_JSON)
+        },
+        logout: () => {
+            return put('/admin/user/logout')
         },
         getUserSession: () => {
             return get('/admin/user/session')

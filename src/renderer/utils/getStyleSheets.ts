@@ -51,7 +51,7 @@ const getAwesomeIconfont = () => {
             let sheetsList = [];
             let sheetsIconList = [];
             for (let i = 0; i < styles.length; i++) {
-                if (styles[i].href && styles[i].href.indexOf('netdna.bootstrapcdn.com') > -1) {
+                if (styles[i].href && styles[i].href.indexOf('font-awesome') > -1) {
                     sheetsList.push(styles[i]);
                 }
             }
@@ -63,6 +63,7 @@ const getAwesomeIconfont = () => {
                         sheetsList[i].cssRules[j].selectorText.indexOf(',') === -1
                     ) {
                         if (/::before/.test(sheetsList[i].cssRules[j].selectorText)) {
+                            console.log(sheetsList[i].cssRules[j].selectorText)
                             sheetsIconList.push(
                                 `${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
                             );
@@ -70,6 +71,7 @@ const getAwesomeIconfont = () => {
                     }
                 }
             }
+            // console.log(sheetsIconList)
             if (sheetsIconList.length > 0) resolve(sheetsIconList.reverse());
             else reject('未获取到值，请刷新重试');
         });
@@ -84,7 +86,7 @@ const getBootstrapIconfont = () => {
             let sheetsList = [];
             let sheetsIconList = [];
             for (let i = 0; i < styles.length; i++) {
-                if (styles[i].href && styles[i].href.indexOf('cdn.jsdelivr.net') > -1) {
+                if (styles[i].href && styles[i].href.indexOf('bootstrap-icons') > -1) {
                     sheetsList.push(styles[i]);
                 }
             }

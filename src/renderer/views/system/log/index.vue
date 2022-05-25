@@ -1,7 +1,7 @@
 <template>
   <div class="system-log-container">
     <el-card shadow="hover">
-      <div class="system-user-search mb15">
+      <div class="system-search mb15">
         <el-date-picker type="daterange" v-model="options.date" start-placeholder="开始日期"
                         end-placeholder="结束日期" value-format="YYYY-MM-DD" style="max-width: 240px"></el-date-picker>
         <el-input clearable placeholder="请输入关键词"
@@ -32,7 +32,7 @@
           v-model:page-size="pagination.size"
           :hide-on-single-page="false"
           :pager-count="5"
-          :small="true"
+          small
           :total="pagination.total"
           background
           class="mt15"

@@ -99,10 +99,12 @@ export default defineComponent({
     // 监听页面监听进行右键菜单的关闭
     onMounted(() => {
       document.body.addEventListener('click', closeContextmenu);
+      document.body.addEventListener('contextmenu', closeContextmenu)
     });
     // 页面卸载时，移除右键菜单监听事件
     onUnmounted(() => {
       document.body.removeEventListener('click', closeContextmenu);
+      document.body.addEventListener('contextmenu', closeContextmenu)
     });
     // 监听下拉菜单位置
     watch(

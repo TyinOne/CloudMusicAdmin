@@ -223,7 +223,6 @@ const menuOptions = ref([])
 //按钮无法新增
 const openDialog = (message, row?) => {
   isEdit.value = message.isEdit
-  isShowDialog.value = true;
   dialogMessage.title = message.title
   dialogMessage.submit = message.submit
   dialogMessage.message = message.message
@@ -255,7 +254,7 @@ const openDialog = (message, row?) => {
   if (isEdit.value) {
     initDetail(row.id)
   } else {
-    updateTypeState({type: null})
+    updateTypeState({type: row ? row.type : null})
   }
 };
 
@@ -273,6 +272,7 @@ const getMenuLabel = () => {
 const initDetail = (id) => {
   loading.value = true
   useMenuApi().getMenuDetail({id: id}).then(res => {
+    isShowDialog.value = true;
     let result = res.result
     let type = result.type
     typeState.typeOptions = <Array<TypeLabel>>[
@@ -299,6 +299,7 @@ const initDetail = (id) => {
 }
 
 const updateTypeState = ({type}) => {
+  isShowDialog.value = true;
   // let type = e.type
   if (!type || type === 0) {
     typeState.type = 0

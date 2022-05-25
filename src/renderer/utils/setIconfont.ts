@@ -1,7 +1,10 @@
 // 字体图标 url
 const cssCdnUrlList: Array<string> = [
+    // 'https://file.tyin.vip/cdn/font-awesome/font-awesome.min.css',
+    // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css',
     'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
-    'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css'
+    'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.css',
+    'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css'
 ];
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [];

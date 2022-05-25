@@ -1,7 +1,7 @@
 <template>
   <div class="system-user-container">
     <el-card shadow="hover">
-      <div class="system-user-search mb15">
+      <div class="system-search mb15">
         <el-input clearable placeholder="请输入关键词" v-model="state.name"
                   size="default" style="max-width: 180px" @keydown.enter="query">
         </el-input>
@@ -19,7 +19,6 @@
           {{'查询'}}
         </el-button>
       </div>
-
       <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
         <el-table-column label="序号" width="60" type="index"/>
         <el-table-column label="账号" width="120" show-overflow-tooltip prop="account"/>

@@ -11,7 +11,7 @@
           <el-input maxlength="25" v-model="dialogMessage.data.dictKey" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="字典Value:">
-          <el-input maxlength="25" v-model="dialogMessage.data.dictValue" placeholder="请输入"></el-input>
+          <el-input v-model="dialogMessage.data.dictValue" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="字典描述:">
           <el-input maxlength="70" show-word-limit type="textarea" v-model="dialogMessage.data.dictDescription" placeholder="请输入描述"></el-input>

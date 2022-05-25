@@ -9,7 +9,7 @@ class Update {
 
     constructor() {
         // 设置url
-        autoUpdater.setFeedURL('http://127.0.0.1:8888/')
+        autoUpdater.setFeedURL('https://api.tyin.vip/')
 
         // 当更新发生错误的时候触发。
         autoUpdater.on('error', (err) => {

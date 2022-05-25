@@ -3,15 +3,17 @@
 import {app, session} from 'electron'
 import InitWindow from './services/windowManager'
 import DisableButton from './config/DisableButton'
+
 function onAppReady() {
-    new InitWindow().initWindow()
-    DisableButton.Disablef12()
+    new InitWindow().windowStarter()
     if (process.env.NODE_ENV === 'development') {
         const {VUEJS3_DEVTOOLS} = require("electron-devtools-vendor");
         session.defaultSession.loadExtension(VUEJS3_DEVTOOLS, {
             allowFileAccess: true,
         });
         console.log('已安装: vue-devtools')
+    } else {
+        DisableButton.Disablef12()
     }
 }
 

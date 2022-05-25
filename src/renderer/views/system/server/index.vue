@@ -84,6 +84,7 @@
 <script name="serverView" lang="ts" setup>
 import {useServerApi} from "@renderer/api/server";
 import {onMounted, reactive, ref} from "vue";
+import {Session} from "@renderer/utils/storage";
 
 let state = reactive({
   server: {
@@ -113,6 +114,7 @@ const getServerConfig = () => {
   state.loading = true
   useServerApi().getServerConfig().then(res => {
     state.server = res.result
+    Session.set("serverIP", state.server.sys.computerIp)
     cupList.value = getCpuInfoList(state.server.cpu)
     memList.value = getMemInfoList(state.server.mem, state.server.jvm)
     state.loading = false

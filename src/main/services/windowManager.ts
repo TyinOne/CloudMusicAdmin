@@ -1,13 +1,11 @@
-import setIpc from './ipcMain'
 import config from '@config/index'
 import menuconfig from '../config/menu'
 import {app, BrowserWindow, dialog, Menu} from 'electron'
 import {loadingURL, winURL} from '../config/StaticPath'
 import {join} from "path"
 import {mainWindowConfig} from "../config/windowsConfig"
-import ipcMain from "./ipcMain";
-
-setIpc.Mainfunc()
+import {AppIpcService} from "@main/services/components/ipcService";
+import {DownloadService} from "@main/services/components/donwloadService";
 
 class MainInit {
 
@@ -15,6 +13,8 @@ class MainInit {
     public shartURL: string = ''
     public loadWindow: BrowserWindow = null
     public mainWindow: BrowserWindow = null
+    public ipcService: AppIpcService = null
+    public downloadService: DownloadService = null
 
     constructor() {
         this.winURL = winURL
@@ -29,6 +29,8 @@ class MainInit {
                 }]
             })
         }
+        this.ipcService = new AppIpcService()
+        this.downloadService = new DownloadService()
     }
 
     // 主窗口函数
@@ -54,20 +56,6 @@ class MainInit {
             this.mainWindow.show()
             if (config.UseStartupChart) this.loadWindow.destroy()
         })
-        // 开发模式下自动开启devtools
-        // if (process.env.NODE_ENV === 'development') {
-        //
-        // }
-        this.mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ["*://*/*"]},
-            (d, c) => {
-                if (d.responseHeaders['X-Frame-Options']) {
-                    delete d.responseHeaders['X-Frame-Options'];
-                } else if (d.responseHeaders['x-frame-options']) {
-                    delete d.responseHeaders['x-frame-options'];
-                }
-                c({cancel: false, responseHeaders: d.responseHeaders});
-            }
-        );
         // 当确定渲染进程卡死时，分类型进行告警操作
         app.on('render-process-gone', (event, webContents, details) => {
             const message = {
@@ -107,6 +95,7 @@ class MainInit {
             })
         })
 
+        //初始化开发者工具状态
         this.mainWindow.webContents.on('devtools-opened', event => {
             this.mainWindow.webContents.send('devtools-status',  true)
         })
@@ -119,8 +108,8 @@ class MainInit {
             dialog.showMessageBox(this.mainWindow, {
                 type: 'warning',
                 title: '警告',
-                buttons: ['重载', '退出'],
-                message: '图形化进程失去响应，是否等待其恢复？',
+                buttons: ['重置', '退出'],
+                message: '程序无响应，是否等待其恢复？',
                 noLink: true
             }).then(res => {
                 if (res.response === 0) this.mainWindow.reload()
@@ -130,8 +119,8 @@ class MainInit {
         /**
          * 新的gpu崩溃检测，详细参数详见：http://www.electronjs.org/docs/api/app
          * @returns {void}
-         * @author zmr (umbrella22)
-         * @date 2020-11-27
+         * @author tyin
+         * @date 2022-03-27
          */
         app.on('child-process-gone', (event, details) => {
             const message = {
@@ -201,19 +190,14 @@ class MainInit {
         this.loadWindow.loadURL(loadingURL)
         this.loadWindow.show()
         this.loadWindow.setAlwaysOnTop(true)
-        // 延迟两秒可以根据情况后续调快，= =，就相当于个，sleep吧，就那种。 = =。。。
         setTimeout(() => {
             this.createMainWindow()
-        }, 1500)
+        }, 500)
     }
 
     // 初始化窗口函数
-    initWindow() {
-        if (config.UseStartupChart) {
-            return this.loadingWindow(this.shartURL)
-        } else {
-            return this.createMainWindow()
-        }
+    windowStarter() {
+        return config.UseStartupChart ? this.loadingWindow(this.shartURL) : this.createMainWindow()
 
     }
 }

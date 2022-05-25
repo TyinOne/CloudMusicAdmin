@@ -12,6 +12,7 @@ import extract from 'extract-zip'
 import {version} from '../../../package.json'
 import {hotPublishConfig} from '../config/hotPublish'
 import axios, {AxiosResponse} from 'axios'
+import log from '../utils/logUtils'
 
 const streamPipeline = promisify(pipeline)
 const appPath = app.getAppPath()
@@ -52,9 +53,14 @@ const updateInfo = {
 
 interface Res extends AxiosResponse<any> {
     data: {
-        version?: string;
-        name?: string;
-        hash?: string;
+        code: number,
+        message: string,
+        result?: {
+            path?: string;
+            version?: string;
+            name?: string;
+            hash?: string;
+        }
     };
 }
 
@@ -67,7 +73,6 @@ interface Res extends AxiosResponse<any> {
 export const updater = async (windows?: BrowserWindow): Promise<void> => {
     try {
         const res: Res = await request({url: `${hotPublishConfig.hotPublishHost}/${hotPublishConfig.hotPublishCheck}`})
-        console.log(res.data)
         if (res.data.result.version != version) {
             await emptyDir(updatePath)
             const filePath = join(updatePath, res.data.result.name)
@@ -78,9 +83,9 @@ export const updater = async (windows?: BrowserWindow): Promise<void> => {
             const sha256 = hash(buffer)
             if (sha256 !== res.data.result.hash) throw new Error('sha256 error')
             const appPathTemp = join(updatePath, 'temp')
-            console.log(appPathTemp)
-            console.log(filePath)
-            console.log(appPath)
+            log.info(appPathTemp)
+            log.info(filePath)
+            log.info(appPath)
             await extract(filePath, {dir: appPathTemp})
             updateInfo.status = 'moving'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
@@ -89,10 +94,10 @@ export const updater = async (windows?: BrowserWindow): Promise<void> => {
             await copy(appPathTemp, appPath)
             updateInfo.status = 'finished'
             if (windows) windows.webContents.send('hot-update-status', updateInfo);
-            console.log('更新完成')
+            log.info('更新完成')
         }
     } catch (error) {
-        console.log(error)
+        log.info(error)
         updateInfo.status = 'failed'
         updateInfo.message = error
         if (windows) windows.webContents.send('hot-update-status', updateInfo)

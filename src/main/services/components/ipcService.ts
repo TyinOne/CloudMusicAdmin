@@ -1,22 +1,30 @@
-import {app, BrowserWindow, dialog, ipcMain, shell} from 'electron'
-import config from '@config/index'
-import {winURL} from '../config/StaticPath'
-import {updater} from './HotUpdater'
-import DownloadFile from './downloadFile'
-import Update from './checkupdate'
-import {join} from 'path'
-import {otherWindowConfig} from "../config/windowsConfig"
+import {IPCEventName} from "@main/services/interface/type/IPCEventName";
+import {app, BrowserWindow, dialog, ipcMain, IpcMainInvokeEvent, shell} from "electron";
+import config from "@config/index";
+import {otherWindowConfig} from "@main/config/windowsConfig";
+import {join} from "path";
+import {winURL} from "@main/config/StaticPath";
+import {UpdateIPC} from "@main/services/ipc/updateIPC";
+import {DownloadIPC} from "@main/services/ipc/downloadIPC";
+import {DownloadService} from "@main/services/components/donwloadService";
 
-export default {
-    Mainfunc() {
-        const allUpdater = new Update()
-        ipcMain.handle('IsUseSysTitle', async () => {
+/**
+ * 应用级事件监听
+ */
+export class AppIpcService {
+    public updateIpc: UpdateIPC = null
+    public downloadIpc: DownloadIPC = null;
+
+    constructor() {
+        this.updateIpc = new UpdateIPC()
+        this.downloadIpc = new DownloadIPC(new DownloadService())
+        AppIpcService.ipcMainHandle('IsUseSysTitle', async () => {
             return config.IsUseSysTitle
         })
-        ipcMain.handle('windows-mini', (event, args) => {
+        AppIpcService.ipcMainHandle('windowsMini', (event, args) => {
             BrowserWindow.fromWebContents(event.sender)?.minimize()
         })
-        ipcMain.handle('window-max', async (event, args) => {
+        AppIpcService.ipcMainHandle('windowMax', async (event, args) => {
             if (BrowserWindow.fromWebContents(event.sender)?.isMaximized()) {
                 BrowserWindow.fromWebContents(event.sender)?.restore()
                 return {status: false}
@@ -25,19 +33,13 @@ export default {
                 return {status: true}
             }
         })
-        ipcMain.handle('window-close', (event, args) => {
+        AppIpcService.ipcMainHandle('windowClose', (event, args) => {
             BrowserWindow.fromWebContents(event.sender)?.close()
         })
-        ipcMain.handle('check-update', (event) => {
-            allUpdater.checkUpdate(BrowserWindow.fromWebContents(event.sender))
-        })
-        ipcMain.handle('confirm-update', () => {
-            allUpdater.quitAndInstall()
-        })
-        ipcMain.handle('app-close', (event, args) => {
+        AppIpcService.ipcMainHandle('appClose', (event, args) => {
             app.quit()
         })
-        ipcMain.handle('open-messagebox', async (event, arg) => {
+        AppIpcService.ipcMainHandle('openMessageBox', async (event, arg) => {
             return await dialog.showMessageBox(BrowserWindow.fromWebContents(event.sender), {
                 type: arg.type || 'info',
                 title: arg.title || '',
@@ -46,24 +48,16 @@ export default {
                 noLink: arg.noLink || true
             })
         })
-        ipcMain.handle('open-errorbox', (event, arg) => {
+        AppIpcService.ipcMainHandle('openErrorBox', (event, arg) => {
             dialog.showErrorBox(
                 arg.title,
                 arg.message
             )
         })
-        ipcMain.handle('hot-update', (event, arg) => {
-            updater(BrowserWindow.fromWebContents(event.sender))
-        })
-
-        ipcMain.handle('start-download', (event, msg) => {
-            new DownloadFile(BrowserWindow.fromWebContents(event.sender), msg.downloadUrl).start()
-        })
-        ipcMain.handle('open-web',   (event, arg) => {
+        AppIpcService.ipcMainHandle('openWeb', (event, arg) => {
             shell.openExternal(arg)
         })
-
-        ipcMain.handle('open-devtools', (event, arg) => {
+        AppIpcService.ipcMainHandle('openDevtools', (event, arg) => {
             let isOpen = BrowserWindow.fromWebContents(event.sender).webContents.isDevToolsOpened()
             if (isOpen) {
                 BrowserWindow.fromWebContents(event.sender).webContents.closeDevTools()
@@ -71,11 +65,10 @@ export default {
                 BrowserWindow.fromWebContents(event.sender).webContents.openDevTools(arg)
             }
         })
-        ipcMain.handle('devtools-status-get', async (event) => {
+        AppIpcService.ipcMainHandle('devtoolsStatus', async (event) => {
             return BrowserWindow.fromWebContents(event.sender).webContents.isDevToolsOpened()
         })
-
-        ipcMain.handle('open-win', (event, arg) => {
+        AppIpcService.ipcMainHandle('openWin', (event, arg) => {
             const ChildWin = new BrowserWindow({
                 titleBarStyle: config.IsUseSysTitle ? 'default' : 'hidden',
                 ...Object.assign(otherWindowConfig, {
@@ -110,6 +103,15 @@ export default {
             ChildWin.once("show", () => {
                 ChildWin.webContents.send('send-data', arg.sendData)
             })
+        })
+    }
+
+    static ipcMainHandle = <T>(
+        eventName: IPCEventName,
+        listener: (event: IpcMainInvokeEvent, ...args: any[]) => Promise<T> | void | T,
+    ): void => {
+        ipcMain.handle(eventName, async (event, ...args: any[]) => {
+            return listener(event, ...args)
         })
     }
 }
