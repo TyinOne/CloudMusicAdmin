@@ -16,10 +16,10 @@
               tabindex="-1"
               @click="onCurrentContextmenuClick(item.contextMenuClickId)"
           >
-            <SvgIcon :size="20" :name="item.icon"/>
+            <SvgIcon :name="item.icon" :size="20"/>
             <span>{{ item.txt }}</span>
           </li>
-          <li class="el-dropdown-menu__item--divided" v-else/>
+          <li v-else class="el-dropdown-menu__item--divided"/>
         </template>
       </ul>
       <div :style="{ left: `${state.arrowLeft}px` }" class="el-popper__arrow"></div>
@@ -27,7 +27,7 @@
   </transition>
 </template>
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, reactive, ref} from "vue";
+import {computed, reactive, ref} from "vue";
 
 const props = defineProps({
   dropdown: {
@@ -50,14 +50,15 @@ const state = reactive({
   arrowLeft: 10,
 });
 const openContextmenu = (i: any) => {
+  console.log(i)
   item.value = i;
   closeContextmenu();
   setTimeout(() => {
     state.dropdownList = [{
       id: 0,
       contextMenuClickId: 0,
-      txt: (getAction(i.status)).name,
-      icon: (getAction(i.status)).icon,
+      txt: (getAction(i)).name,
+      icon: (getAction(i)).icon,
     },
       {id: 0, contextMenuClickId: 1, txt: '打开文件夹', icon: 'bi-folder2-open bi'},
       {id: 1, contextMenuClickId: null, txt: null, icon: null},
@@ -72,7 +73,8 @@ const closeContextmenu = () => {
   state.isShow = false;
 };
 const onCurrentContextmenuClick = (type) => {
-  emit('currentClick', {item: item.value,action: type})
+  emit('currentClick', {item: item.value, action: type})
+  closeContextmenu()
 }
 // 父级传过来的坐标 x,y 值
 const dropdowns = computed(() => {
@@ -86,36 +88,29 @@ const dropdowns = computed(() => {
     return props.dropdown;
   }
 });
-const getAction = (status: number) => {
+const getAction = (item: any) => {
   let name = ''
   let icon = ''
-  switch (status) {
-    case 0:
-      name = '暂停'
-      icon = 'bi-pause-fill bi'
-      break;
-    default:
+  if (item.state === 'progressing') {
+    if (item.paused) {
       name = '开始'
       icon = 'bi-play bi'
-      break;
+    } else {
+      name = '暂停'
+      icon = 'bi-pause-fill bi'
+    }
+  } else {
+    name = '重新下载'
+    icon = 'bi-arrow-counterclockwise bi'
   }
   return {
     name: name,
     icon: icon
   }
 }
-// 监听页面监听进行右键菜单的关闭
-onMounted(() => {
-  document.body.addEventListener('click', closeContextmenu);
-  document.body.addEventListener('contextmenu', closeContextmenu);
-});
-// 页面卸载时，移除右键菜单监听事件
-onUnmounted(() => {
-  document.body.removeEventListener('click', closeContextmenu);
-  document.body.addEventListener('contextmenu', closeContextmenu);
-});
 defineExpose({
-  openContextmenu
+  openContextmenu,
+  closeContextmenu
 })
 </script>
 <script lang="ts">

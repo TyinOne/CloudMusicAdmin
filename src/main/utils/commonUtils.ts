@@ -1,4 +1,4 @@
-import {app, BrowserWindow, DownloadItem} from 'electron'
+import {app, BrowserWindow, DownloadItem, WebContents} from 'electron'
 import {
     IAddDownloadItem,
     IDownloadBytes,
@@ -7,6 +7,8 @@ import {
     IUpdateDownloadItem,
 } from '@main/services/interface'
 import {getBase64Bytes, getFileIcon, getFileName, guid} from '@main/utils/downloadUtils'
+import store from "@main/services/store";
+import {IDownloadConfig} from "@main/services/interface/model/IDownloadConfig";
 
 /**
  * 获取下载中的字节数据
@@ -53,7 +55,6 @@ export const getDownloadIndex = (data: IDownloadFile[], id: string): number =>
  */
 export const isExistItem = (url: string, data: IDownloadFile[]): IDownloadFile | null => {
     const item = data.filter(d => d.url === url)
-
     return item.length ? item[0] : null
 }
 
@@ -70,17 +71,17 @@ export const download = (url: string, sender: any): void => {
 /**
  * 保存下载记录
  * @param data - 下载项
+ * @param webContents
  */
 export const setDownloadStore = (data: IDownloadFile[]): void => {
-    // store.set('downloadManager', data)
+    store.set('downloadManager', data)
 }
 
 /**
  * 获取下载记录
  */
 export const getDownloadStore = (): IDownloadFile[] => {
-    // store.get('downloadManager', []) as IDownloadFile[]
-    return []
+    return store.get('downloadManager', []) as IDownloadFile[]
 }
 
 /**
@@ -117,7 +118,7 @@ export const addDownloadItem = async ({
 
     // 阻止系统保存对话框
     item.setSavePath(savePath)
-
+    if (item.isPaused()) item.resume()
     const fileIcon = await getFileIcon(savePath)
     const downloadItem: IDownloadFile = {
         id: fileId,
@@ -134,10 +135,7 @@ export const addDownloadItem = async ({
         paused: item.isPaused(),
         _sourceItem: item,
     }
-
     data.unshift(downloadItem)
-    console.log('add')
-    console.log(data)
     setDownloadStore(data)
     // 清空缓存数据
     newDownloadItem = null
@@ -205,4 +203,8 @@ export const getDownloadData = (
     return query + pageCount >= data.length
         ? data.slice(query, data.length)
         : data.slice(query, query + pageCount)
+}
+
+export const getDownloadConfigFromStore = (): IDownloadConfig => {
+    return store.get('downloadConfig') as IDownloadConfig
 }

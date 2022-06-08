@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import {app, shell} from 'electron'
-import {DownloadTaskItem} from "@main/services/download/download";
+import {app, shell, dialog} from 'electron'
 
 /**
  * 获取文件后缀名
@@ -64,7 +63,15 @@ export const removeFile = (path: string): void => {
 
     fs.unlinkSync(path)
 }
+export const openFileDialog = async (oldPath: string = app.getPath('downloads')) => {
+    const {canceled, filePaths} = await dialog.showOpenDialog({
+        title: '选择保存位置',
+        properties: ['openDirectory', 'createDirectory'],
+        defaultPath: oldPath,
+    })
 
+    return !canceled ? filePaths[0] : oldPath
+}
 /**
  * 打开文件
  * @param path - 文件路径

@@ -1,17 +1,17 @@
 <template>
   <div :style="imageBox" @click="onCropperDialogOpen">
-    <el-image v-if="src" alt="" :src="src" :style="imageContainer" :class="circle ? 'circle dashed':'dashed'"
-              ref="avatarImg">
+    <el-image v-if="src" ref="avatarImg" :class="circle ? 'circle dashed':'dashed'" :src="src" :style="imageContainer"
+              alt="">
       <input type="file">
     </el-image>
     <div v-else :class="circle ? 'circle addPicture dashed' : 'addPicture dashed'">
-      <SvgIcon name="ele-Plus" color="white" :size="30" style="font-weight: bold"></SvgIcon>
+      <SvgIcon :size="30" color="white" name="ele-Plus" style="font-weight: bold"></SvgIcon>
     </div>
   </div>
-  <CropperDialog @confirm="confirmImage" ref="cropperDialogRef"/>
+  <CropperDialog ref="cropperDialogRef" @confirm="confirmImage"/>
 </template>
 
-<script setup name="UpdatePicture" lang="ts">
+<script lang="ts" name="UpdatePicture" setup>
 import {ref} from "vue";
 import CropperDialog from '@renderer/components/cropper/index.vue'
 import SvgIcon from "@renderer/components/svgIcon/index.vue";

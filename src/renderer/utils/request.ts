@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {Local, Session} from '@renderer/utils/storage';
+import {response} from "express";
 // import {AxiosInstance} from "a-axios";
 
 export const APPLICATION_JSON = 'application/json';
@@ -13,6 +14,20 @@ const service = axios.create({
     timeout: 50000,
     headers: {'Content-Type': 'application/json'},
 });
+const resourceService = axios.create()
+resourceService.interceptors.request.use(config => {
+    return config
+}, error => {
+    console.log('error')
+    return Promise.reject(error);
+})
+resourceService.interceptors.response.use((response) => {
+    if (response.status === 200) return response
+    return null
+}, error => {
+    console.log('error')
+    return Promise.reject(error);
+})
 
 // 添加请求拦截器
 service.interceptors.request.use(
@@ -96,13 +111,22 @@ export const get = async (url, data?): Promise<Response> => {
         headers: {'Content-Type': APPLICATION_FORM}
     })
 }
-export const upLoad = async (url, data): Promise<Response> => {
+export const upload = async (url, data): Promise<Response> => {
     return await service.request({
         url: url,
         data: data,
-        method: 'post',
-        // headers: {'Content-Type': APPLICATION_FILE}
+        method: 'post'
     })
+}
+export const checkResource = async (url) => {
+    try {
+        return await resourceService.request({
+            url: url,
+            method: 'HEAD'
+        })
+    } catch (e) {
+        return null
+    }
 }
 
 interface Response {

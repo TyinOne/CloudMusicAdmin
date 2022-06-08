@@ -345,7 +345,7 @@ const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
     case 5:
       let u = meta.isLink
       if (ipcRenderer) {
-        ipcRenderer.invoke('open-web', u);
+        ipcRenderer.invoke('openWeb', u);
       }
       break;
   }

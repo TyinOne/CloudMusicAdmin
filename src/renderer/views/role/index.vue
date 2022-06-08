@@ -4,16 +4,16 @@
       <div class="system-search mb15">
         <el-input v-model:model-value="keywords" clearable placeholder="请输入角色名称"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button class="ml10" size="default" type="primary" @click="searchRole" v-permission="'sys:role:query'">
+        <el-button v-permission="'sys:role:query'" class="ml10" size="default" type="primary" @click="searchRole">
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddRole" v-permission="'sys:role:add'">
+        <el-button v-permission="'sys:role:add'" class="ml10" size="default" type="success" @click="onOpenAddRole">
           <SvgIcon name="ele-FolderAdd"></SvgIcon>
           新增角色
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource"  style="width: 100%" height="calc(100vh - 280px)">
+      <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
         <el-table-column label="序号" type="index" width="60"/>
         <el-table-column label="角色名称" prop="name" show-overflow-tooltip></el-table-column>
         <el-table-column label="角色标识" prop="value" show-overflow-tooltip></el-table-column>
@@ -28,10 +28,12 @@
         <el-table-column label="创建时间" prop="created" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button type="primary" :disabled="scope.row.value === 'admin'" size="small" text  v-permission="'sys:role:update'"
+            <el-button v-permission="'sys:role:update'" :disabled="scope.row.value === 'admin'" size="small" text
+                       type="primary"
                        @click="onOpenEditRole(scope.row)">修改
             </el-button>
-            <el-button type="danger" :disabled="scope.row.value === 'admin'" size="small" text @click="onRowDel(scope.row)"  v-permission="'sys:role:remove'">
+            <el-button v-permission="'sys:role:remove'" :disabled="scope.row.value === 'admin'" size="small" text
+                       type="danger" @click="onRowDel(scope.row)">
               删除
             </el-button>
           </template>

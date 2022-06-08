@@ -89,13 +89,7 @@ const version = packageConfig.version
 let isOpenDevTools = ref(false);
 
 if (!ipcRenderer) {
-  ipcRenderer = {} as any;
-  ipcRenderer.on =
-      ipcRenderer.invoke =
-          ipcRenderer.removeAllListeners =
-              (...args: any): any => {
-                console.log("not electron");
-              };
+
 } else {
   isNotMac.value = systemInfo.platform !== "darwin";
   ipcRenderer.invoke("IsUseSysTitle").then((res) => {
@@ -213,6 +207,7 @@ onMounted(() => {
   .menu-container {
     display: flex;
     min-width: 340px;
+
     .menu-item {
       display: inline-block;
       -webkit-app-region: no-drag;

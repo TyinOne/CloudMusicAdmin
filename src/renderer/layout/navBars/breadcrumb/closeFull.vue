@@ -5,7 +5,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup name="closeFull">
+<script lang="ts" name="closeFull" setup>
 import {useStore} from "@renderer/store";
 import {computed} from "vue";
 

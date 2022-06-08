@@ -1,6 +1,7 @@
 <template>
   <div class="system-add-role-container">
-    <el-dialog custom-class="dialog-self" v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="769px">
+    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" custom-class="dialog-self" destroy-on-close draggable
+               width="769px">
       <el-form ref="formRef" v-loading="loading" :model="form" :rules="rules" label-width="90px" size="default"
                style="display: flex">
         <div :style="dialogMessage.init ? {width: '50%'} : {width: '100%'}">

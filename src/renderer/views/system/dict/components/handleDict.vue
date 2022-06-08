@@ -1,20 +1,22 @@
 <template>
   <div class="system-handle-role-container">
-    <el-dialog custom-class="dialog-self" v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="400px">
-      <el-form label-width="90px" label-position="left">
+    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" custom-class="dialog-self" destroy-on-close draggable
+               width="400px">
+      <el-form label-position="left" label-width="90px">
         <el-form-item label="字典类型:">
-          <el-select style="width: 100%;" v-model="dialogMessage.data.dictType">
-            <el-option v-for="item in dictOptions" :value="item.value" :label="item.label" :key="item.value"/>
+          <el-select v-model="dialogMessage.data.dictType" style="width: 100%;">
+            <el-option v-for="item in dictOptions" :key="item.value" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item label="字典Key:">
-          <el-input maxlength="25" v-model="dialogMessage.data.dictKey" placeholder="请输入"></el-input>
+          <el-input v-model="dialogMessage.data.dictKey" maxlength="25" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="字典Value:">
           <el-input v-model="dialogMessage.data.dictValue" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="字典描述:">
-          <el-input maxlength="70" show-word-limit type="textarea" v-model="dialogMessage.data.dictDescription" placeholder="请输入描述"></el-input>
+          <el-input v-model="dialogMessage.data.dictDescription" maxlength="70" placeholder="请输入描述" show-word-limit
+                    type="textarea"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -28,7 +30,7 @@
   </div>
 </template>
 
-<script name="handleDict" setup lang="ts">
+<script lang="ts" name="handleDict" setup>
 import {reactive, ref} from "vue";
 import {useDictApi} from "@renderer/api/dict";
 import {Label} from "@renderer/types/interface";

@@ -2,13 +2,13 @@
   <div class="system-dict-container">
     <el-card shadow="hover">
       <div class="system-search mb15">
-        <el-input clearable placeholder="请输入关键词" v-model="state.keywords"
+        <el-input v-model="state.keywords" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
-        <el-input clearable placeholder="请输入字典Key" v-model="state.dictTypeKey"
+        <el-input v-model="state.dictTypeKey" clearable placeholder="请输入字典Key"
                   size="default" style="max-width: 180px"></el-input>
-        <el-select placeholder="请选择类型" v-model="state.dictType"
+        <el-select v-model="state.dictType" placeholder="请选择类型"
                    size="default" style="max-width: 180px" @change="query">
-          <el-option value="" label="全部(字典类型)"></el-option>
+          <el-option label="全部(字典类型)" value=""></el-option>
           <el-option v-for="item in dictOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
@@ -30,29 +30,29 @@
           新增分类
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
-        <el-table-column label="ID" width="60" prop="id"/>
+      <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
+        <el-table-column label="ID" prop="id" width="60"/>
         <el-table-column label="字典类型" prop="dictLabel" width="120">
           <template #default="scope">
             <el-tooltip
+                :content="scope.row.dictType"
                 class="box-item"
                 effect="light"
-                :content="scope.row.dictType"
                 placement="left"
             >
               {{ scope.row.dictLabel }}
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="字典Key" width="220" show-overflow-tooltip prop="dictKey"/>
-        <el-table-column label="字典Value" show-overflow-tooltip prop="dictValue"/>
-        <el-table-column label="描述" show-overflow-tooltip prop="dictDescription"/>
+        <el-table-column label="字典Key" prop="dictKey" show-overflow-tooltip width="220"/>
+        <el-table-column label="字典Value" prop="dictValue" show-overflow-tooltip/>
+        <el-table-column label="描述" prop="dictDescription" show-overflow-tooltip/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button type="primary" :disabled="scope.row.value === 'admin'" size="small" text
+            <el-button :disabled="scope.row.value === 'admin'" size="small" text type="primary"
                        @click="onOpenEditDict(scope.row)">修改
             </el-button>
-            <el-button type="danger" :disabled="scope.row.value === 'admin'" size="small" text>
+            <el-button :disabled="scope.row.value === 'admin'" size="small" text type="danger">
               删除
             </el-button>
           </template>
@@ -75,7 +75,7 @@
     <handle-dict ref="handleDictRef"></handle-dict>
   </div>
 </template>
-<script lang="ts" setup name="DictIndex">
+<script lang="ts" name="DictIndex" setup>
 
 import {onMounted, reactive, ref} from "vue";
 import {useDictApi} from "@renderer/api/dict";

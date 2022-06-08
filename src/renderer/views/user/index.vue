@@ -2,41 +2,41 @@
   <div class="system-user-container">
     <el-card shadow="hover">
       <div class="system-search mb15">
-        <el-input clearable placeholder="请输入关键词" v-model="state.name"
+        <el-input v-model="state.name" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px" @keydown.enter="query">
         </el-input>
-        <el-select v-model="state.roleId" @change="query" style="max-width: 180px">
+        <el-select v-model="state.roleId" style="max-width: 180px" @change="query">
           <el-option :value="0" label="全部"/>
-          <el-option v-for="item in roleLabel" :value="item.value" :key="item.value" :label="item.label"/>
+          <el-option v-for="item in roleLabel" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
-        <el-select v-model="state.disabled" @change="query" placeholder="是否禁用" style="max-width: 120px">
+        <el-select v-model="state.disabled" placeholder="是否禁用" style="max-width: 120px" @change="query">
           <el-option :value="-1" label="全部"/>
           <el-option :value="0" label="启用"/>
           <el-option :value="1" label="禁用"/>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
           <SvgIcon name="ele-Search"></SvgIcon>
-          {{'查询'}}
+          {{ '查询' }}
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
-        <el-table-column label="序号" width="60" type="index"/>
-        <el-table-column label="账号" width="120" show-overflow-tooltip prop="account"/>
-        <el-table-column label="昵称" width="100" show-overflow-tooltip prop="nickName"/>
-        <el-table-column label="邮箱" width="140" show-overflow-tooltip prop="mail"/>
-        <el-table-column label="手机" width="140" show-overflow-tooltip prop="phone"/>
-        <el-table-column label="角色" min-width="160" show-overflow-tooltip prop="roles">
+      <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
+        <el-table-column label="序号" type="index" width="60"/>
+        <el-table-column label="账号" prop="account" show-overflow-tooltip width="120"/>
+        <el-table-column label="昵称" prop="nickName" show-overflow-tooltip width="100"/>
+        <el-table-column label="邮箱" prop="mail" show-overflow-tooltip width="140"/>
+        <el-table-column label="手机" prop="phone" show-overflow-tooltip width="140"/>
+        <el-table-column label="角色" min-width="160" prop="roles" show-overflow-tooltip>
           <template #default="scope">
-            <el-tag v-if="scope.row.roles" v-for="item in (scope.row.roles.split(','))" class="link" :type="'success'">
+            <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'" class="link">
               {{ item }}
             </el-tag>
             <el-tag v-else class="link" type="danger">{{ '未分配' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="最后登录时间" width="160"  show-overflow-tooltip prop="lastLoginTime"/>
-        <el-table-column label="是否禁用" width="80" show-overflow-tooltip prop="disabled">
+        <el-table-column label="最后登录时间" prop="lastLoginTime" show-overflow-tooltip width="160"/>
+        <el-table-column label="是否禁用" prop="disabled" show-overflow-tooltip width="80">
           <template #default="scope">
-            <el-tag class="link" :type="scope.row.disabled ? 'danger':'success'">{{
+            <el-tag :type="scope.row.disabled ? 'danger':'success'" class="link">{{
                 scope.row.disabled ? '禁用' : '启用'
               }}
             </el-tag>
@@ -44,7 +44,7 @@
         </el-table-column>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button type="primary" size="small" text @click="showDetail(scope.row.account)">
+            <el-button size="small" text type="primary" @click="showDetail(scope.row.account)">
               详情
             </el-button>
             <el-button size="small" text type="danger">

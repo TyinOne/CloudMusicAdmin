@@ -1,6 +1,6 @@
 <template>
   <div class="element-container">
-    <el-card shadow="hover" :header="`awesome 字体图标(自动载入，增加了 fa- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`">
+    <el-card :header="`awesome 字体图标(自动载入，增加了 fa- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`" shadow="hover">
       <el-scrollbar height="calc(100vh - 240px)">
         <el-row class="iconfont-row" style="padding-right: 10px">
           <el-col v-for="(v, k) in state.sheetsIconList" :key="k" :lg="4" :md="6" :sm="8" :xl="2" :xs="12">
@@ -29,7 +29,7 @@ const state = reactive({
   sheetsIconList: [],
 })
 const initElementIcons = () => {
-  initIconfont.awe().then((res:any) => {
+  initIconfont.awe().then((res: any) => {
     state.sheetsIconList = res
   })
 }
@@ -40,11 +40,12 @@ onMounted(() => {
   initElementIcons()
 })
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .element-container {
   .iconfont-row {
     border-top: 1px solid var(--next-border-color-light);
     border-left: 1px solid var(--next-border-color-light);
+
     .iconfont-warp {
       text-align: center;
       border-right: 1px solid var(--next-border-color-light);
@@ -53,21 +54,25 @@ onMounted(() => {
       overflow: hidden;
       display: flex;
       transition: all 0.3s ease;
+
       &:hover {
         box-shadow: 0 2px 12px var(--next-color-dark-hover);
         cursor: pointer;
         transition: all 0.3s ease;
+
         .iconfont-warp-value {
           i {
             color: var(--el-color-primary);
             transition: all 0.3s ease;
           }
         }
+
         .iconfont-warp-label {
           color: var(--el-color-primary);
           transition: all 0.3s ease;
         }
       }
+
       .iconfont-warp-value {
         i {
           color: #606266;
@@ -75,6 +80,7 @@ onMounted(() => {
           transition: all 0.3s ease;
         }
       }
+
       .iconfont-warp-label {
         color: #99a9bf;
         transition: all 0.3s ease;

@@ -172,7 +172,6 @@ function electronLog(data, color) {
     if (data) {
         let log = ''
         data = data.toString().split(/\r?\n/)
-        console.log(data)
         data.forEach(line => {
             log += `  ${line}\n`
         })

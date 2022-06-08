@@ -11,6 +11,7 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {errorHandler} from "@renderer/error";
 import UpdatePicture from '@renderer/components/updatePicture/index.vue'
 import buttonPermission from "@renderer/instruct/buttonPermiss";
+
 const app = createApp(App);
 other.elSvg(app);
 app.use(router).use(store, key).use(ElementPlus, {locale}).mount('#app');

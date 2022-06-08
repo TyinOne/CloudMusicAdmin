@@ -2,6 +2,7 @@ import {onMounted, reactive, ref} from "vue";
 import {useMenuApi} from "@renderer/api/menu";
 import {useRoleApi} from "@renderer/api/role";
 import {Label} from "@renderer/types/interface";
+import {error} from "electron-log";
 
 export default function getService() {
 
@@ -25,6 +26,7 @@ export default function getService() {
             state.dataSource = res.result.list
             loading.value = false
         }).catch(e => {
+            console.error(e)
             loading.value = false
         })
     }
@@ -33,14 +35,11 @@ export default function getService() {
             edit: false,
             title: '新增 MENU',
             submit: '保存',
-            parentId: row? row.id : 0,
+            parentId: row ? row.id : 0,
             isEdit: false,
             callback: searchMenu
         }
         handleMenuRef.value.openDialog(message, row)
-    }
-    const onHandleCurrentChange = (val: number) => {
-
     }
     const onOpenEditMenu = (row) => {
         let message = {

@@ -1,22 +1,23 @@
 <template>
   <div class="system-add-role-container">
-    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" destroy-on-close draggable width="769px"
-               custom-class="dialog-self">
-      <div style="margin-top: 20px" v-loading="loading">
-        <el-form label-width="75px" label-position="left">
+    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" custom-class="dialog-self" destroy-on-close draggable
+               width="769px"
+               @close="onCancel">
+      <div v-loading="loading" style="margin-top: 20px">
+        <el-form label-position="left" label-width="75px">
           <div style="display: flex;justify-content: space-around">
             <div style="width: 47%">
               <el-form-item label="父级菜单:">
-                <el-tree-select :disabled="isEdit" v-model="dialogMessage.formData.parentId" style="width: 100%"
-                                :check-strictly=true
-                                :data="menuOptions" @current-change="updateTypeState">
+                <el-tree-select v-model="dialogMessage.formData.parentId" :check-strictly=true :data="menuOptions"
+                                :disabled="isEdit"
+                                style="width: 100%" @current-change="updateTypeState">
                 </el-tree-select>
               </el-form-item>
             </div>
             <div style="width: 47%">
               <el-form-item label="元素类型:">
-                <el-radio-group :disabled="isEdit" v-model="typeState.type" size="small">
-                  <el-radio-button v-for="item in typeState.typeOptions" :value="item.value" :label="item.value">{{
+                <el-radio-group v-model="typeState.type" :disabled="isEdit" size="small">
+                  <el-radio-button v-for="item in typeState.typeOptions" :label="item.value" :value="item.value">{{
                       item.label
                     }}
                   </el-radio-button>
@@ -27,20 +28,20 @@
           <div v-if="typeState.type === 0" style="display: flex;justify-content: space-around;margin-top: 20px">
             <div style="width: 47%">
               <el-form-item label="路由路径:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.path"></el-input>
+                <el-input v-model="dialogMessage.formData.path" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="组件路径:">
-                <el-input style="width: 100%;" :disabled="dialogMessage.formData.type === 0"
-                          v-model="dialogMessage.formData.component"></el-input>
+                <el-input v-model="dialogMessage.formData.component" :disabled="dialogMessage.formData.type === 0"
+                          style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="组件名称:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.name"></el-input>
+                <el-input v-model="dialogMessage.formData.name" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="页面图标:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaIcons"></el-input>
+                <el-input v-model="dialogMessage.formData.metaIcons" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="是否内链:">
-                <el-radio-group disabled v-model="dialogMessage.formData.metaIsIframe">
+                <el-radio-group v-model="dialogMessage.formData.metaIsIframe" disabled>
                   <el-radio :label="false">否</el-radio>
                   <el-radio :label="true">是</el-radio>
                 </el-radio-group>
@@ -54,26 +55,26 @@
             </div>
             <div style="width: 47%">
               <el-form-item label="页面标题:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaTitle"></el-input>
+                <el-input v-model="dialogMessage.formData.metaTitle" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="外链URL:">
-                <el-input disabled style="width: 100%;" v-model="dialogMessage.formData.metaIsLink"></el-input>
+                <el-input v-model="dialogMessage.formData.metaIsLink" disabled style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="重定向:">
-                <el-input style="width: 100%;" :disabled="dialogMessage.formData.type === 1"
-                          v-model="dialogMessage.formData.redirect"></el-input>
+                <el-input v-model="dialogMessage.formData.redirect" :disabled="dialogMessage.formData.type === 1"
+                          style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="显示排序:">
-                <el-input-number style="width: 100%;" v-model="dialogMessage.formData.sort"></el-input-number>
+                <el-input-number v-model="dialogMessage.formData.sort" style="width: 100%;"></el-input-number>
               </el-form-item>
               <el-form-item label="开启缓存:">
-                <el-radio-group disabled v-model="dialogMessage.formData.metaIsKeepAlive">
+                <el-radio-group v-model="dialogMessage.formData.metaIsKeepAlive" disabled>
                   <el-radio :label="true">是</el-radio>
                   <el-radio :label="false">否</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="是否隐藏:">
-                <el-radio-group disabled v-model="dialogMessage.formData.metaIsHide">
+                <el-radio-group v-model="dialogMessage.formData.metaIsHide" disabled>
                   <el-radio :label="false">否</el-radio>
                   <el-radio :label="true">是</el-radio>
                 </el-radio-group>
@@ -83,16 +84,16 @@
           <div v-else-if="typeState.type === 1" style="display: flex;justify-content: space-around;margin-top: 20px">
             <div style="width: 47%">
               <el-form-item label="路由路径:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.path"></el-input>
+                <el-input v-model="dialogMessage.formData.path" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="组件路径:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.component"></el-input>
+                <el-input v-model="dialogMessage.formData.component" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="组件名称:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.name"></el-input>
+                <el-input v-model="dialogMessage.formData.name" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="页面图标:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaIcons"></el-input>
+                <el-input v-model="dialogMessage.formData.metaIcons" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="是否内链:">
                 <el-radio-group v-model="dialogMessage.formData.metaIsIframe">
@@ -109,17 +110,17 @@
             </div>
             <div style="width: 47%">
               <el-form-item label="页面标题:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaTitle"></el-input>
+                <el-input v-model="dialogMessage.formData.metaTitle" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="外链URL:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaIsLink"></el-input>
+                <el-input v-model="dialogMessage.formData.metaIsLink" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="重定向:">
-                <el-input style="width: 100%;" :disabled="dialogMessage.formData.type === 1"
-                          v-model="dialogMessage.formData.redirect"></el-input>
+                <el-input v-model="dialogMessage.formData.redirect" :disabled="dialogMessage.formData.type === 1"
+                          style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="显示排序:">
-                <el-input-number style="width: 100%;" v-model="dialogMessage.formData.sort"></el-input-number>
+                <el-input-number v-model="dialogMessage.formData.sort" style="width: 100%;"></el-input-number>
               </el-form-item>
               <el-form-item label="开启缓存:">
                 <el-radio-group v-model="dialogMessage.formData.metaIsKeepAlive">
@@ -138,21 +139,21 @@
           <div v-else-if="typeState.type === 2" style="display: flex;justify-content: space-around;margin-top: 20px">
             <div style="width: 47%">
               <el-form-item label="页面组件:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.path"></el-input>
+                <el-input v-model="dialogMessage.formData.path" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="按钮名称:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.name"></el-input>
+                <el-input v-model="dialogMessage.formData.name" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="显示排序:">
-                <el-input-number style="width: 100%;" v-model="dialogMessage.formData.sort"></el-input-number>
+                <el-input-number v-model="dialogMessage.formData.sort" style="width: 100%;"></el-input-number>
               </el-form-item>
             </div>
             <div style="width: 47%">
               <el-form-item label="页面标题:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.metaTitle"></el-input>
+                <el-input v-model="dialogMessage.formData.metaTitle" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="权限标识:">
-                <el-input style="width: 100%;" v-model="dialogMessage.formData.security"></el-input>
+                <el-input v-model="dialogMessage.formData.security" style="width: 100%;"></el-input>
               </el-form-item>
               <el-form-item label="是否禁用:">
                 <el-radio-group v-model="dialogMessage.formData.disabled">
@@ -166,7 +167,7 @@
       </div>
       <template #footer>
         <span class="dialog-footer">
-					<el-button :loading="loading" size="default" @click.stop="onCancel">关 闭</el-button>
+					<el-button :loading="loading" size="default" @click.stop="cancel">关 闭</el-button>
 					<el-button :loading="loading" size="default" type="primary"
                      @click.stop="onSubmit">{{ dialogMessage.submit }}</el-button>
 				</span>
@@ -176,7 +177,7 @@
 
 </template>
 
-<script name="handleMenu" lang="ts" setup>
+<script lang="ts" name="handleMenu" setup>
 import {reactive, ref} from "vue";
 import {useMenuApi} from "@renderer/api/menu";
 import {TypeLabel} from "@renderer/types/interface";
@@ -331,39 +332,8 @@ const initButtonDetail = (result) => {
 
 const onSubmit = () => {
   loading.value = true
-  let {
-    id,
-    parentId,
-    name,
-    component,
-    path,
-    redirect,
-    security,
-    sort,
-    disabled,
-    metaIcons,
-    metaTitle,
-    metaIsHide,
-    metaIsIframe,
-    metaIsKeepAlive,
-    metaIsLink
-  } = dialogMessage.formData
   let params = {
-    id,
-    parentId,
-    name,
-    component,
-    path,
-    redirect,
-    security,
-    sort,
-    disabled,
-    metaIcons,
-    metaTitle,
-    metaIsHide,
-    metaIsIframe,
-    metaIsKeepAlive,
-    metaIsLink,
+    ...dialogMessage.formData,
     type: typeState.type
   }
   useMenuApi().saveMenu(params).then(res => {
@@ -376,9 +346,11 @@ const onSubmit = () => {
   })
 }
 const onCancel = () => {
+
+}
+const cancel = () => {
   isShowDialog.value = false
 }
-
 defineExpose({
   openDialog
 })

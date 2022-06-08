@@ -13,6 +13,12 @@ export interface IDownloadFile {
     progress: number
     totalBytes: number
     receivedBytes: number
-    paused: boolean
-    _sourceItem: DownloadItem | undefined
+    _sourceItem: DownloadItem | undefined,
+    paused: boolean,
+    urlChain?: string[],
+    mimeType?: string,
+    offset?: number,
+    length?: number,
+    lastModified?: string,
+    eTag?: string,
 }

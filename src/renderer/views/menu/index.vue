@@ -32,16 +32,16 @@
         </el-button>
       </div>
       <el-table v-loading="loading" :data="state.dataSource"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="path"
-                height="calc(100vh - 240px)" style="width: 100%"
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" height="calc(100vh - 240px)"
+                row-key="path" style="width: 100%"
       >
-        <el-table-column label="菜单名称" width="180" show-overflow-tooltip>
+        <el-table-column label="菜单名称" show-overflow-tooltip width="180">
           <template #default="scope">
             <span v-if="scope.row.type !== 2" class="ml10">{{ scope.row['metaTitle'] }}</span>
             <el-tag v-else>{{ scope.row['metaTitle'] }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="图标" prop="metaIcons" width="60" show-overflow-tooltip>
+        <el-table-column label="图标" prop="metaIcons" show-overflow-tooltip width="60">
           <template #default="scope">
             <SvgIcon :name="getIconName(scope.row['metaIcons'])"></SvgIcon>
           </template>
@@ -52,13 +52,16 @@
         <el-table-column label="排序" prop="sort" show-overflow-tooltip></el-table-column>
         <el-table-column label="类型" show-overflow-tooltip>
           <template #default="scope">
-            <el-tag class="link" :type="scope.row.type !== 2 ? 'success' : ''">{{ getMenuType(scope.row.type) }}</el-tag>
+            <el-tag :type="scope.row.type !== 2 ? 'success' : ''" class="link">{{
+                getMenuType(scope.row.type)
+              }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="120">
           <template #default="scope">
-            <el-button type="primary" size="small" text :disabled="scope.row.type === 2"
-                       v-permission="'system:menu:add'"
+            <el-button v-permission="'system:menu:add'" :disabled="scope.row.type === 2" size="small" text
+                       type="primary"
                        @click="onOpenAddMenu(scope.row)">新增
             </el-button>
             <el-button v-permission="'system:menu:save'" size="small" text type="primary"

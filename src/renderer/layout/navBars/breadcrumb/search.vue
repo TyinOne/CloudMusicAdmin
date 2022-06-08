@@ -102,7 +102,7 @@ const onHandleSelect = (item: any) => {
 const onSearchBlur = () => {
   closeSearch();
 };
-const getClass = (icon):string => {
+const getClass = (icon): string => {
   return icon.replaceAll(' bi', '');
 }
 

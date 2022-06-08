@@ -97,10 +97,10 @@ class MainInit {
 
         //初始化开发者工具状态
         this.mainWindow.webContents.on('devtools-opened', event => {
-            this.mainWindow.webContents.send('devtools-status',  true)
+            this.mainWindow.webContents.send('devtools-status', true)
         })
         this.mainWindow.webContents.on('devtools-closed', event => {
-            this.mainWindow.webContents.send('devtools-status',  false)
+            this.mainWindow.webContents.send('devtools-status', false)
         })
 
         // 不知道什么原因，反正就是这个窗口里的页面触发了假死时执行

@@ -7,6 +7,7 @@ import {winURL} from "@main/config/StaticPath";
 import {UpdateIPC} from "@main/services/ipc/updateIPC";
 import {DownloadIPC} from "@main/services/ipc/downloadIPC";
 import {DownloadService} from "@main/services/components/donwloadService";
+import {openFileInFolder, removeFile} from "@main/utils/downloadUtils";
 
 /**
  * 应用级事件监听
@@ -104,6 +105,14 @@ export class AppIpcService {
                 ChildWin.webContents.send('send-data', arg.sendData)
             })
         })
+
+
+        AppIpcService.ipcMainHandle('openFileInFolder', ((event, args) => {
+            openFileInFolder(args.path);
+        }))
+
+        AppIpcService.ipcMainHandle('openFile', ((event, args) => {
+        }))
     }
 
     static ipcMainHandle = <T>(

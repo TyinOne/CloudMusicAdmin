@@ -5,7 +5,7 @@
       <login-form :tab="state"/>
     </div>
     <div style="position: fixed; bottom: 30px">
-      <a style="color: white" href="https://beian.miit.gov.cn">蜀ICP备2022011812号</a>
+      <a href="https://beian.miit.gov.cn" style="color: white">蜀ICP备2022011812号</a>
     </div>
   </div>
 </template>

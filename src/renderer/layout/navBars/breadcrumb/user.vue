@@ -3,8 +3,8 @@
     <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
       <SvgIcon name="ele-Search" title="搜索"></SvgIcon>
     </div>
-    <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSettingClick">
-      <SvgIcon :title="'布局配置'" name="ele-Setting"></SvgIcon>
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onDownloadClick">
+      <SvgIcon :title="'下载'" name="bi-download"></SvgIcon>
     </div>
 
     <div class="layout-navbars-breadcrumb-user-icon" @click="onReloadClick">
@@ -13,7 +13,7 @@
     <div class="layout-navbars-breadcrumb-user-icon">
       <el-popover :width="300" placement="bottom" trigger="click">
         <template #reference>
-          <el-badge :is-dot="true">
+          <el-badge :is-dot="false">
             <el-icon :title="'消息'">
               <ele-Bell/>
             </el-icon>
@@ -32,33 +32,33 @@
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.avatar" alt="" class="layout-navbars-breadcrumb-user-link-photo mr5"/>
 				{{ getUserInfos.nickName === '' ? 'common' : getUserInfos.nickName }}
-        <SvgIcon name="ele-ArrowDown" class="el-icon--right"></SvgIcon>
+        <SvgIcon class="el-icon--right" name="ele-ArrowDown"></SvgIcon>
 			</span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item command="/personal">
-            <SvgIcon name="fa-user-o fa"></SvgIcon>
-            {{ '个人中心' }}
-          </el-dropdown-item>
           <el-dropdown-item command="/message">
             <SvgIcon name="fa-bell-o fa"></SvgIcon>
-            {{ '通知中心' }}
+            {{ '通知' }}
           </el-dropdown-item>
           <el-dropdown-item command="/security">
-            <SvgIcon name="fa-eercast fa"></SvgIcon>
-            {{ '安全中心' }}
+            <SvgIcon name="fa-fingerprint fa"></SvgIcon>
+            {{ '安全' }}
           </el-dropdown-item>
-          <el-dropdown-item v-if="ipcRenderer" command="/download">
-            <SvgIcon name="bi-download"></SvgIcon>
-            {{ '下载中心' }}
+          <el-dropdown-item command="/setting">
+            <SvgIcon name="fa-gear fa"></SvgIcon>
+            {{ '设置' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="open:https://www.baidu.com">{{ '百度' }}</el-dropdown-item>-->
           <el-dropdown-item command="open:/github">
             <SvgIcon name="bi-github"></SvgIcon>
-            {{ '代码仓库' }}
+            {{ '仓库' }}
           </el-dropdown-item>
           <!--          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>-->
-          <el-dropdown-item command="logOut" divided>
+          <el-dropdown-item command="/personal" divided>
+            <SvgIcon name="fa-user-o fa"></SvgIcon>
+            {{ '个人中心' }}
+          </el-dropdown-item>
+          <el-dropdown-item command="logOut">
             <SvgIcon name="fa-power-off fa"></SvgIcon>
             {{ '退出登录' }}
           </el-dropdown-item>
@@ -112,6 +112,10 @@ const layoutUserFlexNum = computed(() => {
 const onReloadClick = () => {
   window.location.reload()
 }
+// 下载中心 download 点击时
+const onDownloadClick = () => {
+  proxy.mittBus.emit('openDownloadDrawer');
+};
 // 布局配置 icon 点击时
 const onLayoutSettingClick = () => {
   proxy.mittBus.emit('openSettingsDrawer');
@@ -162,7 +166,7 @@ const onHandleCommandClick = (path: string) => {
       if (url.startsWith("/git")) {
         if (routes && routes.length > 0) {
           let url: any = routes[0].meta.isLink
-          ipcRenderer.invoke('open-web', url);
+          ipcRenderer.invoke('openWeb', url);
         } else {
           routes.push("/404")
         }
@@ -179,7 +183,7 @@ const onHandleCommandClick = (path: string) => {
     } else {
       //醇正的外链， 无配置
       if (ipcRenderer) {
-        ipcRenderer.invoke('open-web', url);
+        ipcRenderer.invoke('openWeb', url);
       } else {
         window.open(url)
       }

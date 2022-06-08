@@ -9,7 +9,7 @@ export type IPCEventName =
     | 'initDownloadItem'
     | 'pauseOrResume'
     | 'removeDownloadItem'
-    | 'clearDownloadDone'
+    | 'removeDownloadItemFile'
     | 'newDownloadItem'
     | 'downloadItemUpdate'
     | 'downloadItemDone'
@@ -28,3 +28,4 @@ export type IPCEventName =
     | 'openWeb'
     | 'openWin'
     | 'startDownload'
+    | 'getDownloadConfig'

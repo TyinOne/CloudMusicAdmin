@@ -1,9 +1,15 @@
-import {get, upLoad} from '@renderer/utils/request';
+import {get, upload} from '@renderer/utils/request';
 
 export const useCommonApi = () => {
     return {
-        upLoad: (params) => {
-            return upLoad('/admin/common/images/upload/tmp', params)
+        uploadImg: (params) => {
+            return upload('/admin/common/images/upload/tmp', params)
+        },
+        uploadPackage: (params) => {
+            return upload('/admin/common/package/upload/tmp', params)
+        },
+        parseUpdateJson: (params) => {
+            return upload('/admin/common/parse/update', params)
         }
     }
 }

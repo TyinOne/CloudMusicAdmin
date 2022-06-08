@@ -1,14 +1,15 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog custom-class="dialog-self" v-model="isShowDialog" :title="'用户详情'" v-if="isShowDialog" destroy-on-close draggable width="700px">
-      <el-card style="border: unset" v-loading="loading" shadow="naver" :body-style="{ padding: '10px' }">
+    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" custom-class="dialog-self" destroy-on-close
+               draggable width="700px">
+      <el-card v-loading="loading" :body-style="{ padding: '10px' }" shadow="naver" style="border: unset">
         <div
             style="padding: 0 20px 20px 20px;display: flex;align-items: center;justify-content: space-between;height: 80px;">
-          <update-picture :src="data.detail.avatar" :size="70" :circle="true" @confirm="confirmImage"/>
+          <update-picture :circle="true" :size="70" :src="data.detail.avatar" @confirm="confirmImage"/>
           <div style="width: 80%; padding: 0 20px">
             <p style="font-size: 20px; font-weight: bold;padding: 10px 0">{{ data.detail.account }}</p>
             <div style="display:flex;align-items: center">
-              <el-tag round class="link" :type="data.detail.sex === 1 ? 'success' : 'danger'">
+              <el-tag :type="data.detail.sex === 1 ? 'success' : 'danger'" class="link" round>
                 {{ data.detail.sex === 1 ? '男' : '女' }}
               </el-tag>
               <p v-if="data.detail.age" style="padding: 10px 10px">{{ data.detail.age }}岁</p>
@@ -19,31 +20,31 @@
         <el-tabs v-model="tabActive">
           <el-tab-pane label="基本信息" name="base">
             <div style="display: flex; justify-content: space-between; width: 100%; padding: 0 20px;height: 185px">
-              <el-form style="width: 45%;" label-width="75px" label-position="left">
+              <el-form label-position="left" label-width="75px" style="width: 45%;">
                 <el-form-item label="昵称:">
-                  <el-input spellcheck="false" v-model="data.detail.nickName"/>
+                  <el-input v-model="data.detail.nickName" spellcheck="false"/>
                 </el-form-item>
                 <el-form-item label="手机号:">
-                  <el-input spellcheck="false" v-model="data.detail.phone"/>
+                  <el-input v-model="data.detail.phone" spellcheck="false"/>
                 </el-form-item>
                 <el-form-item label="邮箱:">
-                  <el-input spellcheck="false" v-model="data.detail.mail"/>
+                  <el-input v-model="data.detail.mail" spellcheck="false"/>
                 </el-form-item>
                 <el-form-item label="地区:">
-                  <el-cascader :options="regionLabel" v-model="data.detail.region" style="width: 100%"/>
+                  <el-cascader v-model="data.detail.region" :options="regionLabel" style="width: 100%"/>
                 </el-form-item>
               </el-form>
-              <el-form style="width: 45%;" label-width="75px" label-position="left">
+              <el-form label-position="left" label-width="75px" style="width: 45%;">
                 <el-form-item label="出生年月:">
-                  <el-date-picker v-model="data.detail.birth" valueFormat="YYYY-MM-DD" style="width: 100%"/>
+                  <el-date-picker v-model="data.detail.birth" style="width: 100%" valueFormat="YYYY-MM-DD"/>
                 </el-form-item>
-                <el-form-item label="身份证号:" disabled>
+                <el-form-item disabled label="身份证号:">
                   <el-input v-model="data.detail.idCardNo" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="姓名:" disabled>
+                <el-form-item disabled label="姓名:">
                   <el-input v-model="data.detail.idCardName" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="户籍地址:" disabled>
+                <el-form-item disabled label="户籍地址:">
                   <el-input v-model="data.detail.idCardAddress" disabled></el-input>
                 </el-form-item>
               </el-form>
@@ -51,7 +52,7 @@
           </el-tab-pane>
           <el-tab-pane label="角色配置" name="role">
             <div style="display: flex; justify-content: space-between; width: 100%; padding: 0 20px;height: 185px">
-              <el-form style="width: 45%;" label-width="75px" label-position="left">
+              <el-form label-position="left" label-width="75px" style="width: 45%;">
                 <el-form-item label="角色分配:">
                   <el-radio-group v-model="data.detail.roleId">
                     <el-radio v-for="item in roleCheckList" :key="item.value" :label="item.value">{{ item.label }}
@@ -74,7 +75,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRegionApi} from "@renderer/api/region";
@@ -144,7 +145,7 @@ const onSubmit = () => {
     nickName: nickName,
     mail: mail,
     phone: phone,
-    region: (!region) || region.length === 0 ?  '' : typeof(region) === "string" ? region : region[region.length - 1],
+    region: (!region) || region.length === 0 ? '' : typeof (region) === "string" ? region : region[region.length - 1],
     birth: birth,
     roleId: roleId,
     avatar: {

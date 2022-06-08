@@ -14,7 +14,7 @@
         "importHelpers": true,
         "target": "es2017",
         "types": [
-            "vite/client",
+            "vite/client"
         ],
         "paths": {
             "@config/*": [
@@ -39,10 +39,12 @@
         ]
     },
     "include": [
-        "src/**/*",
-        "customTypes/*"
+      "src/**/*",
+      "customTypes/*",
+        "consumType/item.d.ts",
+        "consumType/global.d.ts"
     ],
-    "exclude": [
+  "exclude": [
         "node_modules"
-    ],
+    ]
 }

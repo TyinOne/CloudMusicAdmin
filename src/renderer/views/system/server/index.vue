@@ -1,27 +1,27 @@
 <template>
   <div v-loading="state.loading" class="system-server-container">
     <div class="view-item flex">
-      <el-card style="width: 49%" shadow="never">
+      <el-card shadow="never" style="width: 49%">
         <template #header>
           <div style="max-height: 16px">
             <span>CPU</span>
           </div>
         </template>
         <el-table :data="cupList" style="width: 100%">
-          <el-table-column prop="key" label="属性"/>
-          <el-table-column prop="value" label="值"/>
+          <el-table-column label="属性" prop="key"/>
+          <el-table-column label="值" prop="value"/>
         </el-table>
       </el-card>
-      <el-card style="width: 49%" shadow="never">
+      <el-card shadow="never" style="width: 49%">
         <template #header>
           <div style="max-height: 16px">
             <span>内存</span>
           </div>
         </template>
         <el-table :data="memList" style="width: 100%">
-          <el-table-column prop="key" label="属性"/>
-          <el-table-column prop="value" label="内存"/>
-          <el-table-column prop="jvm" label="JVM"/>
+          <el-table-column label="属性" prop="key"/>
+          <el-table-column label="内存" prop="value"/>
+          <el-table-column label="JVM" prop="jvm"/>
         </el-table>
       </el-card>
     </div>
@@ -65,13 +65,13 @@
           </div>
         </template>
         <el-table :data="state.server.disks">
-          <el-table-column prop="dirName" label="盘符路径"/>
-          <el-table-column prop="sysTypeName" label="文件系统"/>
-          <el-table-column prop="fileTypeName" label="盘符类型"/>
-          <el-table-column prop="total" label="总大小"/>
-          <el-table-column prop="free" label="可用大小"/>
-          <el-table-column prop="used" label="已用大小"/>
-          <el-table-column prop="usage" label="已用百分比">
+          <el-table-column label="盘符路径" prop="dirName"/>
+          <el-table-column label="文件系统" prop="sysTypeName"/>
+          <el-table-column label="盘符类型" prop="fileTypeName"/>
+          <el-table-column label="总大小" prop="total"/>
+          <el-table-column label="可用大小" prop="free"/>
+          <el-table-column label="已用大小" prop="used"/>
+          <el-table-column label="已用百分比" prop="usage">
             <template #default="scope">
               {{ scope.row.usage + '%' }}
             </template>
@@ -81,7 +81,7 @@
     </div>
   </div>
 </template>
-<script name="serverView" lang="ts" setup>
+<script lang="ts" name="serverView" setup>
 import {useServerApi} from "@renderer/api/server";
 import {onMounted, reactive, ref} from "vue";
 import {Session} from "@renderer/utils/storage";
@@ -150,6 +150,7 @@ onMounted(() => {
 .view-item {
   min-width: 850px;
 }
+
 .flex {
   display: flex;
   justify-content: space-between

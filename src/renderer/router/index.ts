@@ -180,7 +180,7 @@ const isRequestRoutes = true
 // if (!isRequestRoutes)  initFrontEndControlRoutes();
 
 const hasToken = () => {
-  return Local.get('Authentication') || Session.get('Authentication');
+    return Local.get('Authentication') || Session.get('Authentication');
 }
 
 // 路由加载前

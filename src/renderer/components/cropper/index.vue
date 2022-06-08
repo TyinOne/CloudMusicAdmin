@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-dialog custom-class="dialog-self" title="更换头像" v-model="state.isShowDialog" width="769px">
+    <el-dialog v-model="state.isShowDialog" custom-class="dialog-self" title="更换头像" width="769px">
       <div class="cropper-warp">
         <div class="cropper-warp-left">
-          <img :src="state.cropperImg" ref="cropperImgRef" class="cropper-warp-left-img" alt=""/>
+          <img ref="cropperImgRef" :src="state.cropperImg" alt="" class="cropper-warp-left-img"/>
         </div>
         <div class="cropper-warp-right">
           <div class="cropper-warp-right-title">预览</div>
@@ -28,17 +28,17 @@
       <template #footer>
         <div style="display: flex;justify-content: space-between">
           <el-upload
-              class="avatar-uploader"
-              action="action"
-              :show-file-list="false"
               :httpRequest="uploadImage"
+              :show-file-list="false"
+              action="action"
+              class="avatar-uploader"
           >
             <el-button>选择图片</el-button>
           </el-upload>
           <span class="dialog-footer">
-            <el-button @click="onCancel" size="default">取 消</el-button>
-            <el-button type="primary" v-if="state.isCropper" @click="onSubmit" size="default">更 换</el-button>
-            <el-button type="primary" v-else @click="onCancel" size="default">确 定</el-button>
+            <el-button size="default" @click="onCancel">取 消</el-button>
+            <el-button v-if="state.isCropper" size="default" type="primary" @click="onSubmit">更 换</el-button>
+            <el-button v-else size="default" type="primary" @click="onCancel">确 定</el-button>
           </span>
         </div>
       </template>
@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="cropperIndex">
+<script lang="ts" name="cropperIndex" setup>
 import {reactive, ref} from 'vue';
 import Cropper from 'cropperjs'
 import 'cropperjs/dist/cropper.css'
@@ -98,7 +98,7 @@ const onSubmit = () => {
   }).toDataURL('image/jpeg'));
   const formData = new FormData()
   formData.append('file', file)
-  useCommonApi().upLoad(formData).then(res => {
+  useCommonApi().uploadImg(formData).then(res => {
     state.cropperImg = res.result.src
     emits('confirm', res.result)
     destroy()
@@ -151,7 +151,7 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .cropper-warp {
   display: flex;
 

@@ -2,28 +2,28 @@
   <div class="system-log-container">
     <el-card shadow="hover">
       <div class="system-search mb15">
-        <el-date-picker type="daterange" v-model="options.date" start-placeholder="开始日期"
-                        end-placeholder="结束日期" value-format="YYYY-MM-DD" style="max-width: 240px"></el-date-picker>
+        <el-date-picker v-model="options.date" end-placeholder="结束日期" start-placeholder="开始日期"
+                        style="max-width: 240px" type="daterange" value-format="YYYY-MM-DD"></el-date-picker>
         <el-input clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button class="ml10" size="default" type="primary" @click="query" v-permission="'sys:log:query'">
+        <el-button v-permission="'sys:log:query'" class="ml10" size="default" type="primary" @click="query">
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource" style="width: 100%" height="calc(100vh - 280px)">
-        <el-table-column label="ID" width="60" prop="id"/>
+      <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
+        <el-table-column label="ID" prop="id" width="100"/>
         <el-table-column label="IP地址" prop="ip" show-overflow-tooltip width="140"/>
-        <el-table-column label="请求地址" show-overflow-tooltip prop="uri"/>
-        <el-table-column label="请求时间" width="160" show-overflow-tooltip prop="created"/>
-        <el-table-column label="执行方法" show-overflow-tooltip prop="method"/>
-        <el-table-column label="执行耗时" show-overflow-tooltip prop="elapsed"/>
+        <el-table-column label="请求地址" prop="uri" show-overflow-tooltip/>
+        <el-table-column label="请求时间" prop="created" show-overflow-tooltip width="160"/>
+        <el-table-column label="执行方法" prop="method" show-overflow-tooltip/>
+        <el-table-column label="执行耗时" prop="elapsed" show-overflow-tooltip width="100"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button text type="primary" v-permission="'sys:log:detail'">详情</el-button>
-<!--            <el-button :disabled="scope.row.value === 'admin'" size="small" text>-->
-<!--              删除-->
-<!--            </el-button>-->
+            <el-button v-permission="'sys:log:detail'" text type="primary">详情</el-button>
+            <!--            <el-button :disabled="scope.row.value === 'admin'" size="small" text>-->
+            <!--              删除-->
+            <!--            </el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -32,11 +32,11 @@
           v-model:page-size="pagination.size"
           :hide-on-single-page="false"
           :pager-count="5"
-          small
           :total="pagination.total"
           background
           class="mt15"
           layout="total, prev, pager, next, jumper"
+          small
           @current-change="onHandleCurrentChange"
       >
       </el-pagination>

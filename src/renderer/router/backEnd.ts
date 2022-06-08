@@ -54,7 +54,7 @@ export async function initBackEndControlRoutes() {
  * @returns 返回后端路由菜单数据
  */
 export function getBackEndControlRoutes(): any {
-   return menuApi.getMenuPermission();
+    return menuApi.getMenuPermission();
 }
 
 /**

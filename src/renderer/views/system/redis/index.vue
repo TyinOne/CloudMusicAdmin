@@ -37,7 +37,7 @@
       </el-card>
     </div>
     <div style="display: flex;justify-content: space-between; margin-top: 10px">
-      <el-card style="width: 49%" shadow="never">
+      <el-card shadow="never" style="width: 49%">
         <template #header>
           <div style="max-height: 16px">
             <span>命令统计</span>
@@ -47,14 +47,14 @@
           <div ref="commandEcharts" style="padding-top: 20px;height:100%;width:100%;"></div>
         </div>
       </el-card>
-      <el-card style="width: 49%" shadow="never">
+      <el-card shadow="never" style="width: 49%">
         <template #header>
           <div style="max-height: 16px">
             <span>内存信息</span>
           </div>
         </template>
         <div class="mem-box" style="height:300px;width:100%;">
-          <div ref="memEcharts"  style="padding-top: 20px;height:100%;width:100%;"></div>
+          <div ref="memEcharts" style="padding-top: 20px;height:100%;width:100%;"></div>
         </div>
       </el-card>
     </div>
@@ -102,7 +102,7 @@ const initEcharts = () => {
   })
   mem.setOption({
     tooltip: {
-      formatter: "{b} <br/>{a} : " + ((state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1)/1024).toFixed(2) + 'MB'),
+      formatter: "{b} <br/>{a} : " + ((state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1) / 1024).toFixed(2) + 'MB'),
     },
     series: [
       {
@@ -112,11 +112,11 @@ const initEcharts = () => {
         max: 500,
         center: ['50%', '40%'],
         detail: {
-          formatter: (state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1)/1024).toFixed(2) + 'MB',
+          formatter: (state.redis.info['used_memory_human'].substring(0, state.redis.info['used_memory_human'].length - 1) / 1024).toFixed(2) + 'MB',
         },
         data: [
           {
-            value: (parseFloat(state.redis.info['used_memory_human'])/1024).toFixed(2),
+            value: (parseFloat(state.redis.info['used_memory_human']) / 1024).toFixed(2),
             name: "内存消耗",
             detail: {
               offsetCenter: ["0%", "100%"],

@@ -7,7 +7,7 @@ import {IPagination} from "@main/services/interface/model/IPagination";
 import {INewDownloadFile} from "@main/services/interface/model/INewDownloadFile";
 import {IDownloadFile} from "@main/services/interface/model/IDownloadFile";
 
-export  {
+export {
     IPCEventName, IUpdateDownloadItem, DownloadItemState, IAddDownloadItem, IDownloadBytes, IPagination,
     INewDownloadFile, IDownloadFile
 }

@@ -185,7 +185,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
             {
                 path: '/download',
                 name: 'download',
-                component: () => import('@renderer/views/download/index.vue'),
+                component: () => import('@renderer/views/setting/index.vue'),
                 meta: {
                     roles: ['admin', 'common'],
                     icon: 'ele-Download',
