@@ -56,7 +56,7 @@ const onSubmit = () => {
   let {id, dictType, dictKey, dictValue, dictDescription} = dialogMessage.data
   let params = {id, dictType, dictKey, dictValue, dictDescription}
   console.log(params)
-  useDictApi().saveDict(params).then(res => {
+  useDictApi().saveDict(params).then(() => {
     onCancel()
   })
 }
@@ -82,11 +82,7 @@ const openDialog = (message, row?) => {
   })
 }
 const initData = (row) => {
-  dialogMessage.data.id = row.id
-  dialogMessage.data.dictType = row.dictType
-  dialogMessage.data.dictKey = row.dictKey
-  dialogMessage.data.dictValue = row.dictValue
-  dialogMessage.data.dictDescription = row.dictDescription
+  dialogMessage.data = {...row}
 }
 defineExpose({
   openDialog

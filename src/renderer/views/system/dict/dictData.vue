@@ -4,11 +4,10 @@
       <div class="system-search mb15">
         <el-input v-model="state.keywords" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"></el-input>
-        <el-input v-model="state.dictTypeKey" clearable placeholder="请输入字典Key"
+        <el-input v-model="state.dictKey" clearable placeholder="请输入字典Key"
                   size="default" style="max-width: 180px"></el-input>
         <el-select v-model="state.dictType" placeholder="请选择类型"
                    size="default" style="max-width: 180px" @change="query">
-          <el-option label="全部(字典类型)" value=""></el-option>
           <el-option v-for="item in dictOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
         <el-button class="ml10" size="default" type="primary" @click="query">
@@ -22,12 +21,6 @@
             <SvgIcon name="ele-FolderAdd"></SvgIcon>
           </el-icon>
           新增字典
-        </el-button>
-        <el-button class="ml10" size="default" type="success" @click="onOpenAddDict">
-          <el-icon>
-            <SvgIcon name="ele-FolderAdd"></SvgIcon>
-          </el-icon>
-          新增分类
         </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
@@ -52,9 +45,11 @@
             <el-button :disabled="scope.row.value === 'admin'" size="small" text type="primary"
                        @click="onOpenEditDict(scope.row)">修改
             </el-button>
-            <el-button :disabled="scope.row.value === 'admin'" size="small" text type="danger">
-              删除
-            </el-button>
+            <el-popconfirm title="确认删除此分类?" cancelButtonType="" @confirm="remove(scope.row)">
+              <template #reference>
+                <el-button size="small" text type="danger">删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -69,24 +64,25 @@
           class="mt15"
           layout="total, prev, pager, next, jumper"
           @current-change="onHandleCurrentChange"
-      >
-      </el-pagination>
+      />
     </el-card>
     <handle-dict ref="handleDictRef"></handle-dict>
   </div>
 </template>
-<script lang="ts" name="DictIndex" setup>
-
+<script lang="ts" name="systemDict" setup>
 import {onMounted, reactive, ref} from "vue";
 import {useDictApi} from "@renderer/api/dict";
 import {Label} from "@renderer/types/interface";
 import HandleDict from "@renderer/views/system/dict/components/handleDict.vue";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
+import {useRoute, useRouter} from "vue-router";
+import {ElMessage} from "element-plus";
 
-
+const router = useRouter();
+const route = useRoute();
 let state = reactive({
   dictType: '',
-  dictTypeKey: '',
+  dictKey: '',
   keywords: ''
 })
 let handleDictRef = ref()
@@ -99,13 +95,13 @@ let pagination = ref({
   total: 0,
 })
 const query = () => {
-  getData(pagination)
+  search(pagination)
 }
-const getData = (page) => {
+const search = (page) => {
   loading.value = true
-  let {keywords, dictTypeKey, dictType} = state
+  let {keywords, dictKey, dictType} = state
   let params = {
-    dictTypeKey: dictTypeKey,
+    dictKey: dictKey,
     dictType: dictType,
     keywords: keywords,
     current: page.current,
@@ -120,17 +116,19 @@ const getData = (page) => {
     }
     loading.value = false
   }).catch(e => {
+    console.error(e)
     loading.value = false
   })
 }
 const onHandleCurrentChange = async (value: number) => {
   pagination.value.current = value;
-  await getData(pagination.value)
+  await search(pagination.value)
 }
-const getDictLabel = () => {
+const getDictLabel = (type?) => {
   useDictApi().getDictLabel().then(res => {
     dictOptions.value = res.result.list
-    getData(pagination.value)
+    if (type && type !== 0) state.dictType = type
+    search(pagination.value)
   })
 }
 const onOpenAddDict = () => {
@@ -147,8 +145,14 @@ const onOpenEditDict = (row) => {
     callback: query
   }, row)
 }
+const remove = ({id}) => {
+  useDictApi().removeDict({id}).then(() => {
+    ElMessage.success('已完成')
+    search({...pagination.value})
+  })
+}
 onMounted(() => {
-  getDictLabel()
+  getDictLabel(route.params.dict_type)
 })
 </script>
 <style scoped>

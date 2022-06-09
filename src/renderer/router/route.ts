@@ -106,7 +106,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                             {
                                 path: '/system/dict/view',
                                 name: 'systemDictView',
-                                component: () => import('@renderer/views/system/dict/index.vue'),
+                                component: () => import('@renderer/views/system/dict/dictType.vue'),
                                 meta: {
                                     title: '字典管理',
                                     isLink: '',
