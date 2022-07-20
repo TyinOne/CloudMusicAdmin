@@ -1,11 +1,6 @@
 import {Module} from 'vuex';
 import {RootStateTypes, ThemeConfigState} from '@renderer/store/interface/index';
 
-/**
- * 2020.05.28 by lyt 优化
- * 修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效
- * 哪个大佬有解决办法，欢迎pr，感谢💕！
- */
 const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
     namespaced: true,
     state: {
@@ -125,9 +120,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
              * 全局网站标题 / 副标题
              */
             // 网站主标题（菜单导航、浏览器当前网页标题）
-            globalTitle: 'CloudMusic',
+            globalTitle: 'CloudAdmin',
             // 网站副标题（登录页顶部文字）
-            globalViceTitle: 'CloudMusic',
+            globalViceTitle: 'CloudAdmin',
             // 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
             globalI18n: 'zh-cn',
             // 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'

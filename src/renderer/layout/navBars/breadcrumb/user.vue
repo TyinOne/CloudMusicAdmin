@@ -3,7 +3,7 @@
     <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
       <SvgIcon name="ele-Search" title="搜索"></SvgIcon>
     </div>
-    <div class="layout-navbars-breadcrumb-user-icon" @click="onDownloadClick">
+    <div v-if="ipcRenderer" class="layout-navbars-breadcrumb-user-icon" @click="onDownloadClick">
       <SvgIcon :title="'下载'" name="bi-download"></SvgIcon>
     </div>
 

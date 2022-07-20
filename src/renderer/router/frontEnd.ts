@@ -9,7 +9,6 @@ export async function initFrontEndControlRoutes() {
     // 界面 loading 动画开始执行
     if (window.nextLoading === undefined) NextLoading.start();
     const res = await getBackEndControlRoutes();
-    console.log(res)
     try {
         // 无 token 停止执行下一步
         if (!Session.get('Authentication') && !Local.get('Authentication')) return false;
@@ -19,7 +18,7 @@ export async function initFrontEndControlRoutes() {
         await setAddRoute();
         // 设置递归过滤有权限的路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
         await setFilterMenuAndCacheTagsViewRoutes();
-    } catch (e) {
+    } finally {
         NextLoading.done()
     }
 }

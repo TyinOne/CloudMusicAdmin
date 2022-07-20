@@ -60,14 +60,14 @@
         </el-table-column>
         <el-table-column label="操作" width="120">
           <template #default="scope">
-            <el-button v-permission="'system:menu:add'" :disabled="scope.row.type === 2" size="small" text
+            <el-button v-permission="'sys:menu:save'" :disabled="scope.row.type === 2" size="small" text
                        type="primary"
                        @click="onOpenAddMenu(scope.row)">新增
             </el-button>
-            <el-button v-permission="'system:menu:save'" size="small" text type="primary"
+            <el-button v-permission="'sys:menu:detail'" size="small" text type="primary"
                        @click="onOpenEditMenu(scope.row)">修改
             </el-button>
-            <el-button v-permission="'system:menu:remove'" size="small" text type="danger" @click="onRowDel(scope.row)">
+            <el-button v-permission="'sys:menu:remove'" size="small" text type="danger" @click="onRowDel(scope.row)">
               {{ '删除' }}
             </el-button>
           </template>

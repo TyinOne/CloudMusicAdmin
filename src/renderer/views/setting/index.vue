@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="基础设置" name="basic"/>
         <el-tab-pane label="主题设置" name="theme"/>
-        <el-tab-pane label="下载设置" name="download"/>
+        <el-tab-pane label="下载设置" v-if="ipcRenderer" name="download"/>
         <el-tab-pane label="关于" name="about"/>
       </el-tabs>
       <el-scrollbar ref="scrollbarRef" style="height: calc(100vh - 240px);width: 100%" @scroll="changePane">
@@ -433,7 +433,7 @@
             </div>
           </div>
         </div>
-        <div :ref="refs.download" class="setting-item">
+        <div v-if="ipcRenderer" :ref="refs.download" class="setting-item">
           <p class="item-title">下载设置</p>
           <div class="setting-bar">
             <el-divider content-position="left">{{ '下载目录' }}</el-divider>
@@ -671,9 +671,11 @@ const initSetStyle = () => {
 let {ipcRenderer} = window;
 let oldPath = ref('')
 const getDownloadPath = () => {
-  ipcRenderer.invoke('getDownloadConfig').then(res => {
-    oldPath.value = res.path
-  })
+  if (ipcRenderer) {
+    ipcRenderer.invoke('getDownloadConfig').then(res => {
+      oldPath.value = res.path
+    })
+  }
 }
 const selectFolder = async () => {
   //openFileDialog
@@ -716,7 +718,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .setting-item {
   width: 100%;
-  min-height: 300px;
+  min-height: calc(100vh - 240px);
 }
 
 .item-title {

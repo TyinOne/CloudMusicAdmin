@@ -211,7 +211,7 @@ const startDownload = () => {
 }
 const getTaskList = async () => {
   let list = []
-  list = await ipcRenderer.invoke('getDownloadData')
+  list = ipcRenderer ? await ipcRenderer.invoke('getDownloadData') : []
   downloading.task = list.filter(i => (i.state === 'progressing' || i.state === 'interrupted' || i.state === 'cancelled') || i.paused)
   downloaded.task = list.filter(i => i.state === 'completed')
   console.log(list)
@@ -282,10 +282,6 @@ const retryDownload = (download) => {
 const closeContextmenu = () => {
   downloadContext.value.closeContextmenu();
 }
-ipcRenderer.on('downloadFileExist', (event, arg) => {
-  openMessageBox(arg)
-});
-
 onMounted(() => {
   nextTick(() => {
     getTaskList()
@@ -294,9 +290,17 @@ onMounted(() => {
     document.getElementsByClassName('downloadDrawer')[0].addEventListener('contextmenu', closeContextmenu);
   })
 })
-ipcRenderer.on('updateTaskList', (event: any, msg: boolean) => {
-  getTaskList()
-})
+
+if (!ipcRenderer) {
+
+} else {
+  ipcRenderer.on('updateTaskList', (event: any, msg: boolean) => {
+    getTaskList()
+  })
+  ipcRenderer.on('downloadFileExist', (event, arg) => {
+    openMessageBox(arg)
+  });
+}
 defineExpose({
   openDrawer
 })
