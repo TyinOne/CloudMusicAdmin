@@ -1,7 +1,7 @@
 <template>
   <form ref="form" class="login_form">
     <div class="login_form_r1">
-      <login-text-field v-model:value="state.params.mail" icon="envelope" label="邮箱"></login-text-field>
+      <login-text-field v-model:value="state.params.code" icon="envelope" label="邀请码"></login-text-field>
     </div>
     <div class="login_form_r2">
       <login-text-field v-model:value="state.params.account" icon="user" label="用户名"></login-text-field>
@@ -51,7 +51,7 @@ const state = reactive({
     signIn: false,
   },
   params: {
-    mail: '',
+    code: '',
     account: '',
     password: '',
     rePassword: '',
@@ -59,7 +59,7 @@ const state = reactive({
 });
 
 const paramsTemplate = {
-  mail: '',
+  code: '',
   account: '',
   password: '',
   rePassword: '',
@@ -67,19 +67,24 @@ const paramsTemplate = {
 
 const submit = async () => {
   state.loading.signIn = true;
+  let {account, password} = state.params
   switch (props.tab) {
     case 1:
-      signIn()
+      signIn(account, password)
       break
     case 2:
-      signUp()
+      signUp().then(res => {
+        ElMessage.success('注册完成, 将自动登录...');
+        signIn(account, password);
+      }).catch(e => {
+        state.loading.signIn = false;
+      })
       break
   }
 }
-const signIn = () => {
-  let {account, password} = state.params
+const signIn = (account, password) => {
   let params = {account, password}
-  useUserApi().login(params).then(res => {
+  useUserApi().signIn(params).then(res => {
     let userInfo = {
       nickName: res.result.nickName,
       avatar: res.result.avatar,
@@ -101,9 +106,15 @@ const signIn = () => {
     state.loading.signIn = false;
   })
 }
-const signUp = () => {
-  let {mail, account, password, rePassword} = state.params
-  let params = {mail, account, password, rePassword}
+const signUp = async () => {
+  let {code, account, password, rePassword} = state.params
+  if (password !== rePassword) {
+    ElMessage.error('两次密码输入不一致');
+    state.loading.signIn = false;
+    throw new Error();
+  }
+  let params = {code, account, password}
+  await useUserApi().signUp(params)
 }
 // 时间获取
 const currentTime = computed(() => {

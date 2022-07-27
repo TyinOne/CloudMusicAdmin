@@ -85,7 +85,7 @@ service.interceptors.response.use(
     }
 );
 
-export const put = async (url, data): Promise<Response> => {
+export const put = async (url, data?): Promise<Response> => {
     return await service.request({
         url: url,
         data: data,
@@ -93,7 +93,7 @@ export const put = async (url, data): Promise<Response> => {
     })
 }
 
-export const post = async (url, data, header): Promise<Response> => {
+export const post = async (url, data = {}, header): Promise<Response> => {
     return await service.request({
         url: url,
         data: header === APPLICATION_JSON ? data : null,

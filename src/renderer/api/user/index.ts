@@ -5,8 +5,11 @@ export const useUserApi = () => {
         /**
          * self
          */
-        login: (params) => {
+        signIn: (params) => {
             return post('/admin/user/login', params, APPLICATION_JSON)
+        },
+        signUp: (params) => {
+            return post('/admin/user/register', params, APPLICATION_JSON)
         },
         logout: () => {
             return put('/admin/user/logout')
