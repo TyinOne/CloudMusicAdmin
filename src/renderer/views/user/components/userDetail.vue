@@ -1,6 +1,6 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" custom-class="dialog-self" destroy-on-close
+    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" custom-class="dialog-self" :destroy-on-close="true"
                draggable width="700px">
       <el-card v-loading="loading" :body-style="{ padding: '10px' }" shadow="naver" style="border: unset">
         <div
@@ -120,6 +120,7 @@ const openDialog = (account, callback) => {
   initDetail(account)
 }
 const initDetail = async (account) => {
+  loading.value = true
   isShowDialog.value = true;
   Promise.all([useRegionApi().getRegionLabel(), useUserApi().getUserDetail({account: account}), useRoleApi().getRoleLabel()]).then(([regRes, detailRes, roleRes]) => {
     regionLabel.value = regRes.result.list

@@ -18,6 +18,10 @@
           <SvgIcon name="ele-Search"></SvgIcon>
           {{ '查询' }}
         </el-button>
+        <el-button class="ml10" size="default" type="primary" text @click="toInvite">
+          <SvgIcon name="ele-Link"></SvgIcon>
+          {{ '邀请码' }}
+        </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
         <el-table-column label="序号" type="index" width="60"/>
@@ -70,13 +74,15 @@
     </el-card>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="userIndex">
 import {onMounted, reactive, ref, unref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";
 import UserDetail from "@renderer/views/user/components/userDetail.vue";
 import {Label} from "@renderer/types/interface";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 let loading = ref(false)
 let dataSource = ref([])
 let roleLabel = ref<Array<Label>>([])
@@ -95,6 +101,9 @@ const query = () => {
   let page = unref(pagination)
   page.current = 1
   getInfo(page)
+}
+const toInvite = () => {
+  router.push("/system/user/invite")
 }
 const getInfo = (page) => {
   loading.value = true
@@ -133,11 +142,6 @@ const showDetail = (row) => {
 onMounted(() => {
   getRoleLabel()
 })
-</script>
-<script lang="ts">
-export default {
-  name: "userIndex"
-}
 </script>
 
 <style scoped>
