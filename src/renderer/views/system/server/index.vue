@@ -83,7 +83,7 @@
 </template>
 <script lang="ts" name="serverView" setup>
 import {useServerApi} from "@renderer/api/server";
-import {onMounted, reactive, ref} from "vue";
+import {onBeforeUnmount, onMounted, reactive, ref} from "vue";
 import {Session} from "@renderer/utils/storage";
 
 let state = reactive({
@@ -110,18 +110,25 @@ let state = reactive({
 let cupList = ref([])
 let memList = ref([])
 
-const getServerConfig = () => {
+const getConfigLoading = () => {
   state.loading = true
-  useServerApi().getServerConfig().then(res => {
-    state.server = res.result
-    Session.set("serverIP", state.server.sys.computerIp)
-    cupList.value = getCpuInfoList(state.server.cpu)
-    memList.value = getMemInfoList(state.server.mem, state.server.jvm)
-    state.loading = false
-  }).catch(e => {
-    state.loading = false
-  })
+  const getServerConfig = () => {
+    useServerApi().getServerConfig().then(res => {
+      state.server = res.result
+      Session.set("serverIP", state.server.sys.computerIp)
+      cupList.value = getCpuInfoList(state.server.cpu)
+      memList.value = getMemInfoList(state.server.mem, state.server.jvm)
+      state.loading = false
+      setTimeout(() => {
+        getServerConfig()
+      }, 1000)
+    }).catch(e => {
+      state.loading = false
+    })
+  }
+  getServerConfig()
 }
+
 const getCpuInfoList = (cpu) => {
   let array = []
   array.push({key: '核心总数', value: cpu.cpuNum})
@@ -140,9 +147,12 @@ const getMemInfoList = (mem, jvm) => {
 
   return array
 }
-
+let interval;
 onMounted(() => {
-  getServerConfig()
+  getConfigLoading()
+})
+onBeforeUnmount(() => {
+  clearTimeout(interval)
 })
 </script>
 

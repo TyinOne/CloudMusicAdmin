@@ -14,6 +14,12 @@
           </el-icon>
           查询
         </el-button>
+        <el-button class="ml10" size="default" type="primary" @click="query">
+          <el-icon>
+            <SvgIcon name="ele-Search"></SvgIcon>
+          </el-icon>
+          查询
+        </el-button>
         <el-button class="ml10" size="default" type="success" @click="onOpenAddDictType">
           <el-icon>
             <SvgIcon name="ele-FolderAdd"></SvgIcon>
