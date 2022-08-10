@@ -1,0 +1,1 @@
+export  type DownloadItemState = 'progressing' | 'completed' | 'cancelled' | 'interrupted'
