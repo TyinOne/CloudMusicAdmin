@@ -1,4 +1,4 @@
 module.exports = {
     NODE_ENV: 'production',
-    BASE_API: 'https://api.tyin.vip'
+    BASE_API: 'http://api.tyin.vip'
 }
