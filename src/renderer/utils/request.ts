@@ -33,9 +33,11 @@ resourceService.interceptors.response.use((response) => {
 service.interceptors.request.use(
     (config) => {
         // 在发送请求之前做些什么 token
-        if (Session.get('Authentication') || Local.get('Authentication')) {
-            let Authentication = Session.get('Authentication') || Local.get('Authentication');
-            (<any>config.headers).common['Authentication'] = `${Authentication}`;
+        if (Session.get('Authorization') || Local.get('Authorization')) {
+            console.log("local: " + Local.get('Authorization'))
+            console.log("session: " + Session.get('Authorization'))
+            let Authorization = 'Bearer ' + (Session.get('Authorization') || Local.get('Authorization'));
+            (<any>config.headers).common['Authorization'] = `${Authorization}`;
         }
         (<any>config.headers).common['env'] = 'admin'
         return config;
@@ -54,8 +56,8 @@ service.interceptors.response.use(
         if (res.code && res.code !== 200) {
             // `token` 过期或者账号已在别处登录
             if (res.code === 403) {
-                Session.clear(); // 清除浏览器全部临时缓存
-                Local.remove('Authentication')
+                // Session.clear(); // 清除浏览器全部临时缓存
+                Local.remove('Authorization')
                 ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
                     .then(() => {
                         window.location.href = '/'; // 去登录页

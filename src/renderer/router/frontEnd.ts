@@ -11,7 +11,7 @@ export async function initFrontEndControlRoutes() {
     const res = await getBackEndControlRoutes();
     try {
         // 无 token 停止执行下一步
-        if (!Session.get('Authentication') && !Local.get('Authentication')) return false;
+        if (!Session.get('Authorization') && !Local.get('Authorization')) return false;
         // 触发初始化用户信息
         await store.dispatch('userInfos/setUserInfos')
         // 添加动态路由

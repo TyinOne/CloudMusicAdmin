@@ -90,9 +90,9 @@ const signIn = (account, password) => {
       avatar: res.result.avatar,
       authBtnList: res.result.btn,
     }
-    Local.set('Authentication', res.result.token)
+    Local.set('Authorization', res.result.token)
     store.dispatch('userInfos/setUserInfos', {
-      Authentication: res.result.token,
+      Authorization: res.result.token,
       userInfos: userInfo,
     }).then(() => {
       state.loading.signIn = false;

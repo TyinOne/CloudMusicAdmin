@@ -148,7 +148,7 @@ const onHandleCommandClick = (path: string) => {
     })
         .then(async () => {
           Session.clear(); // 清除缓存/token等
-          Local.remove('Authentication')
+          Local.remove('Authorization')
           await resetRoute(); // 删除/重置路由
           ElMessage.success('安全退出成功！');
           setTimeout(() => {

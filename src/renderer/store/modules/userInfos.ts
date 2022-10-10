@@ -26,7 +26,8 @@ const userInfosModule: Module<UserInfosState, RootStateTypes> = {
                 commit('getUserInfos', data);
             } else {
                 let res = await useUserApi().getUserSession();
-                Session.set('Authentication', res.result.token)
+                //Authorization
+                Session.set('Authorization', res.result.token)
                 Session.set('userInfo', res.result)
                 commit('getUserInfos', res.result);
             }
