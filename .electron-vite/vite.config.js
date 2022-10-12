@@ -25,21 +25,38 @@ const config = defineConfig({
             '@store': join(root, '/store/modules'),
         }
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                charset: false
+            }
+        }
+    },
     base: './',
     build: {
         outDir: IsWeb ? resolve('dist/web') : resolve('dist/electron/renderer'),
         emptyOutDir: true,
         target: 'esnext',
-        minify: 'esbuild',
+        minify: 'terser',
+        chunkSizeWarningLimit: 1000,
         rollupOptions: {
             output: {
-                entryFileNames: `assets/js/[name]-[hash].js`,
-                chunkFileNames: `assets/js/[name]-[hash].js`,
-                assetFileNames:  `assets/[ext]/[name]-[hash][extname]`,
-                compact: true,
-                manualChunks: {
-                    vue: ['vue', 'vue-router', 'vuex'],
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                    }
                 },
+                chunkFileNames: (chunkInfo) => {
+                    const facadeModuleId = chunkInfo.facadeModuleId
+                        ? chunkInfo.facadeModuleId.split('/')
+                        : [];
+                    const fileName =
+                        facadeModuleId[facadeModuleId.length - 2] || '[name]';
+                    return `assets/js/${fileName}/[name].[hash].js`;
+                },
+                // entryFileNames: `assets/js/[name]-[hash].js`,
+                assetFileNames:  `assets/[ext]/[name]-[hash][extname]`,
+                compact: true
             },
         },
         terserOptions: {
@@ -65,7 +82,7 @@ const config = defineConfig({
     ],
     optimizeDeps: {
     },
-    publicDir: resolve('static')
+    publicDir: resolve('static'),
 })
 
 module.exports = config
