@@ -9,14 +9,11 @@
     <el-breadcrumb class="layout-navbars-breadcrumb-hide">
       <transition-group mode="out-in" name="breadcrumb">
         <el-breadcrumb-item v-for="(v, k) in state.breadcrumbList" :key="v.meta.title">
-					<span v-if="k === state.breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
-						<SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon"
-                     class="layout-navbars-breadcrumb-iconfont"/>{{ v.meta.title }}
+					<span v-if="k === state.breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span bolder">
+						<SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont"/>{{ v.meta.title }}
 					</span>
           <a v-else @click.prevent="onBreadcrumbClick(v)">
-            <SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon"
-                     class="layout-navbars-breadcrumb-iconfont"/>
-            {{ v.meta.title }}
+            <SvgIcon v-if="getThemeConfig.isBreadcrumbIcon" :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont"/>{{ v.meta.title }}
           </a>
         </el-breadcrumb-item>
       </transition-group>
@@ -113,6 +110,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bolder {
+  font-weight: bold;
+}
 .layout-navbars-breadcrumb {
   flex: 1;
   height: inherit;
@@ -128,8 +128,8 @@ export default {
   }
 
   .layout-navbars-breadcrumb-span {
-    opacity: 0.7;
-    color: var(--next-bg-topBarColor);
+    opacity: 0.9;
+    color: #000000;
   }
 
   .layout-navbars-breadcrumb-iconfont {

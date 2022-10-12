@@ -45,14 +45,14 @@ export default {
   align-items: center;
   justify-content: center;
   box-shadow: rgb(0 21 41 / 2%) 0 1px 4px;
-  color: var(--el-color-primary);
+  color: #4b4b4b;
   font-size: 16px;
   cursor: pointer;
   animation: logoAnimation 0.3s ease-in-out;
-
+  font-weight: bolder;
   &:hover {
     span {
-      color: var(--color-primary-light-2);
+      color: #000000;
     }
   }
 

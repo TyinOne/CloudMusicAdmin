@@ -29,12 +29,14 @@
         <el-table-column label="昵称" prop="nickName" show-overflow-tooltip width="100"/>
         <el-table-column label="邮箱" prop="mail" show-overflow-tooltip width="140"/>
         <el-table-column label="手机" prop="phone" show-overflow-tooltip width="140"/>
-        <el-table-column label="角色" min-width="160" prop="roles" show-overflow-tooltip>
+        <el-table-column label="角色" prop="roles" show-overflow-tooltip>
           <template #default="scope">
-            <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'" class="link">
-              {{ item }}
-            </el-tag>
-            <el-tag v-else class="link" type="danger">{{ '未分配' }}</el-tag>
+            <el-space wrap>
+              <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'" class="link">
+                {{ item }}
+              </el-tag>
+              <el-tag v-else class="link" type="danger">{{ '未分配' }}</el-tag>
+            </el-space>
           </template>
         </el-table-column>
         <el-table-column label="最后登录时间" prop="lastLoginTime" show-overflow-tooltip width="160"/>

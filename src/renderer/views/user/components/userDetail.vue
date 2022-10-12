@@ -1,6 +1,7 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" custom-class="dialog-self" :destroy-on-close="true"
+    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" custom-class="dialog-self"
+               :destroy-on-close="true"
                draggable width="700px">
       <el-card v-loading="loading" :body-style="{ padding: '10px' }" shadow="naver" style="border: unset">
         <div
@@ -54,10 +55,8 @@
             <div style="display: flex; justify-content: space-between; width: 100%; padding: 0 20px;height: 185px">
               <el-form label-position="left" label-width="75px" style="width: 45%;">
                 <el-form-item label="角色分配:">
-                  <el-radio-group v-model="data.detail.roleId">
-                    <el-radio v-for="item in roleCheckList" :key="item.value" :label="item.value">{{ item.label }}
-                    </el-radio>
-                  </el-radio-group>
+                  <el-checkbox v-model="data.detail.roles" v-for="item in roleCheckList" :key="item.value" :label="item.value">{{ item.label }}
+                  </el-checkbox>
                 </el-form-item>
               </el-form>
             </div>
@@ -105,7 +104,7 @@ let data = reactive({
     region: [],
     sex: 0,
     age: '',
-    roleId: null
+    roles: []
   },
   imageUpdate: {
     src: '',
@@ -122,24 +121,28 @@ const openDialog = (account, callback) => {
 const initDetail = async (account) => {
   loading.value = true
   isShowDialog.value = true;
-  Promise.all([useRegionApi().getRegionLabel(), useUserApi().getUserDetail({account: account}), useRoleApi().getRoleLabel()]).then(([regRes, detailRes, roleRes]) => {
-    regionLabel.value = regRes.result.list
-    roleCheckList.value = roleRes.result.list
-    data.detail = detailRes.result
-    data.imageUpdate = {
-      src: '',
-      uri: '',
-      fileName: '',
-    }
-    loading.value = false
-  }).catch(e => {
+  Promise.all([
+    useRegionApi().getRegionLabel(),
+    useUserApi().getUserDetail({account: account}),
+    useRoleApi().getRoleKeyLabel()])
+      .then(([regRes, detailRes, roleRes]) => {
+        regionLabel.value = regRes.result.list
+        roleCheckList.value = roleRes.result.list
+        data.detail = detailRes.result
+        data.imageUpdate = {
+          src: '',
+          uri: '',
+          fileName: '',
+        }
+        loading.value = false
+      }).catch(e => {
     loading.value = false;
     isShowDialog.value = false;
   })
 }
 const onSubmit = () => {
   loading.value = true
-  let {nickName, mail, phone, region, birth, account, roleId} = data.detail
+  let {nickName, mail, phone, region, birth, account, roles} = data.detail
   let {uri, fileName} = data.imageUpdate
   let params = {
     account: account,
@@ -148,7 +151,7 @@ const onSubmit = () => {
     phone: phone,
     region: (!region) || region.length === 0 ? '' : typeof (region) === "string" ? region : region[region.length - 1],
     birth: birth,
-    roleId: roleId,
+    roles: roles,
     avatar: {
       uri: uri,
       fileName: fileName

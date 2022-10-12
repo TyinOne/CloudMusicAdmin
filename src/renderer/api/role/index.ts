@@ -5,6 +5,9 @@ export const useRoleApi = () => {
         getRoleLabel: () => {
             return get('/admin/label/role')
         },
+        getRoleKeyLabel: () => {
+            return get('/admin/label/role/key')
+        },
         getRoleList: (params) => {
             return get('/admin/role/list', params)
         },
