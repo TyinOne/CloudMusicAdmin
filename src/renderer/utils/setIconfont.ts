@@ -4,7 +4,8 @@ const cssCdnUrlList: Array<string> = [
     // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css',
     'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
     'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.css',
-    'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css'
+    'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css',
+    '//at.alicdn.com/t/c/font_2626786_9dh29vnvrq7.css'
 ];
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [];
