@@ -1,6 +1,6 @@
 <template>
   <div class="system-add-role-container">
-    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" custom-class="dialog-self" destroy-on-close draggable
+    <el-dialog v-model="isShowDialog" :title="dialogMessage.title" class="dialog-self" destroy-on-close draggable
                width="769px"
                @close="onCancel">
       <div v-loading="loading" style="margin-top: 20px">

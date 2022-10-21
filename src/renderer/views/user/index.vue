@@ -31,7 +31,7 @@
         <el-table-column label="手机" prop="phone" show-overflow-tooltip width="140"/>
         <el-table-column label="角色" prop="roles" show-overflow-tooltip>
           <template #default="scope">
-            <el-space wrap>
+            <el-space>
               <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'" class="link">
                 {{ item }}
               </el-tag>
@@ -147,5 +147,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.nowrap {
+  white-space: nowrap;
+}
 </style>

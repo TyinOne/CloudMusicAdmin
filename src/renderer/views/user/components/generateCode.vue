@@ -1,6 +1,6 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'生成邀请码'" custom-class="dialog-self"
+    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'生成邀请码'" class="dialog-self"
                :destroy-on-close="true">
       <div v-loading="loading">
         <el-form :model="formData" ref="ruleFormRef" :rules="rules">

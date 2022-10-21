@@ -7,8 +7,8 @@
     <div v-else :class="circle ? 'circle addPicture dashed' : 'addPicture dashed'">
       <SvgIcon :size="30" color="white" name="ele-Plus" style="font-weight: bold"></SvgIcon>
     </div>
+    <CropperDialog ref="cropperDialogRef" @confirm="confirmImage"/>
   </div>
-  <CropperDialog ref="cropperDialogRef" @confirm="confirmImage"/>
 </template>
 
 <script lang="ts" name="UpdatePicture" setup>

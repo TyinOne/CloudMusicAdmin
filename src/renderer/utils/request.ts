@@ -116,7 +116,8 @@ export const upload = async (url, data): Promise<Response> => {
     return await service.request({
         url: url,
         data: data,
-        method: 'post'
+        method: 'post',
+        headers: {'Content-Type': APPLICATION_FILE}
     })
 }
 export const checkResource = async (url) => {

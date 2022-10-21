@@ -1,6 +1,6 @@
 <template>
   <div class="system-add-version-container">
-    <el-dialog v-model="isShowDialog" :title="'新建版本'" custom-class="dialog-self" destroy-on-close draggable
+    <el-dialog v-model="isShowDialog" :title="'新建版本'" class="dialog-self" destroy-on-close draggable
                width="569px" @close="onCancel">
       <el-form v-loading="loading" label-width="90px">
         <el-form-item label="检查文件:">

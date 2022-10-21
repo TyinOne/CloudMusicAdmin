@@ -1,49 +1,47 @@
 <template>
-  <div>
-    <el-dialog v-model="state.isShowDialog" custom-class="dialog-self" title="更换头像" width="769px">
-      <div class="cropper-warp">
-        <div class="cropper-warp-left">
-          <img ref="cropperImgRef" :src="state.cropperImg" alt="" class="cropper-warp-left-img"/>
+  <el-dialog v-model="state.isShowDialog" class="dialog-self" title="更换头像" width="769px">
+    <div class="cropper-warp">
+      <div class="cropper-warp-left">
+        <img ref="cropperImgRef" :src="state.cropperImg" alt="" class="cropper-warp-left-img"/>
+      </div>
+      <div class="cropper-warp-right">
+        <div class="cropper-warp-right-title">预览</div>
+        <div class="cropper-warp-right-item">
+          <div class="cropper-warp-right-value">
+            <el-image :src="state.cropperImgBase64" class="cropper-warp-right-value-img">
+              <template #error>{{ '' }}</template>
+            </el-image>
+          </div>
+          <div class="cropper-warp-right-label">100 x 100</div>
         </div>
-        <div class="cropper-warp-right">
-          <div class="cropper-warp-right-title">预览</div>
-          <div class="cropper-warp-right-item">
-            <div class="cropper-warp-right-value">
-              <el-image :src="state.cropperImgBase64" class="cropper-warp-right-value-img">
-                <template #error>{{ '' }}</template>
-              </el-image>
-            </div>
-            <div class="cropper-warp-right-label">100 x 100</div>
+        <div class="cropper-warp-right-item">
+          <div class="cropper-warp-right-value">
+            <el-image :src="state.cropperImgBase64" class="cropper-warp-right-value-img cropper-size">
+              <template #error>{{ '' }}</template>
+            </el-image>
           </div>
-          <div class="cropper-warp-right-item">
-            <div class="cropper-warp-right-value">
-              <el-image :src="state.cropperImgBase64" class="cropper-warp-right-value-img cropper-size">
-                <template #error>{{ '' }}</template>
-              </el-image>
-            </div>
-            <div class="cropper-warp-right-label">50 x 50</div>
-          </div>
+          <div class="cropper-warp-right-label">50 x 50</div>
         </div>
       </div>
-      <template #footer>
-        <div style="display: flex;justify-content: space-between">
-          <el-upload
-              :httpRequest="uploadImage"
-              :show-file-list="false"
-              action="action"
-              class="avatar-uploader"
-          >
-            <el-button>选择图片</el-button>
-          </el-upload>
-          <span class="dialog-footer">
+    </div>
+    <template #footer>
+      <div style="display: flex;justify-content: space-between">
+        <el-upload
+            :httpRequest="uploadImage"
+            :show-file-list="false"
+            action="action"
+            class="avatar-uploader"
+        >
+          <el-button>选择图片</el-button>
+        </el-upload>
+        <span class="dialog-footer">
             <el-button size="default" @click="onCancel">取 消</el-button>
             <el-button v-if="state.isCropper" size="default" type="primary" @click="onSubmit">更 换</el-button>
             <el-button v-else size="default" type="primary" @click="onCancel">确 定</el-button>
           </span>
-        </div>
-      </template>
-    </el-dialog>
-  </div>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" name="cropperIndex" setup>
@@ -96,6 +94,7 @@ const onSubmit = () => {
   let file = base64ImgToFile(state.cropper.getCroppedCanvas({
     imageSmoothingQuality: 'high'
   }).toDataURL('image/jpeg'));
+  console.log(file)
   const formData = new FormData()
   formData.append('file', file)
   useCommonApi().uploadImg(formData).then(res => {

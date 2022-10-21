@@ -23,7 +23,6 @@
         </template>
         <el-space direction="horizontal" fill style="width: 100%" wrap>
           <div v-for="(item, index) in downloading.task" :class="downloading.active === index ? 'active' : ''"
-               :shadow="'never'"
                class="task-item"
                @click="activeItem('downloading',index)"
                @contextmenu.prevent="onContextmenu(item, index, $event)">
