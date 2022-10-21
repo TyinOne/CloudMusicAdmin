@@ -31,10 +31,10 @@
         </el-table-column>
         <el-table-column label="创建人" prop="createBy" show-overflow-tooltip width="100"/>
         <el-table-column label="使用人" prop="useBy" show-overflow-tooltip width="100"/>
-        <el-table-column label="是否有效" prop="invalid" show-overflow-tooltip width="80">
+        <el-table-column label="是否有效" prop="invalid" show-overflow-tooltip width="90">
           <template #default="scope">
-            <el-tag v-if="!scope.row.invalid" type="success">{{'有效'}}</el-tag>
-            <el-tag v-else type="danger">{{'无效'}}</el-tag>
+            <el-tag v-if="!scope.row.invalid" type="success">{{'可使用'}}</el-tag>
+            <el-tag v-else type="danger">{{'已失效'}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="是否使用" prop="used" show-overflow-tooltip width="120">
