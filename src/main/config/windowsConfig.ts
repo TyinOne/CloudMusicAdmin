@@ -5,7 +5,7 @@ import {BrowserWindowConstructorOptions} from "electron";
 export const mainWindowConfig = {
     height: 800,
     useContentSize: true,
-    width: 1700,
+    width: 1422,
     minWidth: 1366,
     show: false,
     frame: config.IsUseSysTitle,

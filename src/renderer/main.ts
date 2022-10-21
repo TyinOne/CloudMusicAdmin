@@ -11,10 +11,14 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {errorHandler} from "@renderer/error";
 import UpdatePicture from '@renderer/components/updatePicture/index.vue'
 import buttonPermission from "@renderer/instruct/buttonPermiss";
+import JsonViewer from "vue-json-viewer";
+import "vue-json-viewer/style.css";
+
 
 const app = createApp(App);
 other.elSvg(app);
-app.use(router).use(store, key).use(ElementPlus, {locale}).mount('#app');
+app.use(router).use(store, key).use(ElementPlus, {locale}).use(JsonViewer)
+    .mount('#app');
 app.config.globalProperties.mittBus = mitt();
 app.component('update-picture', UpdatePicture)
 buttonPermission(app)

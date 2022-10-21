@@ -45,6 +45,7 @@ class MainInit {
                 }
             })
         })
+
         // 赋予模板
         const menu = Menu.buildFromTemplate(menuconfig as any)
         // 加载模板
@@ -102,7 +103,11 @@ class MainInit {
         this.mainWindow.webContents.on('devtools-closed', event => {
             this.mainWindow.webContents.send('devtools-status', false)
         })
-
+        // 禁用链接打开
+        this.mainWindow.webContents.setWindowOpenHandler((details) => {
+            require('electron').shell.openExternal(details.url);
+            return {action: 'deny'}
+        })
         // 不知道什么原因，反正就是这个窗口里的页面触发了假死时执行
         this.mainWindow.on('unresponsive', () => {
             dialog.showMessageBox(this.mainWindow, {

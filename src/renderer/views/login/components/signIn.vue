@@ -1,7 +1,8 @@
 <template>
   <el-form size="large" class="login-content-form">
     <el-form-item class="login-animation1">
-      <el-input type="text" :placeholder="'请输入用户名/手机号/邮箱'" v-model="state.ruleForm.account"
+    <el-input type="text" :placeholder="'请输入用户名/手机号/邮箱'" v-model="state.ruleForm.account"
+    spellcheck="false"
                 clearable autocomplete="off">
         <template #prefix>
           <el-icon class="el-input__icon">
@@ -14,6 +15,7 @@
       <el-input
           :type="state.isShowPassword ? 'text' : 'password'"
           :placeholder="'请输入密码'"
+          spellcheck="false"
           v-model="state.ruleForm.password" v-on:keyup.enter="onSignIn"
           autocomplete="off">
         <template #prefix>

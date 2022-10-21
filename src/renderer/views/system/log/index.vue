@@ -2,11 +2,11 @@
   <div class="system-log-container">
     <el-card shadow="hover">
       <div class="system-search mb15">
-        <el-date-picker v-model="options.date" end-placeholder="结束日期" start-placeholder="开始日期"
+        <el-date-picker v-model="state.date" end-placeholder="结束日期" start-placeholder="开始日期"
                         style="max-width: 240px" type="daterange" value-format="YYYY-MM-DD"></el-date-picker>
-        <el-input clearable placeholder="请输入关键词"
+        <el-input clearable placeholder="请输入URI关键词" v-model="state.keywords"
                   size="default" style="max-width: 180px"></el-input>
-        <el-button v-permission="'sys:log:query'" class="ml10" size="default" type="primary" @click="query">
+        <el-button v-permission="'sys:log:query'" class="ml10" size="default" type="primary" @click="searchLog">
           <SvgIcon name="ele-Search"></SvgIcon>
           查询
         </el-button>
@@ -20,7 +20,7 @@
         <el-table-column label="执行耗时" prop="elapsed" show-overflow-tooltip width="100"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button v-permission="'sys:log:detail'" text type="primary">详情</el-button>
+            <el-button text type="primary" @click="openDetail(scope.row)">详情</el-button>
             <!--            <el-button :disabled="scope.row.value === 'admin'" size="small" text>-->
             <!--              删除-->
             <!--            </el-button>-->
@@ -35,12 +35,13 @@
           :total="pagination.total"
           background
           class="mt15"
-          layout="total, prev, pager, next, jumper"
+          :layout="'prev, pager, next, jumper, ->, total'"
           small
           @current-change="onHandleCurrentChange"
       >
       </el-pagination>
     </el-card>
+    <handle-log-detail ref="handleLogDetail"/>
   </div>
 </template>
 
@@ -49,9 +50,13 @@
 import {onMounted, reactive, ref, unref} from "vue";
 import {useServerApi} from "@renderer/api/server";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
+import HandleLogDetail from "@renderer/views/system/log/components/handleLogDetail.vue";
 
-let options = reactive({
-  date: []
+let handleLogDetail = ref(null);
+
+let state = reactive({
+  date: [],
+  keywords: ""
 })
 let dataSource = ref([])
 let loading = ref(false)
@@ -60,16 +65,16 @@ let pagination = ref({
   size: 20,
   total: 0,
 })
-const query = () => {
-  const [startDate, endDate] = options.date
-}
 const searchLog = () => {
   let page = unref(pagination)
   page.current = 1
   getData(page)
 }
 const getData = (page) => {
+  const [startDate, endDate] = state.date
   let params = {
+    startDate, endDate,
+    keywords: state.keywords,
     current: page.current,
     size: page.size
   }
@@ -90,6 +95,10 @@ const onHandleCurrentChange = (val: number) => {
   pagination.value.current = val;
   getData(pagination.value)
 };
+const openDetail = (row) => {
+  console.log(row.id)
+  handleLogDetail.value.openDialog(row.id)
+}
 onMounted(() => {
   searchLog()
 })

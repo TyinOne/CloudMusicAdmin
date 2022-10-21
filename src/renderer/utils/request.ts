@@ -35,9 +35,9 @@ service.interceptors.request.use(
         // 在发送请求之前做些什么 token
         if (Session.get('Authorization') || Local.get('Authorization')) {
             let Authorization = 'Bearer ' + (Session.get('Authorization') || Local.get('Authorization'));
-            (<any>config.headers).common['Authorization'] = `${Authorization}`;
+            (<any>config.headers)['Authorization'] = `${Authorization}`;
         }
-        (<any>config.headers).common['env'] = 'admin'
+        (<any>config.headers)['env'] = 'admin'
         return config;
     },
     (error) => {
@@ -79,7 +79,7 @@ service.interceptors.response.use(
         } else if (error.message == 'Network Error') {
             ElMessage.error('网络连接错误');
         } else {
-            if (error.response.data) ElMessage.error(error.response.data.message);
+            if (error.message) ElMessage.error(error.message);
             else ElMessage.error('接口资源不存在');
         }
         return Promise.reject(error);

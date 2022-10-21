@@ -15,6 +15,9 @@
             <el-tab-pane label="账号登录" name="SignIn">
               <SignIn/>
             </el-tab-pane>
+            <!-- <el-tab-pane label="验证码登录" name="SignUp"> -->
+            <!-- <SignUp/> -->
+            <!-- </el-tab-pane>-->
             <el-tab-pane label="账号注册" name="SignUp">
               <SignUp/>
             </el-tab-pane>
@@ -202,7 +205,8 @@ const state = reactive<LoginState>({
   left: 170px;
 
   &-text {
-    color: var(--el-input-text-color,var(--el-text-color-regular));
+    color: var(--el-input-text-color, var(--el-text-color-regular));
+
     &:hover {
       color: var(--el-text-color-primary);
       transition: all ease 0.3s;

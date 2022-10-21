@@ -10,6 +10,9 @@ export const useServerApi = () => {
         },
         getLogList: (params) => {
             return get('/admin/log/list', params)
+        },
+        getLogDetail: (params) => {
+            return get('/admin/log/detail/' + params)
         }
     }
 }

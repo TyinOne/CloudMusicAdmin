@@ -1,7 +1,10 @@
 <template>
   <el-form size="large" class="login-content-form">
     <el-form-item class="login-animation1">
-      <el-input type="text" :placeholder="'请输入用户名'" v-model="state.ruleForm.account" clearable autocomplete="off">
+      <el-input type="text"
+                :placeholder="'请输入用户名'"
+                v-model="state.ruleForm.account" clearable autocomplete="off"
+                spellcheck="false">
         <template #prefix>
           <SvgIcon name="ele-User"/>
         </template>
@@ -9,6 +12,7 @@
     </el-form-item>
     <el-form-item class="login-animation2">
       <el-input
+          spellcheck="false"
           :type="state.isShowPassword ? 'text' : 'password'"
           :placeholder="'请输入密码'"
           v-model="state.ruleForm.password"
