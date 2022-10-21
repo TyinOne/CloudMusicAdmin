@@ -1,11 +1,13 @@
 <template>
-  <div :style="imageBox" @click="onCropperDialogOpen">
-    <el-image v-if="src" ref="avatarImg" :class="circle ? 'circle dashed':'dashed'" :src="src" :style="imageContainer"
-              alt="">
-      <input type="file">
-    </el-image>
-    <div v-else :class="circle ? 'circle addPicture dashed' : 'addPicture dashed'">
-      <SvgIcon :size="30" color="white" name="ele-Plus" style="font-weight: bold"></SvgIcon>
+  <div>
+    <div :style="imageBox" @click="onCropperDialogOpen">
+      <el-image v-if="src" ref="avatarImg" :class="circle ? 'circle dashed':'dashed'" :src="src" :style="imageContainer"
+                alt="">
+        <input type="file">
+      </el-image>
+      <div v-else :class="circle ? 'circle addPicture dashed' : 'addPicture dashed'">
+        <SvgIcon :size="30" color="white" name="ele-Plus" style="font-weight: bold"></SvgIcon>
+      </div>
     </div>
     <CropperDialog ref="cropperDialogRef" @confirm="confirmImage"/>
   </div>

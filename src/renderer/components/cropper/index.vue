@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="state.isShowDialog" class="dialog-self" title="更换头像" width="769px">
+  <el-dialog v-model="state.isShowDialog" class="dialog-self" title="更换头像" width="769px" @close="onCloseDialog">
     <div class="cropper-warp">
       <div class="cropper-warp-left">
         <img ref="cropperImgRef" :src="state.cropperImg" alt="" class="cropper-warp-left-img"/>
@@ -47,8 +47,9 @@
 <script lang="ts" name="cropperIndex" setup>
 import {reactive, ref} from 'vue';
 import Cropper from 'cropperjs'
-import 'cropperjs/dist/cropper.css'
 import {useCommonApi} from "@renderer/api/common";
+import {UploadRequestOptions} from "element-plus";
+import 'cropperjs/dist/cropper.css'
 
 const emits = defineEmits<{
   (e: 'confirm', result: Object): void
@@ -66,35 +67,61 @@ let cropperImgRef = ref()
 
 // 打开弹窗
 const openDialog = (src) => {
-  state.cropperImg = src
+  if (src) {
+    state.cropperImg = src
+    initImagesBase64(src)
+  } else {
+    state.cropperImgBase64 = ''
+  }
   state.isShowDialog = true;
   // initCropper()
 };
 // 关闭弹窗
 const closeDialog = () => {
-  destroy()
   state.isShowDialog = false;
 };
+const onCloseDialog = () => {
+  destroy()
+  console.log(123)
+}
 // 取消
 const onCancel = () => {
   closeDialog();
 };
-const uploadImage = async (param) => {
+const uploadImage = async (param: UploadRequestOptions) => {
   let reader = new FileReader();
   reader.readAsDataURL(param.file);
   state.cropperImg = URL.createObjectURL(param.file)
   reader.onload = (evt) => {
-    state.cropperImgBase64 = evt.target.result
-    destroy()
+    state.cropperImgBase64 = evt.target.result.toString()
     initCropper()
   }
+}
+const initImagesBase64 = (url) => {
+  console.log(url)
+  let image = new Image()
+  image.src = url + '?v=' + Math.random() // 处理缓存
+  image.setAttribute('Origin', 'Anonymous');
+  image.setAttribute('crossOrigin', 'Anonymous');
+  // image.crossOrigin = 'anonymous' // 支持跨域图片
+  image.onload = function () {
+    state.cropperImgBase64 = toTrans(image)
+  }
+  // console.log(toTrans(image))
+}
+const toTrans = (img) => {
+  let canvas = document.createElement('canvas')
+  canvas.width = img.width
+  canvas.height = img.height
+  let ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0, img.width, img.height)
+  return canvas.toDataURL('image/png')
 }
 // 更换
 const onSubmit = () => {
   let file = base64ImgToFile(state.cropper.getCroppedCanvas({
     imageSmoothingQuality: 'high'
   }).toDataURL('image/jpeg'));
-  console.log(file)
   const formData = new FormData()
   formData.append('file', file)
   useCommonApi().uploadImg(formData).then(res => {
@@ -107,6 +134,7 @@ const onSubmit = () => {
 // 初始化cropperjs图片裁剪
 const initCropper = () => {
   if (cropperImgRef.value) {
+    state.cropperImgBase64 = "";
     state.isCropper = true
     state.cropper = new Cropper(cropperImgRef.value, {
       viewMode: 1,
@@ -146,7 +174,7 @@ const base64ImgToFile = (base64, filename = 'file') => {
 }
 
 defineExpose({
-  openDialog
+  openDialog,
 })
 </script>
 
