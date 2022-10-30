@@ -42,7 +42,7 @@ class Update {
 
         // 下载监听
         autoUpdater.on('download-progress', (progressObj) => {
-            this.Message(this.mainWindow, 3, progressObj)
+            this.Message(this.mainWindow, 3, progressObj.toString())
         })
 
         // 下载完成
