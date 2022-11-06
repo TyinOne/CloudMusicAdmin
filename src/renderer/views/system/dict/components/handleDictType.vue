@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="isShowDialog" :title="dialogMessage.title" custom-class="dialog-self" destroy-on-close draggable
+  <el-dialog v-model="isShowDialog" :title="dialogMessage.title" class="dialog-self" destroy-on-close draggable
              width="400px">
     <el-form label-position="left" label-width="90px">
       <el-form-item label="字典类型:">

@@ -152,7 +152,8 @@ const remove = ({id}) => {
   })
 }
 onMounted(() => {
-  getDictLabel(route.params.dict_type)
+  console.log(route)
+  getDictLabel(route.query.dictType)
 })
 </script>
 <style scoped>

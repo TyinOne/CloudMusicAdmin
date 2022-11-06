@@ -4,16 +4,10 @@
       <div class="system-search mb15">
         <el-input v-model="state.keywords" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"/>
-        <el-select v-model="state.deleted"  @change="query">
+        <el-select v-model="state.deleted" @change="query">
           <el-option :value="false" label="正常"></el-option>
           <el-option :value="true" label="停用"></el-option>
         </el-select>
-        <el-button class="ml10" size="default" type="primary" @click="query">
-          <el-icon>
-            <SvgIcon name="ele-Search"></SvgIcon>
-          </el-icon>
-          查询
-        </el-button>
         <el-button class="ml10" size="default" type="primary" @click="query">
           <el-icon>
             <SvgIcon name="ele-Search"></SvgIcon>
@@ -26,13 +20,19 @@
           </el-icon>
           新增分类
         </el-button>
+        <el-button class="ml10" size="default" type="warning" plain @click="updateDictCache">
+          <el-icon>
+            <SvgIcon name="ele-Coin"></SvgIcon>
+          </el-icon>
+          更新缓存
+        </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
         <el-table-column label="ID" prop="id" width="60"/>
         <el-table-column label="字典名称" prop="dictLabel" width="120"/>
         <el-table-column label="字典类型" prop="dictType" width="120">
           <template #default="scope">
-            <router-link :to="{path: '/system/dict/view/'+ scope.row.dictType}">
+            <router-link :to="{path: '/system/dict/view' , query: {dictType: scope.row.dictType}}">
               <el-link :underline="false" type="primary">{{ scope.row.dictType }}</el-link>
             </router-link>
           </template>
@@ -47,8 +47,10 @@
         <el-table-column label="创建时间" prop="created" width="180"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button size="small" text type="primary" :disabled="scope.row.deleted === true" @click="onOpenEditDictType(scope.row)">编辑</el-button>
-            <el-popconfirm title="确认删除此分类?" cancelButtonType="" @confirm="remove(scope.row)">
+            <el-button size="small" text type="primary" :disabled="scope.row.deleted === true"
+                       @click="onOpenEditDictType(scope.row)">编辑
+            </el-button>
+            <el-popconfirm title="确认删除此分类?" @confirm="remove(scope.row)">
               <template #reference>
                 <el-button size="small" text type="danger" :disabled="scope.row.deleted === true">删除</el-button>
               </template>
@@ -129,9 +131,15 @@ const onOpenEditDictType = (row) => {
     callback: query
   }, row)
 }
+
+const updateDictCache = (row) => {
+  useDictApi().updateDictCache().then(res => {
+    ElMessage.success('更新完成')
+  })
+}
 const remove = ({id}) => {
   useDictApi().removeDictType({id}).then(() => {
-    ElMessage.success('已完成')
+    ElMessage.success('删除成功')
     search({...pagination.value})
   })
 }

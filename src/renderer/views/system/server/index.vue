@@ -119,7 +119,7 @@ const getConfigLoading = () => {
       cupList.value = getCpuInfoList(state.server.cpu)
       memList.value = getMemInfoList(state.server.mem, state.server.jvm)
       state.loading = false
-      setTimeout(() => {
+      interval = setTimeout(() => {
         getServerConfig()
       }, 1000)
     }).catch(e => {
@@ -152,6 +152,7 @@ onMounted(() => {
   getConfigLoading()
 })
 onBeforeUnmount(() => {
+  console.log(interval)
   clearTimeout(interval)
 })
 </script>

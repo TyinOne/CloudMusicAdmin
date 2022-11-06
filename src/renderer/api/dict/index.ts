@@ -1,4 +1,4 @@
-import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
+import {APPLICATION_JSON, get, post, put} from '@renderer/utils/request';
 
 export const useDictApi = () => {
     return {
@@ -22,6 +22,9 @@ export const useDictApi = () => {
         },
         removeDictType: (params) => {
             return post('/admin/dict/type/remove', params, APPLICATION_JSON)
+        },
+        updateDictCache: () => {
+            return put('/admin/dict/update/cache')
         }
     }
 }
