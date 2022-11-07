@@ -2,7 +2,7 @@
   <div>客户端管理</div>
 </template>
 
-<script name="clientIndex">
+<script name="clientIndex" setup>
 
 </script>
 

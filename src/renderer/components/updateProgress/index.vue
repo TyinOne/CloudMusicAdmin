@@ -18,7 +18,7 @@
       </div>
       <div class="bom-box">
         <el-button
-            v-if="progressStaus == 'success'"
+            v-if="progressStaus === 'success'"
             type="text"
             @click="openfile"
         >

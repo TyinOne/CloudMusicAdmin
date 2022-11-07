@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!IsUseSysTitle && isNotMac && !IsWeb">
+  <div v-if="!IsUseSysTitle && !IsWeb">
     <div class="window-title">
-      <div class="controls-container">
+      <div class="controls-container" v-if="isNotMac">
         <div class="windows-icon-bg close-icon" @click="Close">
           <SvgIcon :name="macClose"></SvgIcon>
         </div>
@@ -12,12 +12,13 @@
           <SvgIcon :name="macMin"></SvgIcon>
         </div>
       </div>
+      <div v-else><mac-placeholder/></div>
       <!-- 菜单栏位置 -->
       <div class="menu-container">
-        <div class="menu-item">
+        <div v-if="isNotMac" class="menu-item">
           <div class="link">帮助</div>
         </div>
-        <div class="menu-item">
+        <div v-if="isNotMac" class="menu-item">
           <div class="link">关于</div>
         </div>
         <div class="menu-item">
@@ -34,8 +35,7 @@
       <div class="title" style="-webkit-app-region: drag"></div>
     </div>
   </div>
-  <div v-else-if="!IsUseSysTitle && !isNotMac" class="window-title">
-  </div>
+  <div v-else-if="!IsUseSysTitle && !isNotMac" class="window-title"/>
   <el-dialog
       v-model="dialogVisible"
       :before-close="handleClose"
@@ -60,6 +60,7 @@
 import macMax from '@renderer/assets/mac_max.svg'
 import macMin from '@renderer/assets/mac_min.svg'
 import macClose from '@renderer/assets/mac_close.svg'
+import MacPlaceholder from "@renderer/components/titleBar/mac-placeholder.vue"
 import UpdateProgress from "@renderer/components/updateProgress/index.vue";
 import {onMounted, ref} from "vue";
 import packageConfig from '../../../../package.json'
@@ -154,8 +155,8 @@ onMounted(() => {
 <style lang="scss" rel="stylesheet/scss" scoped>
 .window-title {
   width: calc(100% - 50px);
-  height: 30px;
-  line-height: 30px;
+  height: 24px;
+  line-height: 24px;
   background-color: #ffffff;
   display: flex;
   -webkit-app-region: drag;
