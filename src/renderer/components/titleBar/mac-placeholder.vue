@@ -10,6 +10,6 @@ export default {
 
 <style lang="scss" scoped>
 .mac-place {
-  width: 60px;
+  width: 80px;
 }
 </style>

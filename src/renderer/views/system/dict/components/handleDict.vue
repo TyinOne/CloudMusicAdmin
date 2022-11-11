@@ -55,7 +55,6 @@ let dictOptions = ref<Array<Label>>([])
 const onSubmit = () => {
   let {id, dictType, dictKey, dictValue, dictDescription} = dialogMessage.data
   let params = {id, dictType, dictKey, dictValue, dictDescription}
-  console.log(params)
   useDictApi().saveDict(params).then(() => {
     onCancel()
   })

@@ -4,11 +4,10 @@
       <div class="system-search mb15">
         <el-input v-model="state.keywords" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"/>
-        <el-select v-model="state.group" @change="query" placeholder="请选择分组">
-          <el-option :value="false" label="正常"></el-option>
-          <el-option :value="true" label="停用"></el-option>
+        <el-select v-model="state.group" @change="query" :clearable="true" placeholder="请选择分组">
+          <el-option v-for="item in queryGroup" :value="item.value" :label="item.label"/>
         </el-select>
-        <el-select v-model="state.status" @change="query" placeholder="请选择状态">
+        <el-select v-model="state.disabled" @change="query" placeholder="请选择状态">
           <el-option :value="false" label="正常"></el-option>
           <el-option :value="true" label="停用"></el-option>
         </el-select>
@@ -33,22 +32,39 @@
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
         <el-table-column label="ID" prop="id" width="60"/>
-        <el-table-column label="任务名称" prop="name"/>
-        <el-table-column label="任务组名" prop="name"/>
-        <el-table-column label="目标方法" prop="name"/>
-        <el-table-column label="cron表达式" prop="name"/>
-        <el-table-column label="状态" prop="name" width="180"/>
-        <el-table-column label="创建时间" prop="created" width="180"/>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="任务名称" prop="name" width="120"/>
+        <el-table-column label="任务分组" prop="group" width="100"/>
+        <el-table-column label="目标方法" prop="method"/>
+        <el-table-column label="cron表达式" prop="cron" width="150"/>
+        <el-table-column label="状态" width="80">
           <template #default="scope">
-            <el-button size="small" text type="primary" :disabled="scope.row.deleted === true"
-                       @click="onOpenEditScheduled(scope.row)">编辑
-            </el-button>
-            <el-popconfirm title="确认删除此分类?" @confirm="remove(scope.row)">
-              <template #reference>
-                <el-button size="small" text type="danger" :disabled="scope.row.deleted === true">删除</el-button>
-              </template>
-            </el-popconfirm>
+            <el-tag v-if="scope.row.disabled" type="warning">{{ '停用' }}</el-tag>
+            <el-tag v-else type="success">{{ '正常' }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" prop="created" width="180"/>
+        <el-table-column label="操作" width="130">
+          <template #default="scope">
+            <el-space>
+              <el-button size="small" text type="primary" :disabled="scope.row.deleted === true"
+                         @click="onOpenEditScheduled(scope.row)">编辑
+              </el-button>
+              <el-dropdown @command="(command) => handleDropdownCommand(command)">
+                <el-button size="small" text type="primary">更多</el-button>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item command="handleRun" icon="ele-CaretRight">执行一次</el-dropdown-item>
+                    <el-dropdown-item command="handleView" icon="ele-View">任务详细</el-dropdown-item>
+                    <el-dropdown-item command="handleJobLog" icon="ele-Operation">调度日志</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+              <el-popconfirm title="确认删除?" @confirm="remove(scope.row)">
+                <template #reference>
+                  <el-button size="small" text type="danger" :disabled="scope.row.deleted === true">删除</el-button>
+                </template>
+              </el-popconfirm>
+            </el-space>
           </template>
         </el-table-column>
       </el-table>
@@ -61,19 +77,28 @@
           :total="pagination.total"
           background
           class="mt15"
-          layout="total, prev, pager, next, jumper"
+          layout="jumper, next, pager, prev, sizes, total"
           @current-change="onHandleCurrentChange"
       />
+      <save-scheduled ref="saveSchedule"/>
     </el-card>
   </div>
 </template>
 
-<script name="scheduledIndex" setup>
-import {reactive, ref} from "vue";
+<script name="scheduledIndex" setup lang="ts">
+import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
+import {useScheduledApi} from "@renderer/api/scheduled";
+import SaveScheduled from "@renderer/views/system/scheduled/components/saveScheduled.vue";
 const router = useRouter();
 const loading = ref(false)
-const state = reactive({})
+const saveSchedule = ref(null)
+const state = reactive({
+  keywords: '',
+  disabled: false,
+  group: ''
+})
+const queryGroup = ref([])
 const pagination = ref({
   current: 1,
   size: 20,
@@ -82,21 +107,33 @@ const pagination = ref({
 const dataSource = ref()
 
 const toLogView = () => {
-  console.log(123)
   router.push("/system/scheduled/logs")
 }
 const query = () => {
   pagination.value.current = 1
   search({...pagination.value})
 }
+const getGroupList = () => {
+  useScheduledApi().getGroups().then(res => {
+    queryGroup.value = res.result.list
+  })
+}
 const onHandleCurrentChange = (page) => {
   search(page)
 }
 const addScheduled = () => {
-
+  saveSchedule.value.openDialog({
+    title: '新增任务',
+    submit: '保存',
+    callback: () => search({...pagination.value})
+  })
 }
 const onOpenEditScheduled = (row) => {
-
+  saveSchedule.value.openDialog({
+    title: '编辑任务',
+    submit: '保存',
+    callback: () => search({...pagination.value})
+  }, row)
 }
 const updateStatus = (row) => {
 
@@ -104,10 +141,25 @@ const updateStatus = (row) => {
 const remove = (row) => {
 
 }
-
-const search = (page) => {
-
+const handleDropdownCommand = (command) => {
+  console.log(command)
 }
+const search = (page) => {
+  let params = {...state, ...page}
+  useScheduledApi().getScheduledList(params).then(res => {
+    dataSource.value = res.result.list
+    pagination.value = {
+      current: res.result.current,
+      size: res.result.size,
+      total: res.result.total
+    }
+    loading.value = false
+  })
+}
+onMounted(() => {
+  query()
+  getGroupList()
+})
 </script>
 
 <style scoped>

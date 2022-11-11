@@ -5,14 +5,14 @@
         <div class="windows-icon-bg close-icon" @click="Close">
           <SvgIcon :name="macClose"></SvgIcon>
         </div>
-        <div class="windows-icon-bg" @click="MixOrReduction">
-          <SvgIcon :name="macMax"></SvgIcon>
-        </div>
         <div class="windows-icon-bg" @click="Mini">
           <SvgIcon :name="macMin"></SvgIcon>
         </div>
+        <div class="windows-icon-bg" @click="MixOrReduction">
+        <SvgIcon :name="macMax"></SvgIcon>
       </div>
-      <div v-else><mac-placeholder/></div>
+      </div>
+      <div v-else-if="!isNotMac"><mac-placeholder/></div>
       <!-- 菜单栏位置 -->
       <div class="menu-container">
         <div v-if="isNotMac" class="menu-item">
