@@ -9,10 +9,12 @@
           <SvgIcon :name="macMin"></SvgIcon>
         </div>
         <div class="windows-icon-bg" @click="MixOrReduction">
-        <SvgIcon :name="macMax"></SvgIcon>
+          <SvgIcon :name="macMax"></SvgIcon>
+        </div>
       </div>
+      <div v-else-if="!isNotMac">
+        <mac-placeholder/>
       </div>
-      <div v-else-if="!isNotMac"><mac-placeholder/></div>
       <!-- 菜单栏位置 -->
       <div class="menu-container">
         <div v-if="isNotMac" class="menu-item">
@@ -32,7 +34,7 @@
         </div>
       </div>
       <!-- 中间标题位置 -->
-      <div class="title" style="-webkit-app-region: drag"></div>
+      <div class="title" style="-webkit-app-region: drag"/>
     </div>
   </div>
   <div v-else-if="!IsUseSysTitle && !isNotMac" class="window-title"/>
@@ -54,7 +56,6 @@
     </div>
   </el-dialog>
   <update-progress v-model="showForcedUpdate"/>
-
 </template>
 <script lang="ts" setup>
 import macMax from '@renderer/assets/mac_max.svg'
