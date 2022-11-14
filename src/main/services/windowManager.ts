@@ -51,7 +51,7 @@ class MainInit {
         // 加载模板
         Menu.setApplicationMenu(menu)
         // 加载主窗口
-        this.mainWindow.loadURL(this.winURL)
+        this.mainWindow.loadURL(this.winURL).then(r => {})
         // dom-ready之后显示界面
         this.mainWindow.once('ready-to-show', () => {
             this.mainWindow.show()

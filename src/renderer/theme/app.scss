@@ -62,7 +62,7 @@ body,
     display: flex;
     flex-direction: column;
     overflow-x: hidden !important;
-
+    user-select: none;
     .el-scrollbar__view {
       overflow: hidden;
     }

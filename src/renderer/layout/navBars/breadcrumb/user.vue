@@ -1,6 +1,6 @@
 <template>
   <div :style="{ flex: layoutUserFlexNum }" class="layout-navbars-breadcrumb-user">
-    <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
+    <div class="layout-navbars-breadcrumb-user-icon" @click.stop="onSearchClick">
       <SvgIcon name="ele-Search" title="搜索"></SvgIcon>
     </div>
     <div v-if="ipcRenderer" class="layout-navbars-breadcrumb-user-icon" @click="onDownloadClick">
@@ -38,29 +38,29 @@
         <el-dropdown-menu>
           <el-dropdown-item command="/message">
             <SvgIcon name="fa-bell-o fa"></SvgIcon>
-            {{ '通知' }}
+            <span class="user-dropdown-item">{{ '通知' }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="/security">
             <SvgIcon name="fa-fingerprint fa"></SvgIcon>
-            {{ '安全' }}
+            <span class="user-dropdown-item">{{ '安全' }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="/setting">
             <SvgIcon name="fa-gear fa"></SvgIcon>
-            {{ '设置' }}
+            <span class="user-dropdown-item">{{ '设置' }}</span>
           </el-dropdown-item>
           <!--          <el-dropdown-item command="open:https://www.baidu.com">{{ '百度' }}</el-dropdown-item>-->
           <el-dropdown-item command="open:/github">
             <SvgIcon name="bi-github"></SvgIcon>
-            {{ '仓库' }}
+            <span class="user-dropdown-item">{{ '仓库' }}</span>
           </el-dropdown-item>
           <!--          <el-dropdown-item command="/404">{{ '404' }}</el-dropdown-item>-->
           <el-dropdown-item command="/personal" divided>
             <SvgIcon name="fa-user-o fa"></SvgIcon>
-            {{ '个人中心' }}
+            <span class="user-dropdown-item">{{ '个人中心' }}</span>
           </el-dropdown-item>
           <el-dropdown-item command="logOut">
             <SvgIcon name="fa-power-off fa"></SvgIcon>
-            {{ '退出登录' }}
+            <span class="user-dropdown-item">{{ '退出登录' }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -205,6 +205,7 @@ const onScreenfullClick = () => {
   screenfull.toggle();
   screenfull.on('change', () => {
     state.isScreenfull = screenfull.isFullscreen;
+    store.state.themeConfig.themeConfig.isScreenfull = screenfull.isFullscreen
   });
 };
 </script>
@@ -216,7 +217,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.user-dropdown-item {
+  user-select: none;
+}
 .layout-navbars-breadcrumb-user {
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: flex-end;

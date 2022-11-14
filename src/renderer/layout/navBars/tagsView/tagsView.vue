@@ -547,6 +547,7 @@ export default {
 
 <style lang="scss" scoped>
 .layout-navbars-tagsview {
+  user-select: none;
   background-color: var(--el-color-white);
   border-bottom: 1px solid var(--next-border-color-light);
   position: relative;

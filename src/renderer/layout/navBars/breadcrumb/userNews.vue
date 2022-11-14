@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 .layout-navbars-breadcrumb-user-news {
+  user-select: none;
   .head-box {
     display: flex;
     border-bottom: 1px solid var(--el-border-color-lighter);

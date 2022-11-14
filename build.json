@@ -16,7 +16,7 @@
     "installerHeaderIcon": "config/icons/format.ico",
     "createDesktopShortcut": true
   },
-  "productName": "cloud-admin",
+  "productName": "Cloud管理后台",
   "appId": "com.tyin.cloud.admin",
   "directories": {
     "output": "build"
@@ -25,6 +25,7 @@
     "dist/electron/**/*"
   ],
   "dmg": {
+    "icon": "./config/icons/Icon.icns",
     "contents": [
       {
         "x": 410,
@@ -40,7 +41,7 @@
     ]
   },
   "mac": {
-    "icon": "build/icons/icon.icns"
+    "icon": "./config/icons/Icon.icns"
   },
   "win": {
     "icon": "./config/icons/format.ico",
@@ -48,6 +49,6 @@
   },
   "linux": {
     "target": "deb",
-    "icon": "build/icons"
+    "icon": "./config/icons/format.ico"
   }
 }

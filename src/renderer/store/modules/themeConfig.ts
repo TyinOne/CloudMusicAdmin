@@ -127,6 +127,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
             globalI18n: 'zh-cn',
             // 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'
             globalComponentSize: 'large',
+            isScreenfull: false
         },
     },
     mutations: {

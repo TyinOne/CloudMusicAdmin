@@ -39,6 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .layout-logo {
+  margin-top: 10px;
   width: 220px;
   height: 60px;
   display: flex;

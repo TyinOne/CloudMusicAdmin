@@ -12,7 +12,7 @@
           <SvgIcon :name="macMax"></SvgIcon>
         </div>
       </div>
-      <div v-else-if="!isNotMac">
+      <div v-else-if="!isNotMac && !isScreenfull">
         <mac-placeholder/>
       </div>
       <!-- 菜单栏位置 -->
@@ -63,9 +63,14 @@ import macMin from '@renderer/assets/mac_min.svg'
 import macClose from '@renderer/assets/mac_close.svg'
 import MacPlaceholder from "@renderer/components/titleBar/mac-placeholder.vue"
 import UpdateProgress from "@renderer/components/updateProgress/index.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import packageConfig from '../../../../package.json'
-
+import {useStore} from "@renderer/store";
+const store = useStore();
+// 获取用户信息 vuex
+const isScreenfull = computed(() => {
+  return <any>store.state.themeConfig.themeConfig.isScreenfull;
+});
 let dialogVisible = ref(false);
 let showForcedUpdate = ref(false);
 let progressStatus = ref(null);
@@ -156,8 +161,8 @@ onMounted(() => {
 <style lang="scss" rel="stylesheet/scss" scoped>
 .window-title {
   width: calc(100% - 50px);
-  height: 24px;
-  line-height: 24px;
+  height: 28px;
+  line-height: 28px;
   background-color: #ffffff;
   display: flex;
   -webkit-app-region: drag;

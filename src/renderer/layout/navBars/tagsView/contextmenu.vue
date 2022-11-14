@@ -130,6 +130,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .custom-contextmenu {
+  user-select: none;
   transform-origin: center top;
   z-index: 2190;
   position: fixed;

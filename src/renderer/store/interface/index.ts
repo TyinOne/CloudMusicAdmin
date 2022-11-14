@@ -45,6 +45,7 @@ export interface ThemeConfigState {
         globalViceTitle: string;
         globalI18n: string;
         globalComponentSize: string;
+        isScreenfull: boolean
     };
 }
 

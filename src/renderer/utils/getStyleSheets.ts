@@ -15,7 +15,7 @@ const getAlicdnIconfont = () => {
             }
             for (let i = 0; i < sheetsList.length; i++) {
                 for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
-                    if (sheetsList[i].cssRules[j].selectorText && sheetsList[i].cssRules[j].selectorText.indexOf('.icon-') > -1) {
+                    if (sheetsList[i].cssRules[j].selectorText && sheetsList[i].cssRules[j].selectorText.indexOf('.i-cloud') > -1) {
                         sheetsIconList.push(
                             `${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
                         );
@@ -24,7 +24,7 @@ const getAlicdnIconfont = () => {
             }
             if (sheetsIconList.length > 0) resolve(sheetsIconList);
             else reject('未获取到值，请刷新重试');
-        });
+        }).then(r => {});
     });
 };
 
@@ -63,7 +63,6 @@ const getAwesomeIconfont = () => {
                         sheetsList[i].cssRules[j].selectorText.indexOf(',') === -1
                     ) {
                         if (/::before/.test(sheetsList[i].cssRules[j].selectorText)) {
-                            console.log(sheetsList[i].cssRules[j].selectorText)
                             sheetsIconList.push(
                                 `${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
                             );

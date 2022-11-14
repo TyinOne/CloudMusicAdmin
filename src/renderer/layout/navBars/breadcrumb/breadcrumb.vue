@@ -114,6 +114,7 @@ export default {
   font-weight: bold;
 }
 .layout-navbars-breadcrumb {
+  user-select: none;
   flex: 1;
   height: inherit;
   display: flex;

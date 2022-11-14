@@ -1,18 +1,20 @@
 <template>
   <div class="layout-search-dialog">
-    <el-dialog v-model="state.isShowSearch" :modal="false" :show-close="false" destroy-on-close fullscreen
+    <el-dialog v-model="state.isShowSearch" :modal="false" :show-close="false"
+               :close-on-press-escape="true"
+               :close-on-click-modal="true"
+               destroy-on-close fullscreen
                width="300px">
       <el-autocomplete
           ref="layoutMenuAutocompleteRef"
           v-model="state.menuQuery"
           :fetch-suggestions="menuSearch"
           :placeholder="'菜单搜索：支持中文、路由路径'"
-          @blur="onSearchBlur"
           @select="onHandleSelect"
       >
         <template #prefix>
           <el-icon class="el-input__icon">
-            <ele-Search/>
+            <SvgIcon name="ele-Search"/>
           </el-icon>
         </template>
         <template #default="{ item }">
@@ -30,6 +32,7 @@
 import {nextTick, reactive, ref} from "vue";
 import {useStore} from "@renderer/store";
 import {useRouter} from "vue-router";
+import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 interface SearchState {
   isShowSearch: boolean;
@@ -96,10 +99,6 @@ const onHandleSelect = (item: any) => {
   if (item.meta.isLink && !item.meta.isIframe) window.open(item.meta.isLink);
   else if (redirect) router.push(redirect);
   else router.push(path);
-  closeSearch();
-};
-// input 失去焦点时
-const onSearchBlur = () => {
   closeSearch();
 };
 const getClass = (icon): string => {

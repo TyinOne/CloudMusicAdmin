@@ -5,9 +5,7 @@
     spellcheck="false"
                 clearable autocomplete="off">
         <template #prefix>
-          <el-icon class="el-input__icon">
-            <SvgIcon name="ele-User"/>
-          </el-icon>
+          <SvgIcon name="ele-User"/>
         </template>
       </el-input>
     </el-form-item>
@@ -19,14 +17,12 @@
           v-model="state.ruleForm.password" v-on:keyup.enter="onSignIn"
           autocomplete="off">
         <template #prefix>
-          <el-icon class="el-input__icon">
-            <SvgIcon name="ele-Unlock"/>
-          </el-icon>
+          <SvgIcon name="ele-Unlock"/>
         </template>
         <template #suffix>
           <i class="iconfont el-input__icon login-content-password"
              :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
-             @click="state.isShowPassword = !state.isShowPassword">
+             @click="state.isShowPassword = !(state.isShowPassword)">
           </i>
         </template>
       </el-input>

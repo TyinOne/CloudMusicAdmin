@@ -1,13 +1,13 @@
 <template>
-  <div class="bootstrap-container">
-    <el-card :header="`bootstrap 字体图标(自动载入，增加了 bi- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`" shadow="hover">
+  <div class="alibaba-container">
+    <el-card :header="`alibaba 字体图标(自动载入：${state.sheetsIconList.length}个)`" shadow="hover">
       <el-scrollbar height="calc(100vh - 240px)">
         <el-row class="iconfont-row">
           <el-col v-for="(v, k) in state.sheetsIconList" :key="k" :lg="4" :md="6" :sm="8" :xl="2" :xs="12">
-            <div class="iconfont-warp" @click="copyIcon(v + ' bi')">
+            <div class="iconfont-warp" @click="copyIcon(`iconfont ${v}`)">
               <div class="flex-margin">
                 <div class="iconfont-warp-value">
-                  <SvgIcon :name="v" :size="30"/>
+                  <SvgIcon :name="`iconfont ${v}`" :size="30"/>
                 </div>
                 <div class="iconfont-warp-label mt10">{{ v }}</div>
               </div>
@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="alibabaIcon">
 import {onMounted, reactive} from "vue";
 import initIconfont from "@renderer/utils/getStyleSheets";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
@@ -29,7 +29,8 @@ const state = reactive({
   sheetsIconList: [],
 })
 const initElementIcons = () => {
-  initIconfont.bi().then((res: any) => {
+  initIconfont.ali().then((res: any) => {
+    console.log(res)
     state.sheetsIconList = res
   })
 }
@@ -40,8 +41,9 @@ onMounted(() => {
   initElementIcons()
 })
 </script>
+
 <style lang="scss" scoped>
-.bootstrap-container {
+.alibaba-container {
   .iconfont-row {
     border-top: 1px solid var(--next-border-color-light);
     border-left: 1px solid var(--next-border-color-light);
@@ -89,4 +91,3 @@ onMounted(() => {
   }
 }
 </style>
-
