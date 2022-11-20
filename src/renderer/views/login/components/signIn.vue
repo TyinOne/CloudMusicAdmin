@@ -71,6 +71,7 @@ const onSignIn = async () => {
   let {account, password} = state.ruleForm
   signIn(account, password)
 };
+let {ipcRenderer} = window;
 const signIn = (account, password) => {
   let params = {account, password}
   useUserApi().signIn(params).then(res => {
@@ -78,8 +79,12 @@ const signIn = (account, password) => {
       nickName: res.result.nickName,
       avatar: res.result.avatar,
       authBtnList: res.result.btn,
+      account: res.result.account
     }
     Local.set('Authorization', res.result.token)
+    ipcRenderer.invoke('userLogin', {
+      account: userInfo.account
+    })
     store.dispatch('userInfos/setUserInfos', {
       Authorization: res.result.token,
       userInfos: userInfo,

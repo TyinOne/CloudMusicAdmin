@@ -7,7 +7,7 @@ const store = new Store({
     // 每当升级版本时，都可以使用migrations对store执行回调操作
     migrations: {
         '0.0.2': store => {
-            store.set('foo', 'package change string change too')
+            store.set('foo.bar', true)
         }
     },
 })
