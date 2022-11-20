@@ -39,6 +39,7 @@ class MainInit {
             titleBarStyle: config.IsUseSysTitle ? 'default' : 'hidden',
             ...Object.assign(mainWindowConfig, {
                 webPreferences: {
+                    webSecurity: false,
                     preload: process.env.NODE_ENV === 'development'
                         ? join(app.getAppPath(), 'preload.js')
                         : join(app.getAppPath(), "dist", "electron", "main", "preload.js")

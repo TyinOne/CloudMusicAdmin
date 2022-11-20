@@ -31,7 +31,6 @@
 // 定义接口来定义对象的类型
 import {nextTick, reactive, ref} from "vue";
 import {useStore} from "@renderer/store";
-import {useRouter} from "vue-router";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 interface SearchState {
@@ -49,7 +48,7 @@ interface Restaurant {
 
 const layoutMenuAutocompleteRef = ref();
 const store = useStore();
-const router = useRouter();
+const router = window.$router;
 const state = reactive<SearchState>({
   isShowSearch: false,
   menuQuery: '',

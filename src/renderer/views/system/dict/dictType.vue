@@ -77,7 +77,6 @@
 
 <script name="systemDictType" setup lang="ts">
 import {onMounted, reactive, ref} from "vue";
-import {useRouter} from "vue-router";
 import HandleDictType from "@renderer/views/system/dict/components/handleDictType.vue";
 import {useDictApi} from "@renderer/api/dict";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
@@ -89,7 +88,7 @@ const state = reactive({
   deleted: false
 })
 const dataSource = ref([])
-const router = useRouter()
+const router = window.$router;
 const handleDictTypeRef = ref(null)
 const pagination = ref({
   current: 1,

@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 // 定义接口来定义对象的类型
 import {useStore} from "@renderer/store";
-import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
+import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {computed, onMounted, reactive} from "vue";
 import {Local} from "@renderer/utils/storage";
 
@@ -36,7 +36,7 @@ interface BreadcrumbState {
 
 const store = useStore();
 const route = useRoute();
-const router = useRouter();
+const router = window.$router;
 const state = reactive<BreadcrumbState>({
   breadcrumbList: [],
   routeSplit: [],

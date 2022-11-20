@@ -61,7 +61,7 @@ import {
 } from "vue";
 import Contextmenu from '@renderer/layout/navBars/tagsView/contextmenu.vue'
 import {useStore} from "@renderer/store";
-import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
+import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {Session} from "@renderer/utils/storage";
 import {isObjectValueEqual} from "@renderer/utils/arrayOperation";
 import other from "@renderer/utils/other";
@@ -105,7 +105,7 @@ const contextmenuRef = ref();
 const tagsUlRef = ref();
 const store = useStore();
 const route = useRoute();
-const router = useRouter();
+const router = window.$router;
 const state = reactive<TagsViewState>({
   routeActive: '',
   routePath: route.path,

@@ -6,6 +6,7 @@
     <Download ref="downloadRef"></Download>
     <CloseFull/>
   </el-config-provider>
+  <api-router/>
 </template>
 
 <script lang="ts" setup>
@@ -19,6 +20,7 @@ import {Local, Session} from "@renderer/utils/storage";
 import other from "@renderer/utils/other";
 import CloseFull from '@renderer/layout/navBars/breadcrumb/closeFull.vue'
 import TitleBar from '@renderer/components/titleBar/index.vue'
+import ApiRouter from "@renderer/components/router/apiRouter.vue";
 
 const {proxy} = <any>getCurrentInstance();
 // const settingsRef = ref();

@@ -70,7 +70,6 @@
 </template>
 <script lang="ts" setup>
 import {computed, getCurrentInstance, reactive, ref} from "vue";
-import {useRouter} from "vue-router";
 import {useStore} from "@renderer/store";
 import {Local, Session} from "@renderer/utils/storage";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -83,7 +82,7 @@ import {useUserApi} from "@renderer/api/user";
 
 const {ipcRenderer} = window;
 const {proxy} = <any>getCurrentInstance();
-const router = useRouter();
+const router = window.$router;
 const store = useStore();
 const searchRef = ref();
 const state = reactive({

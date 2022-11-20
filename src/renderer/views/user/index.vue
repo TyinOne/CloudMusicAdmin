@@ -82,9 +82,8 @@ import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";
 import UserDetail from "@renderer/views/user/components/userDetail.vue";
 import {Label} from "@renderer/types/interface";
-import {useRouter} from "vue-router";
 
-const router = useRouter()
+const router = window.$router()
 let loading = ref(false)
 let dataSource = ref([])
 let roleLabel = ref<Array<Label>>([])

@@ -87,10 +87,10 @@
 
 <script name="scheduledIndex" setup lang="ts">
 import {onMounted, reactive, ref} from "vue";
-import {useRouter} from "vue-router";
 import {useScheduledApi} from "@renderer/api/scheduled";
 import SaveScheduled from "@renderer/views/system/scheduled/components/saveScheduled.vue";
-const router = useRouter();
+
+const router = window.$router;
 const loading = ref(false)
 const saveSchedule = ref(null)
 const state = reactive({

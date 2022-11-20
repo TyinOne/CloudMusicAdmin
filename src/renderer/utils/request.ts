@@ -1,13 +1,11 @@
 import axios from 'axios';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {Local, Session} from '@renderer/utils/storage';
-import {response} from "express";
 // import {AxiosInstance} from "a-axios";
 
 export const APPLICATION_JSON = 'application/json';
 export const APPLICATION_FORM = 'application/x-www-form-urlencoded;charset=UTF-8';
 export const APPLICATION_FILE = 'multipart/form-data';
-
 // 配置新建一个 axios 实例
 const service = axios.create({
     baseURL: process.env.BASE_API,
@@ -45,7 +43,23 @@ service.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
+let toLogin = false
+const toLoginHandle = () => {
+    console.log(toLogin)
+    if (!toLogin) {
+        toLogin = true
+        console.log('toLogin')
+        ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
+            .then(() => {
+                window.$router.replace({name: 'login'})
+                toLogin = false
+            })
+            .catch(() => {
+                window.$router.replace({name: 'login'})
+                toLogin = false
+            });
+    }
+}
 // 添加响应拦截器
 service.interceptors.response.use(
     (response) => {
@@ -57,13 +71,7 @@ service.interceptors.response.use(
                 // Session.clear(); // 清除浏览器全部临时缓存
                 Local.remove('Authorization')
                 Session.remove('Authorization')
-                ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
-                    .then(() => {
-                        window.location.href = '/'; // 去登录页
-                    })
-                    .catch(() => {
-                        window.location.href = '/'; // 去登录页
-                    });
+                toLoginHandle()
             } else {
                 ElMessage.error(res.message)
             }

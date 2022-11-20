@@ -75,10 +75,10 @@ import {useDictApi} from "@renderer/api/dict";
 import {Label} from "@renderer/types/interface";
 import HandleDict from "@renderer/views/system/dict/components/handleDict.vue";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {ElMessage} from "element-plus";
 
-const router = useRouter();
+const router = window.$router;
 const route = useRoute();
 let state = reactive({
   dictType: '',
