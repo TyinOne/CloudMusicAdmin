@@ -18,7 +18,7 @@
           <SvgIcon name="ele-Search"></SvgIcon>
           {{ '查询' }}
         </el-button>
-        <el-button class="ml10" size="default" type="primary" text @click="toInvite">
+        <el-button class="ml10" size="default" text type="primary" @click="toInvite">
           <SvgIcon name="ele-Link"></SvgIcon>
           {{ '邀请码' }}
         </el-button>
@@ -79,7 +79,7 @@
     </el-card>
   </div>
 </template>
-<script lang="ts" setup name="userIndex">
+<script lang="ts" name="userIndex" setup>
 import {onMounted, reactive, ref, unref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";

@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="alibabaIcon">
+<script lang="ts" name="alibabaIcon" setup>
 import {onMounted, reactive} from "vue";
 import initIconfont from "@renderer/utils/getStyleSheets";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";

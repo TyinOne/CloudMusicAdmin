@@ -219,6 +219,7 @@ export default {
 .user-dropdown-item {
   user-select: none;
 }
+
 .layout-navbars-breadcrumb-user {
   user-select: none;
   display: flex;

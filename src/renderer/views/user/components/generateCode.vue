@@ -1,18 +1,18 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'生成邀请码'" class="dialog-self"
-               :destroy-on-close="true">
+    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :destroy-on-close="true" :title="'生成邀请码'"
+               class="dialog-self">
       <div v-loading="loading">
-        <el-form :model="formData" ref="ruleFormRef" :rules="rules">
+        <el-form ref="ruleFormRef" :model="formData" :rules="rules">
           <el-form-item label="角色选择" prop="roleId">
             <el-select v-model="formData.roleId">
-              <el-option v-for="item in roleLists" :value="item.value" :key="item.value" :label="item.label"/>
+              <el-option v-for="item in roleLists" :key="item.value" :label="item.label" :value="item.value"/>
             </el-select>
           </el-form-item>
         </el-form>
         <div class="box">
           <div class="code-box">
-            <div class="message" v-if="isShowMessage">
+            <div v-if="isShowMessage" class="message">
               <span>已生成邀请码：</span>
               <span style="color: #63b536">{{ message.code }}</span>
               <span>，有效期 </span>
@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script setup name="generateCode" lang="ts">
+<script lang="ts" name="generateCode" setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoleApi} from "@renderer/api/role";
 import {useInviteCodeApi} from "@renderer/api/invite";

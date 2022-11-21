@@ -24,7 +24,8 @@ const getAlicdnIconfont = () => {
             }
             if (sheetsIconList.length > 0) resolve(sheetsIconList);
             else reject('未获取到值，请刷新重试');
-        }).then(r => {});
+        }).then(r => {
+        });
     });
 };
 

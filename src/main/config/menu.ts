@@ -2,11 +2,13 @@
 import {app, dialog} from 'electron'
 import {arch, release, type} from 'os'
 import packageInfo from '../../../package.json'
+
 interface MenuState {
-    label:string,
+    label: string,
     submenu: any,
 }
-const menu:Array<MenuState> = [
+
+const menu: Array<MenuState> = [
     {
         label: '设置',
         submenu: [{

@@ -51,6 +51,7 @@ export default {
   cursor: pointer;
   animation: logoAnimation 0.3s ease-in-out;
   font-weight: bolder;
+
   &:hover {
     span {
       color: #000000;

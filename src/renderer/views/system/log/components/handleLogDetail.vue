@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="isShowDialog" title="详情" class="dialog-self-log" destroy-on-close draggable width="80%">
+  <el-dialog v-model="isShowDialog" class="dialog-self-log" destroy-on-close draggable title="详情" width="80%">
     <div class="content">
       <el-row :gutter="10">
         <el-col :span="12">
@@ -32,7 +32,7 @@
           <p class="copy-text" style="width: 150px;font-weight: bolder" @click="copyText(state.request)">
             {{ '请求参数(点击复制):' }}</p>
           <el-scrollbar>
-            <json-viewer :value="state.request" :expanded="true"></json-viewer>
+            <json-viewer :expanded="true" :value="state.request"></json-viewer>
           </el-scrollbar>
         </el-col>
         <el-col :span="12">
@@ -47,7 +47,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup name="handleLogDetail">
+<script lang="ts" name="handleLogDetail" setup>
 import {reactive, ref} from "vue";
 import {useServerApi} from "@renderer/api/server";
 import commonFunction from "@renderer/utils/commonFunction";
@@ -95,7 +95,7 @@ defineExpose({
   max-height: 80%;
 }
 </style>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .copy-text {
   -webkit-touch-callout: none;
   -moz-user-select: none;

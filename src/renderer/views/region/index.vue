@@ -14,7 +14,8 @@
           {{ '查询' }}
         </el-button>
       </div>
-      <el-table v-loading="loading" :data="dataSource" :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren'}"
+      <el-table v-loading="loading" :data="dataSource" :load="load"
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren'}"
                 height="calc(100vh - 240px)"
                 lazy row-key="id"
                 style="width: 100%">

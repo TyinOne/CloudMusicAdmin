@@ -1,6 +1,8 @@
 <template>
   <div class="element-container">
-    <el-card :header="`element plus 字体图标(自动载入，增加了 ele- 前缀，使用时：ele-Aim)：${state.sheetsIconList.length}个`" shadow="hover">
+    <el-card
+        :header="`element plus 字体图标(自动载入，增加了 ele- 前缀，使用时：ele-Aim)：${state.sheetsIconList.length}个`"
+        shadow="hover">
       <el-scrollbar height="calc(100vh - 240px)">
         <el-row class="iconfont-row">
           <el-col v-for="(v, k) in state.sheetsIconList" :key="k" :lg="4" :md="6" :sm="8" :xl="2" :xs="12">

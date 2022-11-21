@@ -39,7 +39,6 @@
 import {useUserApi} from "@renderer/api/user";
 import {onMounted, reactive, ref} from "vue";
 import type {UploadFile} from 'element-plus'
-import {Plus} from "@element-plus/icons-vue";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
 
 let user = reactive({

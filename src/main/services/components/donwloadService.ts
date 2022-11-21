@@ -2,8 +2,10 @@ import {IDownloadFile, INewDownloadFile} from "@main/services/interface";
 import {getFileName, guid, isExistFile, pathJoin, removeFile} from "@main/utils/downloadUtils";
 import {
     addDownloadItem,
-    download, getDownloadConfigFromStore,
-    getDownloadItem, initDownloadData,
+    download,
+    getDownloadConfigFromStore,
+    getDownloadItem,
+    initDownloadData,
     isExistItem,
     setDownloadStore,
     updateDownloadItem
@@ -11,7 +13,6 @@ import {
 
 import {BrowserWindow, DownloadItem, WebContents} from "electron";
 import {IDownloadConfig} from "@main/services/interface/model/IDownloadConfig";
-import store from "@main/services/store";
 
 export class DownloadService {
 

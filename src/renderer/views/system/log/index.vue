@@ -4,7 +4,7 @@
       <div class="system-search mb15">
         <el-date-picker v-model="state.date" end-placeholder="结束日期" start-placeholder="开始日期"
                         style="max-width: 240px" type="daterange" value-format="YYYY-MM-DD"></el-date-picker>
-        <el-input clearable placeholder="请输入URI关键词" v-model="state.keywords"
+        <el-input v-model="state.keywords" clearable placeholder="请输入URI关键词"
                   size="default" style="max-width: 180px"></el-input>
         <el-button v-permission="'sys:log:query'" class="ml10" size="default" type="primary" @click="searchLog">
           <SvgIcon name="ele-Search"></SvgIcon>
@@ -31,11 +31,11 @@
           v-model:current-page="pagination.current"
           v-model:page-size="pagination.size"
           :hide-on-single-page="false"
+          :layout="'prev, pager, next, jumper, ->, total'"
           :pager-count="5"
           :total="pagination.total"
           background
           class="mt15"
-          :layout="'prev, pager, next, jumper, ->, total'"
           small
           @current-change="onHandleCurrentChange"
       >

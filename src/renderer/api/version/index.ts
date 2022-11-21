@@ -1,4 +1,4 @@
-import {APPLICATION_JSON, get, post, put} from '@renderer/utils/request';
+import {APPLICATION_JSON, get, post} from '@renderer/utils/request';
 
 export const useVersionApi = () => {
     return {

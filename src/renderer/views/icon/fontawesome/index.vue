@@ -1,6 +1,7 @@
 <template>
   <div class="element-container">
-    <el-card :header="`awesome 字体图标(自动载入，增加了 fa- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`" shadow="hover">
+    <el-card :header="`awesome 字体图标(自动载入，增加了 fa- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`"
+             shadow="hover">
       <el-scrollbar height="calc(100vh - 240px)">
         <el-row class="iconfont-row" style="padding-right: 10px">
           <el-col v-for="(v, k) in state.sheetsIconList" :key="k" :lg="4" :md="6" :sm="8" :xl="2" :xs="12">

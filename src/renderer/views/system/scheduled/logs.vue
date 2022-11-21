@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script name="scheduledLogs" setup lang="ts">
+<script lang="ts" name="scheduledLogs" setup>
 
 </script>
 

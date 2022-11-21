@@ -1,7 +1,7 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-model="isShowDialog" :title="'用户详情'" class="dialog-self"
-               :destroy-on-close="true"
+    <el-dialog v-model="isShowDialog" :destroy-on-close="true" :title="'用户详情'"
+               class="dialog-self"
                draggable width="700px">
       <el-card v-loading="loading" :body-style="{ padding: '10px' }" shadow="never" style="border: unset">
         <div
@@ -55,8 +55,11 @@
             <div style="display: flex; justify-content: space-between; width: 100%; padding: 0 20px;height: 185px">
               <el-form label-position="left" label-width="75px" style="width: 45%;">
                 <el-form-item label="角色分配:">
-                  <el-checkbox-group v-model="data.detail.roles" >
-                    <el-checkbox v-for="item in roleCheckList" :key="item.value" :label="item.value">{{ item.label }}</el-checkbox>
+                  <el-checkbox-group v-model="data.detail.roles">
+                    <el-checkbox v-for="item in roleCheckList" :key="item.value" :label="item.value">{{
+                        item.label
+                      }}
+                    </el-checkbox>
                   </el-checkbox-group>
                 </el-form-item>
               </el-form>

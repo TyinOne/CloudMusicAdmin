@@ -2,13 +2,13 @@
   <div class="system-save-scheduled-container">
     <el-dialog v-model="isShowDialog" :title="dialogMessage.title" class="dialog-self" destroy-on-close draggable
                width="600px">
-      <el-form label-width="120px" label-position="left">
+      <el-form label-position="left" label-width="120px">
         <el-form-item label="任务名称:" required>
           <el-input v-model="dialogMessage.data.scheduledName" placeholder="请输入任务名称"/>
         </el-form-item>
         <el-form-item label="任务分组:" required>
-          <el-select class="w100" v-model="dialogMessage.data.scheduledGroup" placeholder="请选择任务分组">
-            <el-option v-for="item in scheduledGroupOptions" :value="item.value" :label="item.label"/>
+          <el-select v-model="dialogMessage.data.scheduledGroup" class="w100" placeholder="请选择任务分组">
+            <el-option v-for="item in scheduledGroupOptions" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item required>
@@ -21,8 +21,8 @@
               >
                 <template #content>
                   Bean调用示例：systemTask.loadConfig('configName')
-                  <br />Class类调用示例：com.tyin.quartz.task.ClassName.methodName('abc')
-                  <br />参数说明：支持字符串，布尔类型，长整型，浮点型，整型
+                  <br/>Class类调用示例：com.tyin.quartz.task.ClassName.methodName('abc')
+                  <br/>参数说明：支持字符串，布尔类型，长整型，浮点型，整型
                 </template>
                 <svg-icon name="ele-Warning"/>
               </el-tooltip>
@@ -38,8 +38,8 @@
           </el-input>
         </el-form-item>
         <el-form-item label="错误策略:">
-          <el-select class="w100" v-model="dialogMessage.data.misfirePolicy" placeholder="请选择错误策略">
-            <el-option v-for="item in misfirePolicyOptions" :value="item.value" :label="item.label"/>
+          <el-select v-model="dialogMessage.data.misfirePolicy" class="w100" placeholder="请选择错误策略">
+            <el-option v-for="item in misfirePolicyOptions" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item label="是否并发:">
@@ -52,14 +52,16 @@
       <template #footer>
 				<span class="dialog-footer">
 					<el-button :loading="loading" size="default" @click.stop="onCancel">取 消</el-button>
-					<el-button :loading="loading" size="default" type="primary" @click.stop="onSubmit">{{ dialogMessage.submit }}</el-button>
+					<el-button :loading="loading" size="default" type="primary" @click.stop="onSubmit">{{
+              dialogMessage.submit
+            }}</el-button>
 				</span>
       </template>
     </el-dialog>
   </div>
 </template>
 
-<script lang="ts" setup name="addScheduled">
+<script lang="ts" name="addScheduled" setup>
 import {reactive, ref} from "vue";
 import {useScheduledApi} from "@renderer/api/scheduled";
 import SvgIcon from "@renderer/components/svgIcon/index.vue";
@@ -128,13 +130,15 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 :deep(.el-input-group__append button.el-button) {
   background-color: var(--el-button-bg-color);
   color: var(--el-button-text-color);
+
   &:hover {
     background-color: var(--el-button-hover-bg-color);
   }
+
   &:active {
     background-color: var(--el-button-active-color);
   }

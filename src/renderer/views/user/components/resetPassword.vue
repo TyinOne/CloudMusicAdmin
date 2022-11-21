@@ -1,12 +1,12 @@
 <template>
   <div class="system-rest-container">
-    <el-dialog v-model="isShowDialog" :title="'修改密码'" class="dialog-self"
-               :destroy-on-close="true"
+    <el-dialog v-model="isShowDialog" :destroy-on-close="true" :title="'修改密码'"
+               class="dialog-self"
                draggable width="400px">
       <el-form label-position="left" label-width="60px">
         <el-form-item label="用户名:">{{ state.account }}</el-form-item>
         <el-form-item label="密 码:">
-          <el-input placeholder="请输入新密码" v-model="state.password" :disabled="loading"/>
+          <el-input v-model="state.password" :disabled="loading" placeholder="请输入新密码"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 
@@ -54,7 +54,8 @@ const onCancel = () => {
 const closeDialog = () => {
   state.password = ''
   state.account = ''
-  state.call = () => {}
+  state.call = () => {
+  }
   loading.value = true
   isShowDialog.value = false
 }

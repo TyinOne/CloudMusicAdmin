@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="基础设置" name="basic"/>
         <el-tab-pane label="主题设置" name="theme"/>
-        <el-tab-pane label="下载设置" v-if="ipcRenderer" name="download"/>
+        <el-tab-pane v-if="ipcRenderer" label="下载设置" name="download"/>
         <el-tab-pane label="关于" name="about"/>
       </el-tabs>
       <el-scrollbar ref="scrollbarRef" style="height: calc(100vh - 240px);width: 100%" @scroll="changePane">
@@ -419,7 +419,8 @@
               </div>
             </div>
             <div class="copy-config">
-              <el-alert :closable="false" :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'"
+              <el-alert :closable="false"
+                        :title="'点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。'"
                         type="warning"></el-alert>
               <el-button ref="copyConfigBtnRef" class="copy-config-btn" size="default" type="primary"
                          @click="onCopyConfigClick">

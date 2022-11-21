@@ -1,8 +1,8 @@
 <template>
   <div class="layout-search-dialog">
-    <el-dialog v-model="state.isShowSearch" :modal="false" :show-close="false"
-               :close-on-press-escape="true"
-               :close-on-click-modal="true"
+    <el-dialog v-model="state.isShowSearch" :close-on-click-modal="true" :close-on-press-escape="true"
+               :modal="false"
+               :show-close="false"
                destroy-on-close fullscreen
                width="300px">
       <el-autocomplete

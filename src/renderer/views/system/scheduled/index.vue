@@ -4,10 +4,10 @@
       <div class="system-search mb15">
         <el-input v-model="state.keywords" clearable placeholder="请输入关键词"
                   size="default" style="max-width: 180px"/>
-        <el-select v-model="state.group" @change="query" :clearable="true" placeholder="请选择分组">
-          <el-option v-for="item in queryGroup" :value="item.value" :label="item.label"/>
+        <el-select v-model="state.group" :clearable="true" placeholder="请选择分组" @change="query">
+          <el-option v-for="item in queryGroup" :label="item.label" :value="item.value"/>
         </el-select>
-        <el-select v-model="state.disabled" @change="query" placeholder="请选择状态">
+        <el-select v-model="state.disabled" placeholder="请选择状态" @change="query">
           <el-option :value="false" label="正常"></el-option>
           <el-option :value="true" label="停用"></el-option>
         </el-select>
@@ -17,13 +17,13 @@
           </el-icon>
           查询
         </el-button>
-        <el-button class="ml10" size="default" type="primary" plain @click="addScheduled">
+        <el-button class="ml10" plain size="default" type="primary" @click="addScheduled">
           <el-icon>
             <SvgIcon name="ele-Plus"></SvgIcon>
           </el-icon>
           新增任务
         </el-button>
-        <el-button class="ml10" size="default" type="success" plain @click="toLogView">
+        <el-button class="ml10" plain size="default" type="success" @click="toLogView">
           <el-icon>
             <SvgIcon name="ele-Operation"></SvgIcon>
           </el-icon>
@@ -46,7 +46,7 @@
         <el-table-column label="操作" width="130">
           <template #default="scope">
             <el-space>
-              <el-button size="small" text type="primary" :disabled="scope.row.deleted === true"
+              <el-button :disabled="scope.row.deleted === true" size="small" text type="primary"
                          @click="onOpenEditScheduled(scope.row)">编辑
               </el-button>
               <el-dropdown @command="(command) => handleDropdownCommand(command)">
@@ -61,7 +61,7 @@
               </el-dropdown>
               <el-popconfirm title="确认删除?" @confirm="remove(scope.row)">
                 <template #reference>
-                  <el-button size="small" text type="danger" :disabled="scope.row.deleted === true">删除</el-button>
+                  <el-button :disabled="scope.row.deleted === true" size="small" text type="danger">删除</el-button>
                 </template>
               </el-popconfirm>
             </el-space>
@@ -85,7 +85,7 @@
   </div>
 </template>
 
-<script name="scheduledIndex" setup lang="ts">
+<script lang="ts" name="scheduledIndex" setup>
 import {onMounted, reactive, ref} from "vue";
 import {useScheduledApi} from "@renderer/api/scheduled";
 import SaveScheduled from "@renderer/views/system/scheduled/components/saveScheduled.vue";

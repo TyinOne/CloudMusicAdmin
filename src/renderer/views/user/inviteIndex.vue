@@ -2,8 +2,8 @@
   <div class="system-user-code-container">
     <el-card shadow="hover">
       <div class="system-search mb15">
-        <el-input placeholder="创建者" v-model="state.createBy" style="max-width: 120px"></el-input>
-        <el-input placeholder="使用者" v-model="state.useBy" style="max-width: 120px"></el-input>
+        <el-input v-model="state.createBy" placeholder="创建者" style="max-width: 120px"></el-input>
+        <el-input v-model="state.useBy" placeholder="使用者" style="max-width: 120px"></el-input>
         <el-select v-model="state.invalid" placeholder="是否有效" style="max-width: 120px" @change="query">
           <el-option :value="false" label="有效"/>
           <el-option :value="true" label="无效"/>
@@ -22,25 +22,25 @@
         </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
-        <el-table-column label="序号"  prop="id" width="60"/>
+        <el-table-column label="序号" prop="id" width="60"/>
         <el-table-column label="邀请码" prop="code" show-overflow-tooltip width="120"/>
         <el-table-column label="角色" prop="roleName" show-overflow-tooltip width="120">
           <template #default="scope">
-            <el-tag>{{scope.row.roleName}}</el-tag>
+            <el-tag>{{ scope.row.roleName }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="创建人" prop="createBy" show-overflow-tooltip width="100"/>
         <el-table-column label="使用人" prop="useBy" show-overflow-tooltip width="100"/>
         <el-table-column label="是否有效" prop="invalid" show-overflow-tooltip width="90">
           <template #default="scope">
-            <el-tag v-if="!scope.row.invalid" type="success">{{'可使用'}}</el-tag>
-            <el-tag v-else type="danger">{{'已失效'}}</el-tag>
+            <el-tag v-if="!scope.row.invalid" type="success">{{ '可使用' }}</el-tag>
+            <el-tag v-else type="danger">{{ '已失效' }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="是否使用" prop="used" show-overflow-tooltip width="120">
           <template #default="scope">
-            <el-tag type="success" v-if="scope.row.used">{{'已使用'}}</el-tag>
-            <el-tag type="danger" v-else>{{'未使用'}}</el-tag>
+            <el-tag v-if="scope.row.used" type="success">{{ '已使用' }}</el-tag>
+            <el-tag v-else type="danger">{{ '未使用' }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="生成时间" prop="created" show-overflow-tooltip width="160"/>
@@ -50,7 +50,7 @@
             <el-button v-if="false" size="small" text type="primary">
               详情
             </el-button>
-            <el-popconfirm title="确认清除此邀请码?" cancelButtonType="" @confirm="remove(scope.row)">
+            <el-popconfirm cancelButtonType="" title="确认清除此邀请码?" @confirm="remove(scope.row)">
               <template #reference>
                 <el-button size="small" text type="danger">
                   清除
@@ -78,7 +78,7 @@
   </div>
 </template>
 
-<script setup name="inviteIndex" lang="ts">
+<script lang="ts" name="inviteIndex" setup>
 import {onMounted, reactive, ref, unref} from "vue";
 import {useInviteCodeApi} from "@renderer/api/invite";
 import {ElMessage} from "element-plus";
@@ -147,7 +147,7 @@ const OpenGenerate = () => {
 }
 const remove = (row) => {
   const {id} = row
-  useInviteCodeApi().removeInviteCode({id:Number(id)}).then(res => {
+  useInviteCodeApi().removeInviteCode({id: Number(id)}).then(res => {
     let page = unref(pagination)
     ElMessage.success("清除成功")
     getInfo(page)

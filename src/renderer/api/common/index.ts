@@ -1,4 +1,4 @@
-import {get, upload} from '@renderer/utils/request';
+import {upload} from '@renderer/utils/request';
 
 export const useCommonApi = () => {
     return {

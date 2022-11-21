@@ -1,10 +1,10 @@
 <template>
-  <el-form size="large" class="login-content-form">
+  <el-form class="login-content-form" size="large">
     <el-form-item class="login-animation1">
-      <el-input type="text"
+      <el-input v-model="state.ruleForm.account"
                 :placeholder="'请输入用户名'"
-                v-model="state.ruleForm.account" clearable autocomplete="off"
-                spellcheck="false">
+                autocomplete="off" clearable spellcheck="false"
+                type="text">
         <template #prefix>
           <SvgIcon name="ele-User"/>
         </template>
@@ -12,11 +12,11 @@
     </el-form-item>
     <el-form-item class="login-animation2">
       <el-input
-          spellcheck="false"
-          :type="state.isShowPassword ? 'text' : 'password'"
-          :placeholder="'请输入密码'"
           v-model="state.ruleForm.password"
+          :placeholder="'请输入密码'"
+          :type="state.isShowPassword ? 'text' : 'password'"
           autocomplete="off"
+          spellcheck="false"
       >
         <template #prefix>
           <el-icon class="el-input__icon">
@@ -24,8 +24,8 @@
           </el-icon>
         </template>
         <template #suffix>
-          <i class="iconfont el-input__icon login-content-password"
-             :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
+          <i :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
+             class="iconfont el-input__icon login-content-password"
              @click="state.isShowPassword = !state.isShowPassword"
           >
           </i>
@@ -33,22 +33,22 @@
       </el-input>
     </el-form-item>
     <el-form-item class="login-animation3">
-      <el-input type="text" maxlength="4" :placeholder="'请输入邀请码'"
-                v-model="state.ruleForm.code" clearable autocomplete="off">
+      <el-input v-model="state.ruleForm.code" :placeholder="'请输入邀请码'" autocomplete="off"
+                clearable maxlength="4" type="text">
         <template #prefix>
           <SvgIcon name="ele-Link"/>
         </template>
       </el-input>
     </el-form-item>
     <el-form-item class="login-animation3">
-      <el-button round type="primary" class="login-content-submit">
+      <el-button class="login-content-submit" round type="primary">
         <span>{{ '注 册' }}</span>
       </el-button>
     </el-form-item>
   </el-form>
 </template>
 
-<script lang="ts" setup name="signIn">
+<script lang="ts" name="signIn" setup>
 // 定义接口来定义对象的类型
 import {reactive} from "vue";
 
@@ -70,7 +70,7 @@ const state = reactive({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .login-content-form {
   margin-top: 20px;
   @for $i from 1 through 4 {

@@ -29,4 +29,4 @@ export type IPCEventName =
     | 'openWin'
     | 'startDownload'
     | 'getDownloadConfig'
-    |'userLogin'
+    | 'userLogin'

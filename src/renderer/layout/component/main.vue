@@ -5,7 +5,8 @@
         :style="{ padding: state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe ? 0 : '', transition: 'padding 0.3s ease-in-out' }"
         class="layout-scrollbar"
     >
-      <LayoutParentView :style="getThemeConfig.isTagsViewCurrenFull ? {minHeight: '100vh'} : { minHeight: `calc(100vh - ${state.headerHeight})` }"/>
+      <LayoutParentView
+          :style="getThemeConfig.isTagsViewCurrenFull ? {minHeight: '100vh'} : { minHeight: `calc(100vh - ${state.headerHeight})` }"/>
     </el-scrollbar>
   </el-main>
 </template>

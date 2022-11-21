@@ -1,5 +1,4 @@
 import logger from 'electron-log'
-import {app} from 'electron'
 
 logger.transports.file.level = 'debug'
 

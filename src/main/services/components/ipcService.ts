@@ -7,7 +7,7 @@ import {winURL} from "@main/config/StaticPath";
 import {UpdateIPC} from "@main/services/ipc/updateIPC";
 import {DownloadIPC} from "@main/services/ipc/downloadIPC";
 import {DownloadService} from "@main/services/components/donwloadService";
-import {openFileInFolder, removeFile} from "@main/utils/downloadUtils";
+import {openFileInFolder} from "@main/utils/downloadUtils";
 // import {UserManager} from "@main/services/UserManager";
 // import App = Electron.App;
 
@@ -17,6 +17,7 @@ import {openFileInFolder, removeFile} from "@main/utils/downloadUtils";
 export class AppIpcService {
     public updateIpc: UpdateIPC = null
     public downloadIpc: DownloadIPC = null;
+
     // public app:App;
     constructor() {
         // this.app = app
@@ -117,7 +118,7 @@ export class AppIpcService {
         AppIpcService.ipcMainHandle('openFile', ((event, args) => {
         }))
 
-        AppIpcService.ipcMainHandle('userLogin', ((event, args)=> {
+        AppIpcService.ipcMainHandle('userLogin', ((event, args) => {
             // let userManager = new UserManager();
             // userManager.init(app, {userAccount: args.account})
         }))

@@ -20,7 +20,7 @@
           </el-icon>
           新增分类
         </el-button>
-        <el-button class="ml10" size="default" type="warning" plain @click="updateDictCache">
+        <el-button class="ml10" plain size="default" type="warning" @click="updateDictCache">
           <el-icon>
             <SvgIcon name="ele-Coin"></SvgIcon>
           </el-icon>
@@ -47,12 +47,12 @@
         <el-table-column label="创建时间" prop="created" width="180"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
-            <el-button size="small" text type="primary" :disabled="scope.row.deleted === true"
+            <el-button :disabled="scope.row.deleted === true" size="small" text type="primary"
                        @click="onOpenEditDictType(scope.row)">编辑
             </el-button>
             <el-popconfirm title="确认删除此分类?" @confirm="remove(scope.row)">
               <template #reference>
-                <el-button size="small" text type="danger" :disabled="scope.row.deleted === true">删除</el-button>
+                <el-button :disabled="scope.row.deleted === true" size="small" text type="danger">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -75,7 +75,7 @@
   </div>
 </template>
 
-<script name="systemDictType" setup lang="ts">
+<script lang="ts" name="systemDictType" setup>
 import {onMounted, reactive, ref} from "vue";
 import HandleDictType from "@renderer/views/system/dict/components/handleDictType.vue";
 import {useDictApi} from "@renderer/api/dict";

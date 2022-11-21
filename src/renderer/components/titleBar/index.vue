@@ -1,7 +1,7 @@
 <template>
   <div v-if="!IsUseSysTitle && !IsWeb">
     <div class="window-title">
-      <div class="controls-container" v-if="isNotMac">
+      <div v-if="isNotMac" class="controls-container">
         <div class="windows-icon-bg close-icon" @click="Close">
           <SvgIcon :name="macClose"></SvgIcon>
         </div>
@@ -66,6 +66,7 @@ import UpdateProgress from "@renderer/components/updateProgress/index.vue";
 import {computed, onMounted, ref} from "vue";
 import packageConfig from '../../../../package.json'
 import {useStore} from "@renderer/store";
+
 const store = useStore();
 // 获取用户信息 vuex
 const isScreenfull = computed(() => {

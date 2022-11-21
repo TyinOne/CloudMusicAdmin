@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import {app, shell, dialog} from 'electron'
+import {app, dialog, shell} from 'electron'
 
 /**
  * 获取文件后缀名

@@ -6,6 +6,7 @@ import {join} from "path"
 import {mainWindowConfig} from "../config/windowsConfig"
 import {AppIpcService} from "@main/services/components/ipcService";
 import {DownloadService} from "@main/services/components/donwloadService";
+
 // import {UserManager} from "@main/services/UserManager";
 
 class MainInit {
@@ -16,6 +17,7 @@ class MainInit {
     public mainWindow: BrowserWindow = null
     public ipcService: AppIpcService = null
     public downloadService: DownloadService = null
+
     // public userManager: UserManager = null
 
     constructor() {
@@ -54,7 +56,8 @@ class MainInit {
         // 加载模板
         Menu.setApplicationMenu(menu)
         // 加载主窗口
-        this.mainWindow.loadURL(this.winURL).then(r => {})
+        this.mainWindow.loadURL(this.winURL).then(r => {
+        })
         // dom-ready之后显示界面
         this.mainWindow.once('ready-to-show', () => {
             this.mainWindow.show()

@@ -1,9 +1,9 @@
 <template>
-  <el-form size="large" class="login-content-form">
+  <el-form class="login-content-form" size="large">
     <el-form-item class="login-animation1">
-    <el-input type="text" :placeholder="'请输入用户名/手机号/邮箱'" v-model="state.ruleForm.account"
-    spellcheck="false"
-                clearable autocomplete="off">
+      <el-input v-model="state.ruleForm.account" :placeholder="'请输入用户名/手机号/邮箱'" autocomplete="off"
+                clearable
+                spellcheck="false" type="text">
         <template #prefix>
           <SvgIcon name="ele-User"/>
         </template>
@@ -11,17 +11,17 @@
     </el-form-item>
     <el-form-item class="login-animation2">
       <el-input
-          :type="state.isShowPassword ? 'text' : 'password'"
+          v-model="state.ruleForm.password"
           :placeholder="'请输入密码'"
-          spellcheck="false"
-          v-model="state.ruleForm.password" v-on:keyup.enter="onSignIn"
-          autocomplete="off">
+          :type="state.isShowPassword ? 'text' : 'password'"
+          autocomplete="off" spellcheck="false"
+          v-on:keyup.enter="onSignIn">
         <template #prefix>
           <SvgIcon name="ele-Unlock"/>
         </template>
         <template #suffix>
-          <i class="iconfont el-input__icon login-content-password"
-             :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
+          <i :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
+             class="iconfont el-input__icon login-content-password"
              @click="state.isShowPassword = !(state.isShowPassword)">
           </i>
         </template>
@@ -31,7 +31,7 @@
       <el-checkbox v-model="state.saveAccount">{{ '记住密码' }}</el-checkbox>
     </el-form-item>
     <el-form-item class="login-animation4">
-      <el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="state.loading.signIn">
+      <el-button :loading="state.loading.signIn" class="login-content-submit" round type="primary" @click="onSignIn">
         <span>{{ '登 录' }}</span>
       </el-button>
     </el-form-item>
@@ -122,7 +122,7 @@ const signInSuccess = () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .login-content-form {
   margin-top: 20px;
   @for $i from 1 through 4 {

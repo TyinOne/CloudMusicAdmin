@@ -2,7 +2,7 @@
 
 </template>
 
-<script lang="ts" setup name="scan">
+<script lang="ts" name="scan" setup>
 
 </script>
 

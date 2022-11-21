@@ -1,4 +1,4 @@
-import {APPLICATION_JSON, get, post, put} from '@renderer/utils/request';
+import {get, put} from '@renderer/utils/request';
 
 export const useInviteCodeApi = () => {
     return {

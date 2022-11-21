@@ -2,10 +2,10 @@
   <div class="login-container">
     <div class="login-icon-group">
       <div class="login-icon-group-title">
-        <img alt="" :src="logoMini"/>
+        <img :src="logoMini" alt=""/>
         <div class="login-icon-group-title-text font25">{{ getThemeConfig.globalViceTitle }}</div>
       </div>
-      <img alt="" :src="loginIconTwo" class="login-icon-group-icon"/>
+      <img :src="loginIconTwo" alt="" class="login-icon-group-icon"/>
     </div>
     <div class="login-content">
       <div class="login-content-main">
@@ -25,7 +25,7 @@
         </div>
         <Scan v-if="state.isScan"/>
         <div class="login-content-main-scan" @click="state.isScan = !state.isScan">
-          <i class="iconfont" :class="state.isScan ? 'i-cloud-diannao': 'i-cloud-barcode'"/>
+          <i :class="state.isScan ? 'i-cloud-diannao': 'i-cloud-barcode'" class="iconfont"/>
           <div class="login-content-main-scan-delta"></div>
         </div>
         <div class="ipc-code">
@@ -35,7 +35,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup name="login">
+<script lang="ts" name="login" setup>
 
 import SignIn from '@renderer/views/login/components/signIn.vue';
 import SignUp from '@renderer/views/login/components/signUp.vue';
@@ -62,7 +62,7 @@ const state = reactive<LoginState>({
 });
 
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .login-container {
   width: 100%;
   height: 100%;

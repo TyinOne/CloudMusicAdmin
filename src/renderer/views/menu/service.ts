@@ -2,7 +2,6 @@ import {onMounted, reactive, ref} from "vue";
 import {useMenuApi} from "@renderer/api/menu";
 import {useRoleApi} from "@renderer/api/role";
 import {Label} from "@renderer/types/interface";
-import {error} from "electron-log";
 
 export default function getService() {
 

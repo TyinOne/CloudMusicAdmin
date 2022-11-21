@@ -45,7 +45,7 @@
             <el-button :disabled="scope.row.value === 'admin'" size="small" text type="primary"
                        @click="onOpenEditDict(scope.row)">修改
             </el-button>
-            <el-popconfirm title="确认删除此分类?" cancelButtonType="" @confirm="remove(scope.row)">
+            <el-popconfirm cancelButtonType="" title="确认删除此分类?" @confirm="remove(scope.row)">
               <template #reference>
                 <el-button size="small" text type="danger">删除</el-button>
               </template>

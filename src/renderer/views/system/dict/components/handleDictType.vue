@@ -23,7 +23,7 @@
   </el-dialog>
 </template>
 
-<script name="handleDictType" lang="ts" setup>
+<script lang="ts" name="handleDictType" setup>
 import {reactive, ref} from "vue";
 import {useDictApi} from "@renderer/api/dict";
 import {ElMessage} from "element-plus";

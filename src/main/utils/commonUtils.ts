@@ -1,4 +1,4 @@
-import {app, BrowserWindow, DownloadItem, WebContents} from 'electron'
+import {app, BrowserWindow, DownloadItem} from 'electron'
 import {
     IAddDownloadItem,
     IDownloadBytes,

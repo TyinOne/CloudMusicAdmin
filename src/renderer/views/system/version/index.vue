@@ -74,7 +74,6 @@ import {onMounted, reactive, ref} from "vue";
 import AddVersion from "@renderer/views/system/version/components/AddVersion.vue";
 import {useVersionApi} from "@renderer/api/version";
 import {checkResource} from "@renderer/utils/request";
-import {ElMessage} from "element-plus";
 
 const state = reactive({
   date: []

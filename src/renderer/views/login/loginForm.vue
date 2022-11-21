@@ -7,7 +7,8 @@
       <login-text-field v-model:value="state.params.account" icon="user" label="用户名"></login-text-field>
     </div>
     <div class="login_form_r3">
-      <login-text-field v-model:value="state.params.password" icon="lock" label="密码" type="password"></login-text-field>
+      <login-text-field v-model:value="state.params.password" icon="lock" label="密码"
+                        type="password"></login-text-field>
     </div>
     <div class="login_form_r4">
       <login-text-field v-model:value="state.params.rePassword" icon="lock" label="重复密码"
@@ -31,7 +32,7 @@ import {formatAxis} from "@renderer/utils/formatTime";
 import {useRoute} from "vue-router";
 import {ElMessage} from "element-plus";
 import {useUserApi} from "@renderer/api/user";
-import {Local, Session} from "@renderer/utils/storage";
+import {Local} from "@renderer/utils/storage";
 import {useStore} from "@renderer/store";
 import {initBackEndControlRoutes} from "@renderer/router/backEnd";
 

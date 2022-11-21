@@ -1,6 +1,7 @@
 <template>
   <div class="bootstrap-container">
-    <el-card :header="`bootstrap 字体图标(自动载入，增加了 bi- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`" shadow="hover">
+    <el-card :header="`bootstrap 字体图标(自动载入，增加了 bi- 前缀，使用时：bi-qr-code)：${state.sheetsIconList.length}个`"
+             shadow="hover">
       <el-scrollbar height="calc(100vh - 240px)">
         <el-row class="iconfont-row">
           <el-col v-for="(v, k) in state.sheetsIconList" :key="k" :lg="4" :md="6" :sm="8" :xl="2" :xs="12">
