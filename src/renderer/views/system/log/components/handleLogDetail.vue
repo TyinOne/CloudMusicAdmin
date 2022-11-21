@@ -29,9 +29,14 @@
         </el-col>
 
         <el-col :span="12">
+          <p class="copy-text" style="width: 150px;font-weight: bolder" @click="copyText(state.headers)">
+            {{ '请求头(点击复制):' }}</p>
+          <el-scrollbar style="height: 200px;">
+            <json-viewer :expanded="true" :value="state.headers"></json-viewer>
+          </el-scrollbar>
           <p class="copy-text" style="width: 150px;font-weight: bolder" @click="copyText(state.request)">
             {{ '请求参数(点击复制):' }}</p>
-          <el-scrollbar>
+          <el-scrollbar style="height: 150px;">
             <json-viewer :expanded="true" :value="state.request"></json-viewer>
           </el-scrollbar>
         </el-col>
@@ -59,6 +64,7 @@ const openDialog = (id: number) => {
     isShowDialog.value = true
     state.request = JSON.parse(res.result.params)
     state.response = JSON.parse(res.result.result)
+    state.headers = JSON.parse(res.result.headers)
     state.time = res.result.time
     state.account = res.result.account
     state.uri = res.result.uri
@@ -68,6 +74,7 @@ const openDialog = (id: number) => {
 const state = reactive({
   request: "",
   response: "",
+  headers: "",
   account: "",
   time: "",
   uri: "",

@@ -3,21 +3,38 @@
     <el-card shadow="hover">
       <div class="system-search mb15">
         <el-date-picker v-model="state.date" end-placeholder="结束日期" start-placeholder="开始日期"
-                        style="max-width: 240px" type="daterange" value-format="YYYY-MM-DD"></el-date-picker>
+                        style="max-width: 240px" type="daterange" value-format="YYYY-MM-DD"/>
         <el-input v-model="state.keywords" clearable placeholder="请输入URI关键词"
-                  size="default" style="max-width: 180px"></el-input>
+                  size="default" style="max-width: 180px"/>
+        <el-select :clearable="true" @change="searchLog" placeholder="请选择请求类型" v-model="state.requestMethod">
+          <el-option v-for="item in requestMethodArray" :value="item.value" :label="item.label">{{item.label}}</el-option>
+        </el-select>
+        <el-select :clearable="true" @change="searchLog" placeholder="请选择请求结果" v-model="state.status">
+          <el-option v-for="item in statusArray" :value="item.value" :label="item.label">{{item.label}}</el-option>
+        </el-select>
         <el-button v-permission="'sys:log:query'" class="ml10" size="default" type="primary" @click="searchLog">
-          <SvgIcon name="ele-Search"></SvgIcon>
+          <SvgIcon name="ele-Search"/>
           查询
         </el-button>
       </div>
       <el-table v-loading="loading" :data="dataSource" height="calc(100vh - 280px)" style="width: 100%">
-        <el-table-column label="ID" prop="id" width="100"/>
-        <el-table-column label="IP地址" prop="ip" show-overflow-tooltip width="140"/>
+        <el-table-column label="ID" prop="id" width="60"/>
+        <el-table-column label="IP地址" prop="ip" show-overflow-tooltip width="120"/>
+        <el-table-column label="请求类型" prop="requestMethod" width="100">
+          <template #default="scope">
+            <el-tag :type="requestMethodTag(scope.row)">{{ scope.row['requestMethod'] }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="请求地址" prop="uri" show-overflow-tooltip/>
         <el-table-column label="请求时间" prop="created" show-overflow-tooltip width="160"/>
         <el-table-column label="执行方法" prop="method" show-overflow-tooltip/>
-        <el-table-column label="执行耗时" prop="elapsed" show-overflow-tooltip width="100"/>
+        <el-table-column label="状态" prop="status" show-overflow-tooltip width="60">
+          <template #default="scope">
+            <el-tag v-if="scope.row.status" type="success">{{ '成功' }}</el-tag>
+            <el-tag v-else type="danger">{{ '失败' }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="耗时" prop="elapsed" show-overflow-tooltip width="80"/>
         <el-table-column label="操作" width="100">
           <template #default="scope">
             <el-button text type="primary" @click="openDetail(scope.row)">详情</el-button>
@@ -54,9 +71,39 @@ import HandleLogDetail from "@renderer/views/system/log/components/handleLogDeta
 
 let handleLogDetail = ref(null);
 
+const requestMethodArray = ref([
+  {
+    label: 'GET',
+    value: 'GET'
+  },
+  {
+    label: 'POST',
+    value: 'POST'
+  },
+  {
+    label: 'PUT',
+    value: 'PUT'
+  },
+  {
+    label: 'DELETE',
+    value: 'DELETE'
+  }
+])
+const statusArray = ref([
+  {
+    label: '成功',
+    value: true
+  },
+  {
+    label: '失败',
+    value: false
+  }
+])
 let state = reactive({
   date: [],
-  keywords: ""
+  keywords: '',
+  requestMethod: undefined,
+  status: undefined
 })
 let dataSource = ref([])
 let loading = ref(false)
@@ -74,6 +121,8 @@ const getData = (page) => {
   const [startDate, endDate] = state.date
   let params = {
     startDate, endDate,
+    method: state.requestMethod,
+    status: state.status,
     keywords: state.keywords,
     current: page.current,
     size: page.size
@@ -90,6 +139,18 @@ const getData = (page) => {
   }).catch(e => {
     loading.value = false
   })
+}
+const requestMethodTag = (row) => {
+  switch (row.requestMethod) {
+    case 'GET':
+      return ''
+    case 'POST':
+      return 'success'
+    case 'PUT':
+      return 'warning'
+    case 'DELETE':
+      return 'danger'
+  }
 }
 const onHandleCurrentChange = (val: number) => {
   pagination.value.current = val;
