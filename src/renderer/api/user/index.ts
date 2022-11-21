@@ -33,6 +33,9 @@ export const useUserApi = () => {
         },
         saveAccount: (params) => {
             return post('/admin/account/save', params, APPLICATION_JSON)
+        },
+        resetPassword: (params) => {
+            return put('/admin/account/password/reset', params)
         }
     }
 }

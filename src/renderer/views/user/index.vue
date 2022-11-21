@@ -32,7 +32,8 @@
         <el-table-column label="角色" prop="roles" show-overflow-tooltip>
           <template #default="scope">
             <el-space>
-              <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'" class="link">
+              <el-tag v-for="item in (scope.row.roles.split(','))" v-if="scope.row.roles" :type="'success'"
+                      class="link">
                 {{ item }}
               </el-tag>
               <el-tag v-else class="link" type="danger">{{ '未分配' }}</el-tag>
@@ -48,8 +49,9 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" width="150">
           <template #default="scope">
+            <el-button size="small" text type="primary" @click="reset(scope.row.account)">修改密码</el-button>
             <el-button size="small" text type="primary" @click="showDetail(scope.row.account)">
               详情
             </el-button>
@@ -72,6 +74,7 @@
           @current-change="onHandleCurrentChange"
       >
       </el-pagination>
+      <reset-password ref="resetPasswordRef"/>
       <user-detail ref="userDetailRef"/>
     </el-card>
   </div>
@@ -80,10 +83,12 @@
 import {onMounted, reactive, ref, unref} from "vue";
 import {useUserApi} from "@renderer/api/user";
 import {useRoleApi} from "@renderer/api/role";
-import UserDetail from "@renderer/views/user/components/userDetail.vue";
 import {Label} from "@renderer/types/interface";
+import UserDetail from "@renderer/views/user/components/userDetail.vue";
+import ResetPassword from "@renderer/views/user/components/resetPassword.vue";
 
-const router = window.$router()
+let resetPasswordRef = ref(null)
+const router = window.$router
 let loading = ref(false)
 let dataSource = ref([])
 let roleLabel = ref<Array<Label>>([])
@@ -137,8 +142,11 @@ const onHandleCurrentChange = (val: number) => {
   pagination.value.current = val;
   getInfo(pagination.value)
 };
-const showDetail = (row) => {
-  userDetailRef.value.openDialog(row, query)
+const showDetail = (account) => {
+  userDetailRef.value.openDialog(account, query)
+}
+const reset = (account) => {
+  resetPasswordRef.value.openDialog(account, query)
 }
 onMounted(() => {
   getRoleLabel()

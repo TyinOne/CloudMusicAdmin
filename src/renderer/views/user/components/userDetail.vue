@@ -1,6 +1,6 @@
 <template>
   <div class="system-user-detail-container">
-    <el-dialog v-if="isShowDialog" v-model="isShowDialog" :title="'用户详情'" class="dialog-self"
+    <el-dialog v-model="isShowDialog" :title="'用户详情'" class="dialog-self"
                :destroy-on-close="true"
                draggable width="700px">
       <el-card v-loading="loading" :body-style="{ padding: '10px' }" shadow="never" style="border: unset">
