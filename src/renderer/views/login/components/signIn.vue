@@ -104,7 +104,6 @@ const signIn = (account, password) => {
 }
 // 登录成功后的跳转
 const signInSuccess = () => {
-  console.log('243234')
   // 初始化登录成功时间问候语
   let currentTimeInfo = currentTime.value;
   // 登录成功，跳到转首页
