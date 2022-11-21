@@ -92,18 +92,14 @@ const signIn = (account, password) => {
       Authorization: res.result.token,
       userInfos: userInfo,
     }).then(() => {
-      console.log('1')
       initBackEndControlRoutes().then(() => {
         signInSuccess();
       });
     }).catch(e => {
-      console.log('2')
       state.loading.signIn = false;
     })
   }).catch(e => {
-    console.log(e)
     state.loading.signIn = false;
-    console.log('3')
   })
 }
 // 登录成功后的跳转
