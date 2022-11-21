@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" name="signUp" setup>
-import {computed, reactive} from "vue";
+import {computed, reactive, ref} from "vue";
 import {formatAxis} from "@renderer/utils/formatTime";
 import {useUserApi} from "@renderer/api/user";
 import {Local} from "@renderer/utils/storage";
@@ -72,6 +72,7 @@ const onSignIn = async () => {
   signIn(account, password)
 };
 let {ipcRenderer} = window;
+const isWeb = ref(process.env.IS_WEB);
 const signIn = (account, password) => {
   let params = {account, password}
   useUserApi().signIn(params).then(res => {
@@ -82,37 +83,46 @@ const signIn = (account, password) => {
       account: res.result.account
     }
     Local.set('Authorization', res.result.token)
-    ipcRenderer.invoke('userLogin', {
-      account: userInfo.account
-    })
+    if (!isWeb) {
+      ipcRenderer.invoke('userLogin', {
+        account: userInfo.account
+      })
+    }
     store.dispatch('userInfos/setUserInfos', {
       Authorization: res.result.token,
       userInfos: userInfo,
     }).then(() => {
+      console.log('1')
       initBackEndControlRoutes().then(() => {
         signInSuccess();
       });
     }).catch(e => {
+      console.log('2')
       state.loading.signIn = false;
     })
   }).catch(e => {
+    console.log(e)
     state.loading.signIn = false;
+    console.log('3')
   })
 }
 // 登录成功后的跳转
 const signInSuccess = () => {
+  console.log('243234')
   // 初始化登录成功时间问候语
   let currentTimeInfo = currentTime.value;
   // 登录成功，跳到转首页
   // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
   // 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
   if (route.query?.redirect) {
+    console.log(route.query?.redirect)
     router.push({
       path: <string>route.query?.redirect,
       query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
     });
   } else {
-    router.push('/');
+    console.log('243234')
+    router.replace('home');
   }
   // 登录成功提示
   // 关闭 loading
