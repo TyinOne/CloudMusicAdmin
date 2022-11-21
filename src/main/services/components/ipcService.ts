@@ -8,8 +8,8 @@ import {UpdateIPC} from "@main/services/ipc/updateIPC";
 import {DownloadIPC} from "@main/services/ipc/downloadIPC";
 import {DownloadService} from "@main/services/components/donwloadService";
 import {openFileInFolder, removeFile} from "@main/utils/downloadUtils";
-import {UserManager} from "@main/services/UserManager";
-import App = Electron.App;
+// import {UserManager} from "@main/services/UserManager";
+// import App = Electron.App;
 
 /**
  * 应用级事件监听
@@ -17,9 +17,9 @@ import App = Electron.App;
 export class AppIpcService {
     public updateIpc: UpdateIPC = null
     public downloadIpc: DownloadIPC = null;
-    public app:App;
-    constructor(app:App) {
-        this.app = app
+    // public app:App;
+    constructor() {
+        // this.app = app
         this.updateIpc = new UpdateIPC()
         this.downloadIpc = new DownloadIPC(new DownloadService())
         AppIpcService.ipcMainHandle('IsUseSysTitle', async () => {
@@ -118,8 +118,8 @@ export class AppIpcService {
         }))
 
         AppIpcService.ipcMainHandle('userLogin', ((event, args)=> {
-            let userManager = new UserManager();
-            userManager.init(app, {userAccount: args.account})
+            // let userManager = new UserManager();
+            // userManager.init(app, {userAccount: args.account})
         }))
     }
 

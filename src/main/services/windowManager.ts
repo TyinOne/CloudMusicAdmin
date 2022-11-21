@@ -6,7 +6,7 @@ import {join} from "path"
 import {mainWindowConfig} from "../config/windowsConfig"
 import {AppIpcService} from "@main/services/components/ipcService";
 import {DownloadService} from "@main/services/components/donwloadService";
-import {UserManager} from "@main/services/UserManager";
+// import {UserManager} from "@main/services/UserManager";
 
 class MainInit {
 
@@ -16,7 +16,7 @@ class MainInit {
     public mainWindow: BrowserWindow = null
     public ipcService: AppIpcService = null
     public downloadService: DownloadService = null
-    public userManager: UserManager = null
+    // public userManager: UserManager = null
 
     constructor() {
         this.winURL = winURL
@@ -31,7 +31,7 @@ class MainInit {
                 }]
             })
         }
-        this.ipcService = new AppIpcService(app)
+        this.ipcService = new AppIpcService()
         this.downloadService = new DownloadService()
     }
 
