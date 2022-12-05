@@ -21,19 +21,20 @@
         <template #prefix>
           <SvgIcon name="ele-Unlock"/>
         </template>
-        <template #suffix>
-          <i :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"
-             class="iconfont el-input__icon login-content-password"
-             @click="state.isShowPassword = !(state.isShowPassword)">
-          </i>
-        </template>
+        <!--        <template #suffix>-->
+        <!--          <i :class="state.isShowPassword ? 'i-cloud-buxianshimima' : 'i-cloud-xianshimima'"-->
+        <!--             class="iconfont el-input__icon login-content-password"-->
+        <!--             @click="state.isShowPassword = !(state.isShowPassword)">-->
+        <!--          </i>-->
+        <!--        </template>-->
       </el-input>
     </el-form-item>
     <el-form-item class="login-animation3">
       <el-checkbox v-model="state.saveAccount">{{ '记住密码' }}</el-checkbox>
     </el-form-item>
     <el-form-item class="login-animation4">
-      <el-button :loading="state.loading.signIn" class="login-content-submit" round type="primary" @click="onSignIn(formState)">
+      <el-button :loading="state.loading.signIn" class="login-content-submit" round type="primary"
+                 @click="onSignIn(formState)">
         <span>{{ '登 录' }}</span>
       </el-button>
     </el-form-item>
@@ -41,7 +42,7 @@
 </template>
 
 <script lang="ts" name="signUp" setup>
-import {computed, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import {formatAxis} from "@renderer/utils/formatTime";
 import {useUserApi} from "@renderer/api/user";
 import {Local} from "@renderer/utils/storage";
@@ -50,7 +51,10 @@ import {useRoute} from "vue-router";
 import {useStore} from "@renderer/store";
 import router from "@renderer/router";
 import {ElMessage} from "element-plus";
-import {valid} from "semver";
+import Base64 from "@renderer/utils/Base64";
+import {Md5} from "ts-md5";
+
+let sessionSave;
 
 const route = useRoute();
 const store = useStore();
@@ -58,23 +62,23 @@ const formState = ref(null)
 const state = reactive({
   isShowPassword: false,
   ruleForm: {
-    account: 'TyinZero',
+    account: '',
     password: ''
   },
   rules: {
     account: [
-      { required: true, message: '请输入用户名/手机号/邮箱', trigger: 'blur' },
-      { min: 4, max: 12, message: '请输入6 ~ 12位用户名 ', trigger: 'blur' }
+      {required: true, message: '请输入用户名/手机号/邮箱', trigger: 'blur'},
+      {min: 4, max: 12, message: '请输入6 ~ 12位用户名 ', trigger: 'blur'}
     ],
     password: [
-      { required: true, message: '请输入密码', trigger: 'change' },
-      { min: 8, max: 12, message: '请输入8～12位密码 ', trigger: 'blur' }
+      {required: true, message: '请输入密码', trigger: 'change'},
+      {min: 8, max: 12, message: '请输入8～12位密码 ', trigger: 'blur'}
     ]
   },
   loading: {
     signIn: false,
   },
-  saveAccount: true
+  saveAccount: sessionSave ?  Base64.decode(sessionSave.saveAccount) : false
 });
 // 时间获取
 const currentTime = computed(() => {
@@ -89,7 +93,13 @@ const onSignIn = async (formStateRef) => {
   formStateRef.validate((valid, fields) => {
     if (valid) {
       let {account, password} = state.ruleForm
-      signIn(account, password)
+      let saveAccount = state.saveAccount
+      if (saveAccount) {
+        Local.set("saveAccount", {account, password: Base64.encode(password), saveAccount: saveAccount})
+      } else {
+        Local.remove("saveAccount")
+      }
+      signIn(account, Md5.hashStr(password))
     }
     state.loading.signIn = false;
   })
@@ -147,6 +157,19 @@ const signInSuccess = () => {
   const signInText = '欢迎回来！';
   ElMessage.success(`${currentTimeInfo}，${signInText}`);
 };
+const initForm = (info) => {
+  if (info) {
+    let {account, password, saveAccount} = info
+    state.ruleForm.account = account
+    state.ruleForm.password = Base64.decode(password)
+    state.saveAccount = saveAccount
+
+  }
+}
+onMounted(() => {
+  sessionSave = Local.get("saveAccount");
+  initForm(sessionSave)
+})
 </script>
 
 <style lang="scss" scoped>

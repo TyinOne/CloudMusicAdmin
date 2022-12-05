@@ -23,6 +23,7 @@
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {useUserApi} from "@renderer/api/user";
+import {Md5} from "ts-md5";
 
 const loading = ref(false)
 const isShowDialog = ref(false)
@@ -41,7 +42,7 @@ const openDialog = (account: string, callback: () => void) => {
 const onSubmit = () => {
   loading.value = true
   let {account, password} = state
-  useUserApi().resetPassword({account, password}).then(res => {
+  useUserApi().resetPassword({account, password: Md5.hashStr(password)}).then(res => {
     loading.value = false
     closeDialog()
   }).catch(e => {

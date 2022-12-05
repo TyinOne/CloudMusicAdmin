@@ -9,7 +9,7 @@
     </div>
     <div class="login-content">
       <div class="login-content-main">
-        <h4 class="login-content-title ml15">CloudMusic后台</h4>
+        <h4 class="login-content-title ml15">CloudAdmin后台</h4>
         <div v-if="!state.isScan">
           <el-tabs v-model="state.tabsActiveName">
             <el-tab-pane label="账号登录" name="SignIn">
