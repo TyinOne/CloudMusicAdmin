@@ -78,7 +78,7 @@ const state = reactive({
   loading: {
     signIn: false,
   },
-  saveAccount: sessionSave ?  Base64.decode(sessionSave.saveAccount) : false
+  saveAccount: sessionSave ?  Base64._utf8_decode(sessionSave.saveAccount) : false
 });
 // 时间获取
 const currentTime = computed(() => {
@@ -95,7 +95,7 @@ const onSignIn = async (formStateRef) => {
       let {account, password} = state.ruleForm
       let saveAccount = state.saveAccount
       if (saveAccount) {
-        Local.set("saveAccount", {account, password: Base64.encode(password), saveAccount: saveAccount})
+        Local.set("saveAccount", {account, password: Base64._utf8_encode(password), saveAccount: saveAccount})
       } else {
         Local.remove("saveAccount")
       }
@@ -161,7 +161,7 @@ const initForm = (info) => {
   if (info) {
     let {account, password, saveAccount} = info
     state.ruleForm.account = account
-    state.ruleForm.password = Base64.decode(password)
+    state.ruleForm.password = Base64._utf8_encode(password)
     state.saveAccount = saveAccount
 
   }
